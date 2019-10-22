@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Improving VHDL Testbench Design with Message Passing &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="improving-vhdl-testbench-design-with-message-passing">
+<h1>Improving VHDL Testbench Design with Message Passing<a class="headerlink" href="#improving-vhdl-testbench-design-with-message-passing" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<img alt="message passing" src="../../_images/orange_man.jpeg" />
+</div>
+<div class="section" id="building-spaghetti-towers">
+<h2>Building Spaghetti Towers<a class="headerlink" href="#building-spaghetti-towers" title="Permalink to this headline">¶</a></h2>
+<p>Some time ago me and my colleagues at <a class="reference external" href="http://www.synective.se">Synective
+Labs</a> did a teamwork exercise called the
+<a class="reference external" href="http://www.marshmallowchallenge.com">Marshmallow Challenge</a>. The
+challenge is to build the tallest structure that can hold a
+marshmallow from twenty sticks of spaghetti, one yard of tape and one
+yard of string. The structure must be completed within 18 minutes.
+Many teams with various backgrounds have taken this challenge and a
+number of
+<a class="reference external" href="http://marshmallowchallenge.com/TED_Talk.html">observations</a> have
+been made:</p>
+<ul class="simple">
+<li><p>Engineers and architects have an advantage with their
+special skills and they build the tallest structures.</p></li>
+<li><p>Kindergartners perform better than average despite their lack of
+such skills. The reason is that they start prototyping to figure out
+what works and what doesn’t and then iterate to refine their designs.</p></li>
+<li><p>Business students have an average height that is just half of the
+average for all teams. They are trained to create a <em>single</em> right
+plan from which they execute. With such a strategy there is a single
+attempt to put the marshmallow on top of the structure right before
+the deadline and that attempt often fails.</p></li>
+<li><p>Teams with someone like
+an executive administrator, a member focused on coordinating the work
+of the others, improving on timing and communication, will do
+significantly better.</p></li>
+</ul>
+<p>When I did the challenge I was part of a team with three engineers and
+the company administrator. We did some up front thinking but didn’t wait
+long to put our ideas to the test. From there we iterated our way
+forward to the final structure. Need I say who won the challenge?</p>
+<p>Tom Wujec who made a <a class="reference external" href="https://www.ted.com/talks/tom_wujec_build_a_tower">TED
+talk</a> on this
+challenge has also made some other interesting TED talks. For example
+<a class="reference external" href="https://www.ted.com/talks/tom_wujec_got_a_wicked_problem_first_tell_me_how_you_make_toast">Got a wicked problem? First, tell me how you make
+toast</a>
+which is about the power of visualization, how much easier it is to
+understand a system if it can be represented by a drawing, and how you
+can create such a drawing.</p>
+</div>
+<div class="section" id="implications-on-testbench-design">
+<h2>Implications on Testbench Design<a class="headerlink" href="#implications-on-testbench-design" title="Permalink to this headline">¶</a></h2>
+<p>Looking at these presentations made think about VHDL testbench design.
+Rather than a number of team members cooperating on a spaghetti tower we
+have a number of concurrent processes cooperating around the
+verification of a piece of VHDL code. With several processes (or other
+concurrent statements) spread across your source file(s) the intent of
+the testbench is hard to grasp unless you have one process that
+coordinates the others. That process is the executive administrator of
+the team and the “drawing” visualizing the big picture for what the
+testbench does.</p>
+<p>Just as communication and timing is important within a team it’s also
+important that the testbench processes can communicate efficiently and
+are properly synchronized. Managing that communication and
+synchronization must also be simple such that it can be easily refined
+when working with iterations. However, synchronization is one of the
+things with concurrent programming that is notoriously hard to get right
+even though it comes natural for the members of the Marshmallow
+Challenge teams</p>
+<ul class="simple">
+<li><p>It’s not common that two team members reach for the same stick of
+spaghetti and break it. We instinctively pull back to handle this
+<a class="reference external" href="https://en.wikipedia.org/wiki/Race_condition">race condition</a>.</p></li>
+<li><p>It’s not likely that a team comes to
+<a class="reference external" href="https://en.wikipedia.org/wiki/Deadlock">deadlock</a> indefinitely
+because one member is sitting with the string waiting for the tape
+while the member holding the tape sits waiting for the string.</p></li>
+<li><p>If one member is producing triangular building blocks for the other
+members to assemble into the larger structure and he/she completes a
+new triangle before the previous has been used, it is not likely that
+the new triangle is lost. In programming this <a class="reference external" href="https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem">producer-consumer
+problem</a>
+must be handled explicitly.</p></li>
+</ul>
+<p>It has been
+<a class="reference external" href="https://www.usenix.org/legacy/event/osdi10/tech/full_papers/Xiong.pdf">showed</a>
+that we can make the code less error-prone if we use standard
+synchronization mechanism rather than low-level ad hoc solutions. <a class="reference external" href="http://vunit.github.io/com/user_guide.html">The
+message passing mechanism provided with
+VUnit</a>
+is an example of the former while plain VHDL often becomes an example of
+the latter. For example, below are the cores of two processes which
+communicate with each other using plain VHDL. The <code class="docutils literal notranslate"><span class="pre">main</span></code> process
+provides the streaming input characters to a Caesar encryption device
+using the <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> procedure while the <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code>
+process verifies the output stream using the
+<code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> procedure.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Core of main process                  -- Core of encrypted_symbol_monitor process</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span> <span class="k">loop</span>                    <span class="k">loop</span>
+  <span class="n">sentence</span> <span class="o">&lt;=</span> <span class="n">create_random_sentence</span><span class="p">;</span>      <span class="n">ready_to_verify</span> <span class="o">&lt;=</span> <span class="n">true</span><span class="p">;</span>
+  <span class="k">wait</span> <span class="k">for</span> <span class="mi">0</span> <span class="n">ns</span><span class="p">;</span>                           <span class="k">wait</span> <span class="k">on</span> <span class="n">sentence</span><span class="na">&#39;transaction</span><span class="p">;</span>
+  <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>                       <span class="n">ready_to_verify</span> <span class="o">&lt;=</span> <span class="n">false</span><span class="p">;</span>
+  <span class="k">wait</span> <span class="k">until</span> <span class="n">ready_to_verify</span><span class="p">;</span>              <span class="n">verify_encrypted_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>                                <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>As you can see there are a lot of different wait statements and special
+signalling to make this work. A slight mistake and we will encounter
+both race conditions, deadlocks, and the producer-consumer problem and
+these problems will only get worse if more processes are introduced.</p>
+<p>Message passing on the other hand removes the error-prone details by
+using the asynchronous <code class="docutils literal notranslate"><span class="pre">send</span></code> and the blocking <code class="docutils literal notranslate"><span class="pre">receive</span></code> procedures.
+One procedure call in each process takes care of both the information
+transfer and the synchronization.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Core of main process                                     -- Core of encrypted_symbol_monitor process</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span>                                            <span class="k">loop</span>
+  <span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span>                         <span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+  <span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">encrypted_symbol_monitor</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">receipt</span><span class="p">);</span>     <span class="n">verify_encrypted_sentence</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">);</span>
+  <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>                                        <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In the coming chapters I will present in more detail the example
+encryption device, what problems you may encounter when verifying such a
+device using plain VHDL, how VUnit message passing works, and how it
+improves the situation.</p>
+</div>
+<div class="section" id="the-caesar-encryption-device">
+<h2>The Caesar Encryption Device<a class="headerlink" href="#the-caesar-encryption-device" title="Permalink to this headline">¶</a></h2>
+<p>The figure below shows the Caesar encryption device which takes
+plaintext symbols on the input while concurrently generating the
+encrypted output. The device uses the Caesar cipher which substitutes
+every input letter with the letter a fix number of positions down the
+alphabet. This shift value equals 1 in my example so that <em>a</em> is
+encrypted to <em>b</em>, <em>b</em> is encrypted to <em>c</em> and so on. The latency is
+three clock cycles.</p>
+<div class="figure align-center">
+<img alt="Caesar Encoder" src="../../_images/caesar_encoder.png" />
+</div>
+</div>
+<div class="section" id="building-the-testbench">
+<h2>Building the Testbench<a class="headerlink" href="#building-the-testbench" title="Permalink to this headline">¶</a></h2>
+<p>To verify this device I would ideally have a single process testbench
+where pin wiggling interface details are encapsulated in convenience
+procedures. That approach would result in something like the code below
+where I have a function to generate a random sentence, <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> to
+apply that sentence on the input, and <code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> to
+verify the correct behaviour of the output.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Core of main process</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span> <span class="k">loop</span>
+  <span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span>
+  <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>
+  <span class="n">verify_encrypted_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>I’m not saying that throwing ten random sentences at this design is an
+ideal way to reach functional coverage, the approach is just a simple
+way of representing a testbench in which verification is based on a set
+of input vectors. What I’m saying is that the testbench is very readable
+and clear about its intent. I create a random sentence, encrypt the
+sentence, verify the encrypted output, and repeat this ten times. This
+is the “drawing” I described earlier.</p>
+<p>Sadly, this doesn’t work well for a number of reasons. For example, if
+the sequence of “random” sentences is this</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&quot;a&quot;, &quot;ab&quot;, &quot;abc&quot;, &quot;abcd&quot;, &quot;abcd&quot;, ...</span>
+</pre></div>
+</div>
+<p>the testbench will fail on <code class="docutils literal notranslate"><span class="pre">&quot;abcd&quot;</span></code> since the first encrypted output
+letter appears before the <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> procedure had time to apply the
+complete sentence. <code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> will not see the first
+output letter and report an error.</p>
+<p>The common solution to this is to split the testbench into several
+concurrent processes, one for each interface. So let’s do that and move
+<code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> to its own <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code>
+process. There are several ways to do this but an example is given
+below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Core of main process                  -- Core of encrypted_symbol_monitor process</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span> <span class="k">loop</span>                    <span class="k">loop</span>
+  <span class="n">sentence</span> <span class="o">&lt;=</span> <span class="n">create_random_sentence</span><span class="p">;</span>      <span class="n">ready_to_verify</span> <span class="o">&lt;=</span> <span class="n">true</span><span class="p">;</span>
+  <span class="k">wait</span> <span class="k">for</span> <span class="mi">0</span> <span class="n">ns</span><span class="p">;</span>                           <span class="k">wait</span> <span class="k">on</span> <span class="n">sentence</span><span class="na">&#39;transaction</span><span class="p">;</span>
+  <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>                       <span class="n">ready_to_verify</span> <span class="o">&lt;=</span> <span class="n">false</span><span class="p">;</span>
+  <span class="k">wait</span> <span class="k">until</span> <span class="n">ready_to_verify</span><span class="p">;</span>              <span class="n">verify_encrypted_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>                                <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This is the error-prone example I showed earlier. What would happen if I
+didn’t have the <code class="docutils literal notranslate"><span class="pre">ready_to_verify</span></code> signalling? If I forgot waiting for
+0 ns? If I didn’t include the transaction attribute on the right-hand
+wait statement?</p>
+<p>Despite the efforts the testbench is still lacking important abilities.
+For example, the producer-consumer problem we may experience is because
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> can only consume one sentence at a time. If
+we didn’t have the <code class="docutils literal notranslate"><span class="pre">ready_to_verify</span></code> signal <code class="docutils literal notranslate"><span class="pre">main</span></code> would produce a
+new sentence before <code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> has verified the
+previous. The new sentence is missed by <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code>
+since it isn’t at the wait statement ready to receive it. The
+<code class="docutils literal notranslate"><span class="pre">ready_to_verify</span></code> solution prevents this by having <code class="docutils literal notranslate"><span class="pre">main</span></code> wait for
+<code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> to complete but it also means that two
+sentences are separated by four clock cycles, as shown in the figure
+below, and we never verify the situation in the hello world example
+shown previously where the sentences are separated with a single clock
+cycle.</p>
+<div class="figure align-center">
+<img alt="Low Throughput" src="../../_images/low_throughput.png" />
+</div>
+<p>To address this we need a queue between <code class="docutils literal notranslate"><span class="pre">main</span></code> and
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> where new sentences can wait while previous
+sentences are being verified. <code class="docutils literal notranslate"><span class="pre">main</span></code> can now pass information to
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> without waiting for it to be ready. This is
+known as <a class="reference external" href="https://en.wikipedia.org/wiki/Message_passing">asynchronous message
+passing</a>. If we can
+package the concept of message passing into a higher level
+synchronization primitive we do not only solve our problem but we also
+remove the low-level details of our ad hoc solution which reduces the
+risk of bugs.</p>
+</div>
+<div class="section" id="introducing-message-passing">
+<h2>Introducing Message Passing<a class="headerlink" href="#introducing-message-passing" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://vunit.github.io">VUnit</a> test framework includes a
+<a class="reference external" href="http://vunit.github.io/com/user_guide.html">com
+package</a>
+providing such a message passing mechanism. The abstraction used is that
+we have <em>actors</em> (from the <a class="reference external" href="https://en.wikipedia.org/wiki/Actor_model">actor
+model</a>) which communicates
+with each other using <em>messages</em> sent over an abstract communication
+medium called the <em>net</em>.</p>
+<div class="figure align-center">
+<img alt="Message Passing Model" src="../../_images/message_passing_model.png" />
+</div>
+<p>The code below shows how the <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> process makes
+use of the message passing mechanism. It creates an actor for itself by
+calling <code class="docutils literal notranslate"><span class="pre">create</span></code> with the name for that actor. <code class="docutils literal notranslate"><span class="pre">create</span></code> returns a
+reference to the actor which I assigned to a process local constant
+<code class="docutils literal notranslate"><span class="pre">self</span></code>. That reference is then used in subsequent calls related to the
+message passing mechanism. For example, the core of the process starts
+by blocking at the <code class="docutils literal notranslate"><span class="pre">receive</span></code> procedure waiting for a message to be
+sent over the net to this actor. The payload of that message is the
+sentence we want to verify.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Local declarations of encrypted_symbol_monitor process</span>
+<span class="k">constant</span> <span class="n">self</span> <span class="o">:</span> <span class="n">actor_t</span> <span class="o">:=</span> <span class="n">create</span><span class="p">(</span><span class="s">&quot;encrypted symbol monitor&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Core of encrypted_symbol_monitor process</span>
+<span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+<span class="n">verify_encrypted_message</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The updated code for the <code class="docutils literal notranslate"><span class="pre">main</span></code> process finds the reference to the
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> actor by using its name. That reference is
+used as the receiver when sending a message containing the newly created
+sentence.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Local declarations of main process</span>
+<span class="k">constant</span> <span class="n">encrypted_symbol_monitor</span> <span class="o">:</span> <span class="n">actor_t</span> <span class="o">:=</span>  <span class="n">find</span><span class="p">(</span><span class="s">&quot;encrypted symbol monitor&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Core of main process</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span>
+  <span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span>
+  <span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">encrypted_symbol_monitor</span><span class="p">,</span> <span class="n">sentence</span><span class="p">,</span> <span class="n">receipt</span><span class="p">);</span>
+  <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A few things to note:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">send</span></code> call doesn’t consume physical time, only delta cycles. The message produced by the sender is placed in a queue until the receiver is ready to consume it.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">create</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">send</span></code>, and <code class="docutils literal notranslate"><span class="pre">receive</span></code> subprograms are taken directly from the com package so there is no need for any additional code to make this work.</p></li>
+<li><p>The producer-consumer problem is solved and sentences can be encrypted back-to-back.</p></li>
+<li><p>The error-prone low-level VHDL code is removed.</p></li>
+<li><p>Isn’t there a race condition if the call to <code class="docutils literal notranslate"><span class="pre">find</span></code> is made before the actor is created with <code class="docutils literal notranslate"><span class="pre">create</span></code>? No, the com package will handle this as described in the <a class="reference external" href="http://vunit.github.io/com/user_guide.html">user guide</a>.</p></li>
+<li><p>I’ve created two references to the same actor (the <code class="docutils literal notranslate"><span class="pre">self</span></code> and <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> constants) instead of using a global reference. The reason is that it makes me indifferent to the location of the referenced actor. If I want to make a component out of the <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> process such that it can be reused in other testbenches I would have to make a global reference visible to several source files, for example by putting the reference in a package used by relevant source files. This would get me involved in the transport of information between sender and receiver and I would like to avoid that for the reason mentioned. Compare this to the original plain VHDL <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> process. If I wanted to move that into a separate component I would be responsible for all involved signals and ports and the routing in between.</p></li>
+<li><p>I didn’t create an actor for the <code class="docutils literal notranslate"><span class="pre">main</span></code> process. It’s not necessary when I’m not sending messages in that direction.</p></li>
+<li><p>In this case each actor represents a process but it’s is not limited to that. For example, if you want a process with several communication channels with different priorities you can let an actor represent a channel.</p></li>
+<li><p>The com implementation has many variables but only one signal, <code class="docutils literal notranslate"><span class="pre">net</span></code>, while the typical ad hoc implementation has more. As a result the com-based solution simulates faster.</p></li>
+</ul>
+<p>What I presented so far is the basic functionality for the com package.
+A description of all features can be found in the <a class="reference external" href="http://vunit.github.io/com/user_guide.html">user
+guide</a>
+but I’ll give a few more examples by adding some extra functionality to
+the testbench.</p>
+</div>
+<div class="section" id="adding-a-third-interface">
+<h2>Adding a Third Interface<a class="headerlink" href="#adding-a-third-interface" title="Permalink to this headline">¶</a></h2>
+<p>So far I’ve used a Caesar cipher with the shift value set to one such
+that the input letter is substituted with the next in the alphabet. This
+value can be reconfigured at any time using a configuration port but it
+will not affect the currently encrypted sentence, if any. The <strong>next</strong>
+sentence is the first to be encrypted using the new value. To test this
+I will configure the device with a random shift value at a random point
+while a sentence is being encrypted. I will also randomize the delay
+between sentences.</p>
+<p>The configuration of the shift value is a new concurrent behaviour so
+I’ll drive the configuration port of the device from a dedicated
+<code class="docutils literal notranslate"><span class="pre">shift_driver</span></code> process. The <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> process will
+remain. To refine this design pattern I will also have a dedicated
+<code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code> process to drive the symbol input. <code class="docutils literal notranslate"><span class="pre">main</span></code> is
+still the entry point for understanding the testbench as it will
+continue to coordinate the actions of the others.</p>
+<div class="figure align-center">
+<img alt="Third Interface" src="../../_images/third_interface.png" />
+</div>
+<p>This is what I want the body of the <code class="docutils literal notranslate"><span class="pre">main</span></code> process for loop to do:</p>
+<ol class="arabic simple">
+<li><p>Create a random sentence.</p></li>
+<li><p>Tell the <code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code> process to start encrypting the
+sentence.</p></li>
+<li><p>Tell the <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> process to start verifying the
+output given the random sentence.</p></li>
+<li><p>Randomize a new shift value between, let’s say, 0 and 10. 0 is the
+equivalent of disabling encryption.</p></li>
+<li><p>Randomize a delay no longer than the time it takes to input the
+sentence to encrypt. This is the number of symbols in the sentence
+times the clock period.</p></li>
+<li><p>Tell the <code class="docutils literal notranslate"><span class="pre">shift_driver</span></code> process to set the new shift value after
+the given delay. <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> will also need to know
+the new shift value to verify the next encrypted output.</p></li>
+<li><p>Wait for the <code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code> process to apply the full
+sentence.</p></li>
+<li><p>Randomize a number of extra clock cycles before we start encrypting
+the next sentence</p></li>
+</ol>
+<p>This is what that code would look like.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">10</span> <span class="k">loop</span>
+  <span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span> <span class="c1">-- 1</span>
+
+  <span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">plain_symbol_driver</span><span class="p">,</span> <span class="n">start_encrypting</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span> <span class="n">plain_symbol_driver_receipt</span><span class="p">);</span> <span class="c1">-- 2</span>
+  <span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">encrypted_symbol_monitor</span><span class="p">,</span> <span class="n">start_verifying</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span> <span class="n">receipt</span><span class="p">);</span>  <span class="c1">-- 3</span>
+
+  <span class="n">shift</span> <span class="o">:=</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandInt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>  <span class="c1">-- 4</span>
+  <span class="n">sentence_length</span> <span class="o">:=</span> <span class="n">find</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">NUL</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">-- 5</span>
+  <span class="n">delay</span> <span class="o">:=</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandTime</span><span class="p">(</span><span class="mi">0</span> <span class="n">ms</span><span class="p">,</span> <span class="n">sentence_length</span> <span class="o">*</span> <span class="n">clk_period_c</span><span class="p">);</span>  <span class="c1">-- 6</span>
+  <span class="n">publish</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">set_shift_after_delay</span><span class="p">(</span><span class="n">shift</span><span class="p">,</span> <span class="n">delay</span><span class="p">),</span> <span class="n">status</span><span class="p">);</span>  <span class="c1">-- 7</span>
+
+  <span class="n">receive_reply</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">plain_symbol_driver_receipt</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sentence_is_encrypted</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span> <span class="c1">-- 8</span>
+  <span class="k">wait</span> <span class="k">for</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandInt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="n">clk_period_c</span> <span class="p">;</span> <span class="c1">-- 9</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Let me explain this line by line.</p>
+<div class="section" id="line-1">
+<h3>Line 1<a class="headerlink" href="#line-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span> <span class="c1">-- 1</span>
+</pre></div>
+</div>
+<p>A random sentence is created as before.</p>
+</div>
+<div class="section" id="line-2-3">
+<h3>Line 2 - 3<a class="headerlink" href="#line-2-3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">plain_symbol_driver</span><span class="p">,</span> <span class="n">start_encrypting</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span> <span class="n">plain_symbol_driver_receipt</span><span class="p">);</span> <span class="c1">-- 2</span>
+<span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">encrypted_symbol_monitor</span><span class="p">,</span> <span class="n">start_verifying</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span> <span class="n">receipt</span><span class="p">);</span>  <span class="c1">-- 3</span>
+</pre></div>
+</div>
+<p>Compared to the <code class="docutils literal notranslate"><span class="pre">send</span></code> call showed previously the first of these calls
+also includes <code class="docutils literal notranslate"><span class="pre">self</span></code>, the sending actor, as a parameter. This enables
+the receiving actor to reply back to the sender without any prior
+knowledge of who the sender is. This is something I will use later on.</p>
+<p>The payload is also different from what I’ve showed before. Instead of
+the plain sentence I use a function call <code class="docutils literal notranslate"><span class="pre">start_encrypting(sentence)</span></code>
+which will return a string. Fact is that the com package can only send
+and receive string messages so passing information “as is” like has been
+done with the sentences so far is actually a rare exception. As soon as
+I want to pass information of a type other than string I have to encode
+that information to a string before sending and then decode the string
+back to the original type on the receiving side. The com package
+provides encode and decode functions for around 25 native VHDL and
+standard IEEE types but can also generate encode and decode functions
+for your custom types.</p>
+<p>In this case I want to send a record of type <code class="docutils literal notranslate"><span class="pre">sentence_msg_t</span></code>. This
+record contains the sentence to verify and also a <code class="docutils literal notranslate"><span class="pre">msg_type</span></code> element
+which works as a command telling the receiver what to do with the
+sentence. <code class="docutils literal notranslate"><span class="pre">msg_type</span></code> is of an enumerated type which, in this case, has
+two defined values, <code class="docutils literal notranslate"><span class="pre">start_encrypting</span></code> and <code class="docutils literal notranslate"><span class="pre">start_verifying</span></code>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">max_sentence_length_c</span> <span class="o">:</span> <span class="kt">positive</span> <span class="o">:=</span> <span class="mi">128</span><span class="p">;</span>
+<span class="k">type</span> <span class="n">sentence_msg_type_t</span> <span class="k">is</span> <span class="p">(</span><span class="n">start_verifying</span><span class="p">,</span> <span class="n">start_encrypting</span><span class="p">);</span>
+<span class="k">type</span> <span class="n">sentence_msg_t</span> <span class="k">is</span> <span class="k">record</span>
+  <span class="n">msg_type</span> <span class="o">:</span> <span class="n">sentence_msg_type_t</span><span class="p">;</span>
+  <span class="n">sentence</span> <span class="o">:</span> <span class="kt">string</span><span class="p">(</span><span class="mi">1</span> <span class="k">to</span> <span class="n">max_sentence_length_c</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">record</span> <span class="nc">sentence_msg_t</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>These types are defined in a package <code class="docutils literal notranslate"><span class="pre">msg_types_pkg</span></code> which can be
+parsed by a Python module shipped along with the com package. This
+module can be used directly but is also integrated into VUnit such that
+you can add the following lines to your VUnit run script.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pkg</span> <span class="o">=</span> <span class="n">tb_lib</span><span class="o">.</span><span class="n">package</span><span class="p">(</span><span class="s1">&#39;msg_types_pkg&#39;</span><span class="p">)</span>
+<span class="n">pkg</span><span class="o">.</span><span class="n">generate_codecs</span><span class="p">(</span><span class="s1">&#39;msg_codecs_pkg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first line will find the <code class="docutils literal notranslate"><span class="pre">msg_types_pkg</span></code> package which is compiled
+into the <code class="docutils literal notranslate"><span class="pre">tb_lib</span></code> library. The second line will generate encode/decode
+functions and some other support functions for the types in
+<code class="docutils literal notranslate"><span class="pre">msg_types_pkg</span></code> and place them into a package <code class="docutils literal notranslate"><span class="pre">msg_codecs_pkg</span></code>. This
+package is also compiled into <code class="docutils literal notranslate"><span class="pre">tb_lib</span></code> and can be used in your
+testbench like this.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nn">tb_lib.msg_codecs_pkg.</span><span class="k">all</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The provided <code class="docutils literal notranslate"><span class="pre">encode</span></code> functions can now be used to generate strings
+from your custom types such that they can be passed as messages. For
+example, the code below makes a string out of the <code class="docutils literal notranslate"><span class="pre">my_pkg</span></code> variable
+which is of type <code class="docutils literal notranslate"><span class="pre">sentence_msg_t</span></code>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">my_pkg</span><span class="p">.</span><span class="n">msg_type</span> <span class="o">:=</span> <span class="n">start_verifying</span><span class="p">;</span>
+<span class="n">my_pkg</span><span class="p">.</span><span class="n">sentence</span> <span class="o">:=</span> <span class="n">create_random_sentence</span><span class="p">;</span>
+<span class="n">report</span> <span class="s">&quot;This is the encoded message string: &quot;</span> <span class="o">&amp;</span> <span class="n">encode</span><span class="p">(</span><span class="n">my_pkg</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Since record types beginning with an element of an enumerated type are
+so common for messages a number of special encode functions are
+generated. These are named after the values of the enumerated type and
+have the other record elements as parameters. The code below will do the
+same thing as the code above.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">report</span> <span class="s">&quot;This is the encoded message string: &quot;</span> <span class="o">&amp;</span> <span class="n">start_verifying</span><span class="p">(</span><span class="n">create_random_sentence</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>I didn’t have to use this feature for the first <code class="docutils literal notranslate"><span class="pre">send</span></code> call to
+<code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code>, I could have sent my sentence directly as
+before. However, it makes the code more readable and I have to use this
+feature for the second <code class="docutils literal notranslate"><span class="pre">send</span></code> call to <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code>
+anyway. I will explain why shortly.</p>
+<p>Encoding all types into strings raises the issue of type safety.
+However, with records containing a <code class="docutils literal notranslate"><span class="pre">msg_type</span></code> we have the ability to
+do dynamic type checking to keep the code type safe. The description for
+line 7 will show how.</p>
+</div>
+<div class="section" id="line-4-6">
+<h3>Line 4 - 6<a class="headerlink" href="#line-4-6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">shift</span> <span class="o">:=</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandInt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>  <span class="c1">-- 4</span>
+<span class="n">sentence_length</span> <span class="o">:=</span> <span class="n">find</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">NUL</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">-- 5</span>
+<span class="n">delay</span> <span class="o">:=</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandTime</span><span class="p">(</span><span class="mi">0</span> <span class="n">ms</span><span class="p">,</span> <span class="n">sentence_length</span> <span class="o">*</span> <span class="n">clk_period_c</span><span class="p">);</span>  <span class="c1">-- 6</span>
+</pre></div>
+</div>
+<p>After the two <code class="docutils literal notranslate"><span class="pre">send</span></code> calls I generate a random value for the shift and
+a random delay for when the new shift is to be applied. <code class="docutils literal notranslate"><span class="pre">rv</span></code> is a
+random variable of a protected type for which a number of randomization
+methods are defined. I’m using <code class="docutils literal notranslate"><span class="pre">RandInt</span></code> and <code class="docutils literal notranslate"><span class="pre">RandTime</span></code> for
+generating a random integer and a random time, respectively. The
+randomization functionality is provided by <a class="reference external" href="http://osvvm.org">OSVVM</a> which
+is redistributed with VUnit. My sentence string has a fix length such
+that it can be part of my message record so the variable length of the
+actual sentence is achieved by terminating that string with the <code class="docutils literal notranslate"><span class="pre">NUL</span></code>
+character. <code class="docutils literal notranslate"><span class="pre">find</span></code> is a function provided by the VUnit <code class="docutils literal notranslate"><span class="pre">string_ops</span></code>
+package and can be used to find the position of the first <code class="docutils literal notranslate"><span class="pre">NUL</span></code>
+character and calculate the length of the sentence. Multiplying this
+with the clock period gives the time it takes to encrypt the sentence
+and thus the range within which I want to apply the new shift value.</p>
+</div>
+<div class="section" id="line-7">
+<h3>Line 7<a class="headerlink" href="#line-7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">publish</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">set_shift_after_delay</span><span class="p">(</span><span class="n">shift</span><span class="p">,</span> <span class="n">delay</span><span class="p">),</span> <span class="n">status</span><span class="p">);</span>  <span class="c1">-- 7</span>
+</pre></div>
+</div>
+<p>Line 7 is used to send the randomized shift and delay values to the
+<code class="docutils literal notranslate"><span class="pre">shift_driver</span></code> process using <code class="docutils literal notranslate"><span class="pre">set_shift_after_delay</span></code> which is
+another encoding function generated from a record type. However,
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> will also need the new shift value to
+verify the output correctly so rather than sending a dedicated message
+to each of the two processes I use <code class="docutils literal notranslate"><span class="pre">publish</span></code> which will send a message
+to every actor that is <em>subscribing</em> to messages from the <code class="docutils literal notranslate"><span class="pre">main</span></code>
+actor. This is known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publish-subscribe
+pattern</a>.
+Let’s have a look at the <code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code> code.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">subscribe</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">find</span><span class="p">(</span><span class="s">&quot;main&quot;</span><span class="p">),</span> <span class="n">status</span><span class="p">);</span>
+<span class="k">loop</span>
+  <span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+  <span class="k">case</span> <span class="n">get_msg_type</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">)</span> <span class="k">is</span>
+    <span class="k">when</span> <span class="n">start_verifying</span> <span class="o">=&gt;</span>
+      <span class="n">sentence_msg</span> <span class="o">:=</span> <span class="n">decode</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">);</span>
+      <span class="n">verify_encrypted_sentence</span><span class="p">(</span><span class="n">sentence_msg</span><span class="p">.</span><span class="n">sentence</span><span class="p">,</span> <span class="n">shift</span><span class="p">);</span>
+    <span class="k">when</span> <span class="n">set_shift_after_delay</span> <span class="o">=&gt;</span>
+      <span class="n">shift_msg</span> <span class="o">:=</span> <span class="n">decode</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">);</span>
+      <span class="n">shift</span> <span class="o">:=</span> <span class="n">shift_msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+    <span class="k">when</span> <span class="k">others</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">case</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The first line makes the process subscribe to all messages <strong>published</strong>
+by <code class="docutils literal notranslate"><span class="pre">main</span></code>, messages <strong>sent</strong> by <code class="docutils literal notranslate"><span class="pre">main</span></code> are only received by the
+targeted receivers. The process then goes into to a loop triggered by
+the reception of a message. The reason for not sending the sentence
+directly to this process but rather use a record-based message is that
+it will receive messages of different types. When all these messages are
+using the record style presented it is possible to figure out the
+correct type using the generated <code class="docutils literal notranslate"><span class="pre">get_msg_type</span></code> function and then in
+the case statement decode to the correct record. Trying to decode to
+another record type would cause a run-time error so the code is type
+safe. For example, if the message type is <code class="docutils literal notranslate"><span class="pre">start_verifying</span></code> then I
+know that the message is based on the <code class="docutils literal notranslate"><span class="pre">sentence_msg_t</span></code> record. The
+<code class="docutils literal notranslate"><span class="pre">sentence_msg</span></code> variable has this type so the correct decode function
+will be called. I then take the sentence from the message and feed that
+to the <code class="docutils literal notranslate"><span class="pre">verify_encrypted_sentence</span></code> procedure which has been updated to
+also take the shift value as an input. The <code class="docutils literal notranslate"><span class="pre">shift</span></code> variable is updated
+by the <code class="docutils literal notranslate"><span class="pre">set_shift_after_delay</span></code> command messages in the second
+alternative of the case statement.</p>
+<p>An actor that you subscribe to may
+publish things that you’re not interested in so receiving other types of
+messages can in general be expected and I’m simply ignoring such
+messages with the <code class="docutils literal notranslate"><span class="pre">others</span></code> alternative.</p>
+<p>Using these record-based messages makes the “slave” processes very clean
+and readable and the code generation for encode and decode functions
+makes it effortless to add, remove, and modify messages as you refine
+your testbench. Just update your data types and execute your VUnit run
+script. New codecs will be generated and affected code will be
+recompiled.</p>
+</div>
+<div class="section" id="line-8-9">
+<h3>Line 8 - 9<a class="headerlink" href="#line-8-9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">receive_reply</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">plain_symbol_driver_receipt</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sentence_is_encrypted</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span> <span class="c1">-- 8</span>
+<span class="k">wait</span> <span class="k">for</span> <span class="n">rv</span><span class="p">.</span><span class="n">RandInt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="n">clk_period_c</span> <span class="p">;</span> <span class="c1">-- 9</span>
+</pre></div>
+</div>
+<p>The last two lines are used to create a random delay between sentences
+applied to the input. I could have done that by passing such a delay as
+an extra parameter in the <code class="docutils literal notranslate"><span class="pre">start_encryption</span></code> command like I did for
+the <code class="docutils literal notranslate"><span class="pre">set_shift_after_delay</span></code> command but to show some of the
+synchronization features of the com package I will use another approach.</p>
+<ol class="arabic simple">
+<li><p>Await the completion of a sentence in <code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code>.</p></li>
+<li><p>Wait for a random delay.</p></li>
+</ol>
+<p>This is an example of the <a class="reference external" href="https://en.wikipedia.org/wiki/Request%E2%80%93response">request-reply
+pattern</a>.
+<code class="docutils literal notranslate"><span class="pre">receive_reply</span></code> will wait for the completion acknowledge to the
+<code class="docutils literal notranslate"><span class="pre">start_encrypting</span></code> command (the request) sent to
+<code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code>. That send call returned a <em>receipt</em>,
+<code class="docutils literal notranslate"><span class="pre">plain_symbol_driver_receipt</span></code>, which, among other things, contains a
+unique id for that command message. Feeding that id to the
+<code class="docutils literal notranslate"><span class="pre">receive_reply</span></code> procedure means that it will wait for a reply for that
+specific message. Other types of messages and messages of the correct
+type but replies to other requests (out-of-order execution) will be
+ignored , but not deleted, until the specified reply is received. A
+reply can be a message of any type but often it’s just a positive or
+negative acknowledge of a command which is the case here. For that case
+there is a dedicated <code class="docutils literal notranslate"><span class="pre">receive_reply</span></code> procedure which returns a boolean
+value which I assigned to the <code class="docutils literal notranslate"><span class="pre">sentence_is_encrypted</span></code> variable. I’m
+not checking the value of <code class="docutils literal notranslate"><span class="pre">sentence_is_encrypted</span></code> because it will
+always be a positive acknowledge (<code class="docutils literal notranslate"><span class="pre">true</span></code>).</p>
+<p>Here is the code for the <code class="docutils literal notranslate"><span class="pre">plain_symbol_driver</span></code> process.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Core of plain_symbol_driver</span>
+<span class="k">loop</span>
+  <span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+  <span class="k">case</span> <span class="n">get_msg_type</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">)</span> <span class="k">is</span>
+    <span class="k">when</span> <span class="n">start_encrypting</span> <span class="o">=&gt;</span>
+      <span class="n">sentence_msg</span> <span class="o">:=</span> <span class="n">decode</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">payload</span><span class="p">.</span><span class="k">all</span><span class="p">);</span>
+      <span class="n">encrypt</span><span class="p">(</span><span class="n">sentence_msg</span><span class="p">.</span><span class="n">sentence</span><span class="p">);</span>
+      <span class="n">acknowledge</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">message</span><span class="p">.</span><span class="n">id</span><span class="p">,</span> <span class="n">true</span><span class="p">,</span> <span class="n">receipt</span><span class="p">);</span>
+    <span class="k">when</span> <span class="k">others</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">case</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">acknowledge</span></code> procedure is responsible for sending the positive
+(the <code class="docutils literal notranslate"><span class="pre">true</span></code> parameter) acknowledge message back to the sender of the
+incoming message (<code class="docutils literal notranslate"><span class="pre">message.sender</span></code>), that is the <code class="docutils literal notranslate"><span class="pre">main</span></code> process. The
+<code class="docutils literal notranslate"><span class="pre">message.id</span></code> parameter specifies what message this is a reply to and
+this is the same id that the <code class="docutils literal notranslate"><span class="pre">receive_reply</span></code> procedure in <code class="docutils literal notranslate"><span class="pre">main</span></code> is
+waiting for. Note that the process has the same clean structure as
+<code class="docutils literal notranslate"><span class="pre">encrypted_symbol_monitor</span></code>.</p>
+<p>Finally, in line 9, I create the random delay before starting with the
+next sentence in a new loop iteration.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>The VUnit message passing mechanism with a main controlling process
+provides a number of benefits</p>
+<ul class="simple">
+<li><p>A high-level abstraction of communication and synchronization makes the code less error-prone and more readable. The structure also scale well with increased DUT complexity.</p></li>
+<li><p>A central controlling process makes the testbench intent more clear.</p></li>
+<li><p>Hiding/automating everything but what information to exchange and with whom means that the work for the user is kept to a minimum. The simplicity in adding/deleting/modifying messages and actors encourages iterative testbench development.</p></li>
+<li><p>Message passing comes with a number of well-established design patterns to cover common use cases. Com has built-in support for simple ones like the command pattern but also more advanced patterns like request-reply with out-of-order execution.</p></li>
+<li><p>Information can be logically organized into multiple message types which can be handled by the same actor (communication channel) while still maintaining type safety. There is no need to dedicate an actor/channel for each message type or dump all information into one big message type.</p></li>
+<li><p>With only one signal the message passing mechanism is fast.</p></li>
+</ul>
+<p>What have been described here covers many of the com feature, but not
+all. For more information you can read the com <a class="reference external" href="http://vunit.github.io/com/user_guide.html">user
+guide</a>.</p>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  
+  <a href="../2016_02_01_website_updates/post.html">
+    <i class="fa fa-arrow-circle-left"></i>
+    Website Updates
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  
+  <a href="../2016_08_08_making_osvvm_a_submodule/post.html">
+    Making OSVVM a Git Submodule
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'vunitframework';
+        var disqus_identifier = '/posts/2016_02_21_improving_vhdl_testbench_design_with_message_passing/post/';
+        var disqus_title = 'Improving VHDL Testbench Design with Message Passing';
+        var disqus_url = 'http://vunit.github.io/posts/2016_02_21_improving_vhdl_testbench_design_with_message_passing/post';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    21 February 2016
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span><i class="fa-fw fa fa-user"></i></span>
+    
+      
+      <a href="../../blog/author/lasplund.html">lasplund</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li id="tags"><span><i class="fa-fw fa fa-tag"></i></span>
+    
+      
+      <a href="../../blog/tag/vunit.html">VUnit</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'vunitframework'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2016_02_21_improving_vhdl_testbench_design_with_message_passing/post/"> </a>
+  </li>
+  
+  </ul>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/posts/2016_02_21_improving_vhdl_testbench_design_with_message_passing/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

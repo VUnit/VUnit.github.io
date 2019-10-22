@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>VUnit BFMs - as Simple as Emailing &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="vunit-bfms-as-simple-as-emailing">
+<h1>VUnit BFMs - as Simple as Emailing<a class="headerlink" href="#vunit-bfms-as-simple-as-emailing" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<img alt="VUnit BFMs - as Simple as Emailing" src="../../_images/image7.jpg" />
+</div>
+<p>This article was originally posted on <a class="reference external" href="https://www.linkedin.com/pulse/vunit-bfms-simple-emailing-lars-asplund">LinkedIn</a> where you may find some comments on its contents.</p>
+<p>VUnit 3.0, our next major release, is around the corner and with it
+comes a number of updates and additions. One area which we have
+improved is our support for creating advanced bus functional models
+(BFMs). This includes an update of our communication library,
+additional support functionality and also a number of complete
+BFMs. This post will focus on the communication library, how it’s used
+to build advanced BFMs, and how we made it as simple as emailing. To
+emphasize the email analogy I will conclude the post with a
+demonstration where I use real emails to communicate with a
+simulation.</p>
+<div class="section" id="advanced-vs-basic-bfms">
+<h2>Advanced vs Basic BFMs<a class="headerlink" href="#advanced-vs-basic-bfms" title="Permalink to this headline">¶</a></h2>
+<p>A basic BFM is based on procedure calls which look something like this</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="k">of</span><span class="p">,</span> <span class="k">bus</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The write procedure takes an address and a data word and then performs
+the pin wiggling needed on the bus interface to complete the write
+transaction. The basic BFM provides abstraction by hiding how the pin
+wiggling is done and it makes the test sequencer very readable as
+depicted below. First the device under test (DUT) is initialized using
+the blue interface, then some data is put on the green port, then
+there is a write access on the red bus interface. Crisp and clear as a
+recipe.</p>
+<div class="figure align-center">
+<img alt="Sequential Recipe" src="../../_images/sequential_recipe.jpg" />
+</div>
+<p>However, looking at a real recipe we can see an important difference</p>
+<ol class="arabic simple">
+<li><p>Preheat the oven to 325F.</p></li>
+<li><p>Split vanilla bean in half and scrape out the pulp.</p></li>
+<li><p>While the oven is preheating, place the cream, vanilla bean and its
+pulp into a saucepan set over medium-high heat and bring to a
+boil.</p></li>
+<li><p>…</p></li>
+</ol>
+<p>The recipe is sequential in nature but actually describes concurrent
+activities. You’re expected to do things <strong>while</strong> the oven is
+preheating. This type of concurrency is something that the basic BFM
+approach cannot describe.</p>
+<p>While it makes sense to initialize the example DUT first you should
+also verify what happens when the red and green interfaces are used in
+parallel. The advanced BFM approach will let you do that and just like
+the recipe solves the problem by having several actors (you and the
+oven) the advanced approach makes use of several BFM components, one
+for each interface. These components run in parallel and perform the
+pin wiggling on command from the test sequencer which remains the
+recipe providing overview and readability.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">init</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="k">configuration</span><span class="p">);</span> <span class="c1">-- I will explain net later</span>
+<span class="n">put</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="n">write</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now that the pin wiggling has moved to the BFM components these
+procedures just initiate and optionally await the completion of that
+work as shown in the figure below. Procedure calls that only initiate
+BFM work will return immediately without consuming any simulation
+time. This allows the concurrent execution of the <cite>put</cite> and <cite>write</cite>
+transactions. Procedures like <cite>init</cite>, which await completion, will be
+blocking and consume simulation time.</p>
+<div class="figure align-center">
+<img alt="Parallel Recipe" src="../../_images/parallel_recipe.jpg" />
+</div>
+<p>Creating an advanced BFM component from basic BFM procedures is
+straightforward. The BFM component is basically just an if statement
+selecting what basic BFM procedure to run based on the type of command
+it receives, read or write for example. The challenging part, and the
+key to make the advanced BFM approach tractable, is the communication
+system connecting the test sequencer procedure calls with the BFM
+components.</p>
+</div>
+<div class="section" id="no-need-to-reinvent-the-wheel">
+<h2>No Need to Reinvent the Wheel<a class="headerlink" href="#no-need-to-reinvent-the-wheel" title="Permalink to this headline">¶</a></h2>
+<p>Fortunately we’re not the first to deal with communication in
+concurrent systems and computer science already has a mature solution
+for this - the message passing paradigm. Message passing is available
+in numerous programming languages so there is no lack of good examples
+to be inspired by. The real challenge is to create something equally
+user friendly in VHDL. So how do we measure user friendliness? For me,
+the reference has been email clients. The message passing we’re
+talking about is very similar to basic emailing functionality and
+considering that it takes a minute or two to figure out the basics of
+a new email client I think that’s the interface experience to strive
+for.</p>
+</div>
+<div class="section" id="bfm-interaction-is-just-like-emailing">
+<h2>BFM Interaction is Just Like Emailing<a class="headerlink" href="#bfm-interaction-is-just-like-emailing" title="Permalink to this headline">¶</a></h2>
+<p>Let’s look at some code and compare the sequence of events with those
+in an email thread. In this example my test sequencer is communicating
+with a BFM connected to a bus of a pure memory device. For reasons
+that will appear later I’m calling this device <em>The Brain</em>.</p>
+<div class="figure align-center">
+<img alt="The Brain" src="../../_images/the_brain.jpg" />
+</div>
+</div>
+<div class="section" id="creating-an-email-account">
+<h2>Creating an Email Account<a class="headerlink" href="#creating-an-email-account" title="Permalink to this headline">¶</a></h2>
+<p>First of all, to receive an email you need to sign up for an email
+account to get an email address. Same thing in message passing but we
+talk about <em>actors</em> rather than accounts. Anyway, you can think of the
+<cite>brain</cite> constant below as an email address. The test sequencer is
+really communicating with the BFM but that’s just a technical detail
+which I’ve excluded from the naming.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">brain</span> <span class="o">:</span> <span class="n">actor_t</span> <span class="o">:=</span> <span class="n">new_actor</span><span class="p">(</span><span class="s">&quot;The Brain&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The test sequencer may have direct access to the brain “email address”
+but it can also figure it out.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">brain</span> <span class="o">:=</span> <span class="n">find</span><span class="p">(</span><span class="s">&quot;The Brain&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Just like searching the contacts list in your email client.</p>
+</div>
+<div class="section" id="sending-an-email">
+<h2>Sending an Email<a class="headerlink" href="#sending-an-email" title="Permalink to this headline">¶</a></h2>
+<p>Now that the basics are covered we can start communicating. This is
+how you send a message to the brain BFM instructing it to start a
+write transaction.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">write_msg</span> <span class="o">:=</span> <span class="n">new_msg</span><span class="p">(</span><span class="n">brain_write_msg</span><span class="p">);</span>
+<span class="n">push_integer</span><span class="p">(</span><span class="n">write_msg</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+<span class="n">push_std_ulogic_vector</span><span class="p">(</span><span class="n">write_msg</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">brain</span><span class="p">,</span> <span class="n">write_msg</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Just as you click the new email button in your email client you start
+by creating a new empty message in VUnit.</p>
+<p>An email has an optional subject and so do VUnit messages but we call
+it a message type and it’s an optional parameter to <cite>new_msg</cite>. It would
+be possible to use a string like “write” for the subject but that can
+cause a problem if you have several BFMs supporting write transactions
+and use the <a class="reference external" href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">publisher/subscriber pattern</a>. I
+will not cover that
+pattern in this post but it basically allow you to subscribe to
+messages published by a number of publishers. The parsing of these
+messages becomes much harder if messages with different content is
+allowed to have the same message type. To handle this a BFM can
+register its message types and get unique identifiers in return.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">brain_write_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;write&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When writing an email you add text but you can also attach pictures,
+documents and other objects of <strong>different</strong> types. Same thing with my
+<cite>address</cite> and <cite>data</cite> which are of different types. The reason for <em>pushing</em>
+things into my message is that I’m using the message as a queue. The
+first object pushed on the sender side is the first one popped on the
+receiver side.</p>
+<p>Finally I add the email address (<cite>brain</cite>) and click the send button to
+send the email (<cite>write_msg</cite>) over the Inter(<cite>net</cite>).</p>
+<p>What I shown so far are details not really seen by the test
+sequencer. Instead the BFM would wrap this into a procedure. These are
+the type of transaction calls you’ll end up having in the test
+sequencer.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">brain_write</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Compared to a basic BFM procedure there is only one interface signal,
+<cite>net</cite>, which means less typing and no changes if the physical DUT
+interface is changed.</p>
+</div>
+<div class="section" id="receiving-an-email">
+<h2>Receiving an Email<a class="headerlink" href="#receiving-an-email" title="Permalink to this headline">¶</a></h2>
+<p>The BFM receiving the test sequencer messages would have a process
+with a body starting like this.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">begin</span>
+  <span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">brain</span><span class="p">,</span> <span class="n">command_msg</span><span class="p">);</span>
+  <span class="n">msg_type</span> <span class="o">:=</span> <span class="n">message_type</span><span class="p">(</span><span class="n">command_msg</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="n">msg_type</span> <span class="o">=</span> <span class="n">brain_write_msg</span> <span class="k">then</span>
+    <span class="n">address</span> <span class="o">:=</span> <span class="n">pop_integer</span><span class="p">(</span><span class="n">command_msg</span><span class="p">);</span>
+    <span class="n">data</span> <span class="o">:=</span> <span class="n">pop_std_ulogic_vector</span><span class="p">(</span><span class="n">command_msg</span><span class="p">);</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="k">of</span><span class="p">,</span> <span class="k">bus</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Do you pick up the phone right away at the sound of a notification? If
+so, you’re like this BFM blocking on the <cite>receive</cite> procedure until a
+message arrives to the <cite>brain</cite> account (the BFM can have many
+accounts). Based on the message type and the message contents the BFM
+takes suitable actions much like you would when receiving an
+email. Note that this is the place to reuse your basic BFM procedure
+presented earlier in this post.</p>
+</div>
+<div class="section" id="replying-to-an-email">
+<h2>Replying to an Email<a class="headerlink" href="#replying-to-an-email" title="Permalink to this headline">¶</a></h2>
+<p>Replying to an email is just like writing a new email. The only
+difference is that you start from the incoming email, thereby creating
+a reference to it. Same thing with VUnit message passing. Below is the
+continuation of the if statement above showing how the BFM replies to
+a read command.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>  <span class="k">elsif</span> <span class="n">msg_type</span> <span class="o">=</span> <span class="n">brain_read_msg</span> <span class="k">then</span>
+    <span class="n">address</span> <span class="o">:=</span> <span class="n">pop_integer</span><span class="p">(</span><span class="n">command_msg</span><span class="p">);</span>
+    <span class="n">read</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">number</span><span class="p">,</span> <span class="k">of</span><span class="p">,</span> <span class="k">bus</span><span class="p">,</span> <span class="n">interface</span><span class="p">,</span> <span class="n">signals</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">reply_msg</span> <span class="o">:=</span> <span class="n">new_msg</span><span class="p">;</span>
+    <span class="n">push_std_ulogic_vector</span><span class="p">(</span><span class="n">reply_msg</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+    <span class="n">reply</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">command_msg</span><span class="p">,</span> <span class="n">reply_msg</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="receiving-an-email-reply">
+<h2>Receiving an Email Reply<a class="headerlink" href="#receiving-an-email-reply" title="Permalink to this headline">¶</a></h2>
+<p>Even if you react to every email notification you receive you may
+choose to leave most messages for later and just read the important
+ones, the emails you’ve been waiting for. In the following example I
+do just that. First I initiate a read transaction and then I await the
+reply of <em>that</em> message and ignore everything else. Messages ignored are
+not deleted but remain in the inbox until you are ready to read them.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Initiate a read transaction</span>
+
+<span class="n">read_msg</span> <span class="o">:=</span> <span class="n">new_msg</span><span class="p">(</span><span class="n">brain_read_msg</span><span class="p">);</span>
+<span class="n">push_integer</span><span class="p">(</span><span class="n">read_msg</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+<span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">brain</span><span class="p">,</span> <span class="n">read_msg</span><span class="p">);</span>
+
+<span class="c1">-- Wait for the reply to the read_msg</span>
+
+<span class="n">receive_reply</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">read_msg</span><span class="p">,</span> <span class="n">reply_msg</span><span class="p">);</span>
+<span class="n">data</span> <span class="o">:=</span> <span class="n">pop_std_ulogic_vector</span><span class="p">(</span><span class="n">reply_msg</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Again, these are details that the test sequencer doesn’t have to
+see. The first three lines can be encapsulated in a non-blocking read
+procedure <cite>brain_read</cite> that lets you do other things while waiting for
+the data to be returned. The last two lines can be encapsulated in a
+procedure get that gets the actual data. The link between the two
+procedures is <cite>read_msg</cite> but that name also leaks implementation
+details so I’m calling it <cite>future</cite> instead. <cite>brain_read</cite> returns a
+promise of future data and <cite>get</cite> retrieves that data and may block if
+the data is yet to be received.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">brain_read</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">future</span><span class="p">);</span>
+<span class="n">get</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">future</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sometimes you just need a blocking read so a procedure bundling these
+two should also be provided.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">brain_read</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The difference between the two <cite>brain_read</cite> procedures is the type of
+the last parameter.</p>
+</div>
+<div class="section" id="can-it-be-made-simpler">
+<h2>Can It Be Made Simpler?<a class="headerlink" href="#can-it-be-made-simpler" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><em>Everything should be made as simple as possible, but no simpler.</em></p>
+</div></blockquote>
+<p>As you can see there is almost a 1-to-1 mapping between VUnit API
+interactions and the GUI interactions in an email client. Is this as
+simple as can be? If emailing is the ultimate form of simple
+communication it would be, but it’s not.</p>
+<p>You may have noticed that I never created an actor for the test
+sequencer so all messages to the brain have been anonymous. Allowing
+such messages means one less thing to be concerned about but it’s not
+part of normal emailing. You can make it more like emailing by signing
+your messages with a <cite>test_sequencer</cite> actor.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">:=</span> <span class="n">new_msg</span><span class="p">(</span><span class="n">brain_write_msg</span><span class="p">,</span> <span class="n">test_sequencer</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you do, all reply messages sent by <cite>brain</cite> will end up in the
+<cite>test_sequencer</cite> inbox. If you don’t <cite>brain</cite> will act like an email client
+that has lost its network connection - it will store the reply message
+in its outbox. When the test sequencer waits for the reply it will
+know that the outgoing message, <cite>read_msg</cite> in the example below, was
+anonymous and rather than waiting for a reply to appear in its inbox
+it will look for the message in the <cite>brain</cite> outbox. No privacy but we
+don’t really need that.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">receive_reply</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">read_msg</span><span class="p">,</span> <span class="n">reply_msg</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-real-emails-from-within-a-testbench">
+<h2>Sending Real Emails from within a Testbench<a class="headerlink" href="#sending-real-emails-from-within-a-testbench" title="Permalink to this headline">¶</a></h2>
+<p>To further emphasize the similarity with emailing and also show some
+other aspects of VUnit message passing I’ll end this post with a demo
+of a VUnit testbench interacting with a real email client. The demo is
+a continuation of the previous example but instead of a simulated
+brain within the simulator I’m putting the brain inside my own head
+and use GMail for communication.</p>
+<p>The value of sending emails from within a simulation may be limited
+but there are other more interesting situations where you need
+external communication and where message passing provides a good
+abstraction. But that’s a story for another time.</p>
+<p><strong>NOTE</strong>: This demo recording was based on a release candidate for
+VUnit 3.0 in which the <cite>new_msg</cite> function didn’t have the message type
+parameter and there was no <cite>message_type</cite> function for the
+receiver. Instead the message type was pushed/popped to/from the
+message just like any other message content. This is still possible
+but not the recommended way of doing it. The newer approach provides
+better debugging support as described in the <a class="reference external" href="https://vunit.github.io/com/user_guide.html">user guide</a>.</p>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/o5SbHjXlKbY" frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope;
+picture-in-picture" allowfullscreen></iframe></div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  
+  <a href="../2017_11_23_vunit_matlab_integration/post.html">
+    <i class="fa fa-arrow-circle-left"></i>
+    VUnit Matlab Integration
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  
+  <a href="../2018_02_12_vunit3/post.html">
+    VUnit 3.0
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'vunitframework';
+        var disqus_identifier = '/posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post/';
+        var disqus_title = 'VUnit BFMs - as Simple as Emailing';
+        var disqus_url = 'http://vunit.github.io/posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    14 December 2017
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span><i class="fa-fw fa fa-user"></i></span>
+    
+      
+      <a href="../../blog/author/lasplund.html">lasplund</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li id="tags"><span><i class="fa-fw fa fa-tag"></i></span>
+    
+      
+      <a href="../../blog/tag/vunit.html">VUnit</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'vunitframework'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post/"> </a>
+  </li>
+  
+  </ul>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../2017_11_23_vunit_matlab_integration/post.html">23 November - VUnit Matlab Integration</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

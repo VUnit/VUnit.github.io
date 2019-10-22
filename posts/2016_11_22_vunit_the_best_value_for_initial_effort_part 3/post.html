@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>VUnit - The Best Value for Initial Effort - Part 3 &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="vunit-the-best-value-for-initial-effort-part-3">
+<h1>VUnit - The Best Value for Initial Effort - Part 3<a class="headerlink" href="#vunit-the-best-value-for-initial-effort-part-3" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<img alt="Best Value Part 3" src="../../_images/image2.jpg" />
+</div>
+<p>This article was originally posted on <a class="reference external" href="https://www.linkedin.com/pulse/vunit-best-value-initial-effort-part-3-lars-asplund/">LinkedIn</a>
+where you may find some comments on its contents.</p>
+<p>After spending one minute on <a class="reference external" href="http://www.linkedin.com/pulse/vunit-best-value-initial-effort-lars-asplund">installing VUnit</a>
+and one minute on <a class="reference external" href="http://www.linkedin.com/pulse/vunit-best-value-initial-effort-part-2-lars-asplund">creating a run script</a>
+for incremental compilation it is time to go full automation. Five
+lines of code or roughly 30 seconds of work for each testbench is what
+it takes to get the following added values:</p>
+<ul class="simple">
+<li><p>A single command to verify your project designs or, which I will
+show in the next blog, part of the designs.</p></li>
+<li><p>Support for distributing the simulations over many CPU cores. If you
+have a quad core CPU you can have a 4x speed-up. This requires more
+simulator licenses but if you use a free version of a commercial
+simulator or the open source GHDL that is no problem.</p></li>
+<li><p>Continuous integration with the help of tools like <a class="reference external" href="http://wiki.jenkins-ci.org/display/JENKINS/Meet+Jenkins">Jenkins</a> and
+<a class="reference external" href="http://travis-ci.org/">Travis</a>. Did you notice the build status
+badge in the <a class="reference external" href="http://github.com/LarsAsplund/udp_ip_stack">example project repository</a>? Whenever someone
+pushes new code to the repository Travis will use VUnit to run all
+the tests for that code and present the result. Click on the badge
+or <a class="reference external" href="http://travis-ci.org/LarsAsplund/udp_ip_stack">here</a> and you’ll see.</p></li>
+</ul>
+<p>This <a class="reference external" href="http://youtu.be/_qytd_9Yroc">video</a> clip will show the
+details for this step and the resulting code is in my <a class="reference external" href="http://github.com/LarsAsplund/udp_ip_stack">repository</a>.</p>
+<p>All in all I’ve spent less than ten minutes to convert this project
+but I haven’t really made any changes to how the testbenches are
+designed. If you look at the code you will find several thousands of
+assert statements which can be enhanced with VUnit
+functionality. However, replacing all of them is not a quick fix so
+VUnit must be able to handle legacy asserts in order to be the
+low-effort solution we’re striving for. A better approach is to
+continuously improve on the code you have, for example when developing
+tests for new functionality, making manual testbenches self-checking,
+or when debugging designs.</p>
+<p>This was all for now. In the next blog I will talk about test cases in
+VUnit and how they bring clarity and extra speed to your
+testbenches. As always, comments and questions are welcomed here or in
+our user community <a class="reference external" href="http://gitter.im/VUnit/vunit">chat room</a>.</p>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  
+  <a href="../2016_11_16_vunit_the_best_value_for_initial_effort_part 2/post.html">
+    <i class="fa fa-arrow-circle-left"></i>
+    VUnit - The Best Value for Initial Effort - Part 2
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  
+  <a href="../2017_01_12_vunit_getting_started_1_2_3/post.html">
+    VUnit - Getting Started 1-2-3
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'vunitframework';
+        var disqus_identifier = '/posts/2016_11_22_vunit_the_best_value_for_initial_effort_part 3/post/';
+        var disqus_title = 'VUnit - The Best Value for Initial Effort - Part 3';
+        var disqus_url = 'http://vunit.github.io/posts/2016_11_22_vunit_the_best_value_for_initial_effort_part 3/post';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    22 November 2016
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span><i class="fa-fw fa fa-user"></i></span>
+    
+      
+      <a href="../../blog/author/lasplund.html">lasplund</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li id="tags"><span><i class="fa-fw fa fa-tag"></i></span>
+    
+      
+      <a href="../../blog/tag/vunit.html">VUnit</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'vunitframework'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2016_11_22_vunit_the_best_value_for_initial_effort_part 3/post/"> </a>
+  </li>
+  
+  </ul>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/posts/2016_11_22_vunit_the_best_value_for_initial_effort_part 3/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

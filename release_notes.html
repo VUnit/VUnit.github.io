@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Release notes &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Contributing" href="contributing.html" />
+  
+
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="release-notes">
+<span id="id1"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<p>For installation instructions read <a class="reference internal" href="installing.html#installing"><span class="std std-ref">this</span></a>.</p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.2.0...master">Commits since last release</a></p>
+<hr class="docutils" />
+<div class="section" id="latest">
+<span id="latest-release"></span><h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.2.0/">4.2.0</a> - 2019-10-12 (latest)<a class="headerlink" href="#latest" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">-m/--minimal</span></code> flag to only compile what is necessary for selected tests.</p></li>
+<li><p>Fix axi_stream VC for 0-length tid/tdest/tuser.</p></li>
+<li><p>Fix work reference for non-lower case library names. <a class="reference external" href="https://github.com/VUnit/vunit/issues/556/">#556</a></p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">init_files.before_run</span></code> hook to RivieraPRO and ModelSim.</p></li>
+<li><p>Do not add extra quotes when invoking a gtkwave subprocess. <a class="reference external" href="https://github.com/VUnit/vunit/issues/563/">#563</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.2.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.1.0...v4.2.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id2">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.1.0/">4.1.0</a> - 2019-09-29<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Enhancements to Stream VCI and AXI Stream VCs. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/420/">#420</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/422/">#422</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/429/">#429</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/483/">#483</a>)</p></li>
+<li><p>Add option ‘overwrite’ to set_sim_option. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/471/">#471</a>)</p></li>
+<li><p>ActiveHDL: add code coverage support. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/461/">#461</a>)</p></li>
+<li><p>GtkWave: add sim option ‘ghdl.init_file.gui’. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/459/">#459</a>)</p></li>
+<li><p>GHDL: add boolean option ghdl.elab_e, to execute ‘ghdl -e’ only. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/467/">#467</a>)</p></li>
+<li><p>GHDL: with VHDL 2008 nonzero return values produce a fail. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/469/">#469</a>)</p></li>
+<li><p>Add experimental VHDL 2019 support. (<a class="reference external" href="https://github.com/VUnit/vunit/issues/549/">#549</a>)</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.1.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.8...v4.1.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id3">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.8/">4.0.8</a> - 2018-12-04<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix vivado submodule missing from release. <a class="reference external" href="https://github.com/VUnit/vunit/issues/415/">#415</a></p></li>
+<li><p>Add support for checking AXI response in axi_lite_master</p></li>
+<li><p>Fix bug with coverage flag not working with unique-sim in rivierapro</p></li>
+<li><p>Support for Avalon-MM burst transfers</p></li>
+<li><p>Unsure LICENSE_QUEUE environment variable is in effect for RivieraPRO</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.8/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.7...v4.0.8">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id4">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.7/">4.0.7</a> - 2018-11-20<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix a problem parsing generics with string containing semi colon. <a class="reference external" href="https://github.com/VUnit/vunit/issues/409/">#409</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.7/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.6...v4.0.7">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id5">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.6/">4.0.6</a> - 2018-11-15<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix a problem where sometimes multiple Ctrl-C where required to abort execution. <a class="reference external" href="https://github.com/VUnit/vunit/issues/408/">#408</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.6/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.5...v4.0.6">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.5/">4.0.5</a> - 2018-11-07<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Make tb_path absolute again. <a class="reference external" href="https://github.com/VUnit/vunit/issues/406/">#406</a></p></li>
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">--export-json</span></code> test location offets for DOS line endings. <a class="reference external" href="https://github.com/VUnit/vunit/issues/437/">#437</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.5/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.4...v4.0.5">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id7">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.4/">4.0.4</a> - 2018-11-05<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix broken ActiveHDL support.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.4/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.3...v4.0.4">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id8">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.3/">4.0.3</a> - 2018-11-02<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">set_timeout</span></code> for large values in ModelSim. <a class="reference external" href="https://github.com/VUnit/vunit/issues/405/">#405</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.3/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.2...v4.0.3">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id9">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.2/">4.0.2</a> - 2018-10-25<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix missing msg_type in push and pop of msg_t.</p></li>
+<li><p>Ensure axi_lite_master always aligns with aclk to avoid VHDL/Verilog simulation mismatch.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.2/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.1...v4.0.2">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id10">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.1/">4.0.1</a> - 2018-10-23<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Set value to null when pushing pointer types in queue_t and com to avoid accidental dupliction of ownership.</p></li>
+<li><p>Fix broken ram_master.vhd where the response messages where deleted to early.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v4.0.0...v4.0.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id11">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v4.0.0/">4.0.0</a> - 2018-10-22<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>New coverage support:</p>
+<blockquote>
+<div><p>The <code class="docutils literal notranslate"><span class="pre">--coverage</span></code> flag has been removed in favor of exposing a
+more flexible <a class="reference internal" href="py/opts.html#coverage"><span class="std std-ref">coverage interface</span></a>. The flag was
+was not flexible enough for many users and we decided to make a
+breaking change to get a better solution moving forward. An
+example of using the new interface can be found here
+<a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/coverage/">here</a>. For users who liked the old
+flag VUnit supports adding <a class="reference internal" href="py/ui.html#custom-cli"><span class="std std-ref">custom</span></a> command line
+arguments.</p>
+</div></blockquote>
+</li>
+<li><p>Add ability to set watchdog timer dynamically. <a class="reference external" href="https://github.com/VUnit/vunit/issues/400/">#400</a></p></li>
+<li><p>Skipping protected regions in the Verilog preprocessor.</p></li>
+<li><p>Integrate utility to add Vivado IP to a VUnit project see <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/vivado/">example</a>.</p></li>
+<li><p>Make tb_path work in combination with preprocessing. <a class="reference external" href="https://github.com/VUnit/vunit/issues/402/">#402</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/4.0.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.9.0...v4.0.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id12">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.9.0/">3.9.0</a> - 2018-10-11<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Verification components</dt><dd><ul>
+<li><dl class="simple">
+<dt>Avalon</dt><dd><ul>
+<li><p>Add Avalon streaming packet signals <a class="reference external" href="https://github.com/VUnit/vunit/issues/383/">#383</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>AXI</dt><dd><ul>
+<li><p>Various AXI BFM improvements.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Added special JUnit XML format for Bamboo CI server. <a class="reference external" href="https://github.com/VUnit/vunit/issues/384/">#384</a></p></li>
+<li><p>Add support for requirements trace-ability via user defined test attributes.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">--json--export</span></code> flag to export list of all files and tests with associated attributes.</p></li>
+<li><dl class="simple">
+<dt>Add test case filtering for user defined attributes.</dt><dd><ul>
+<li><p>For example allows marking tests that should be run per commit or only every night.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Always use the most up to date version of modelsim.ini.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.9.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.8.0...v3.9.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id13">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.8.0/">3.8.0</a> - 2018-08-26<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Verification components</dt><dd><ul>
+<li><dl class="simple">
+<dt>Avalon</dt><dd><ul>
+<li><p>Add Avalon memory mapped slave and master. <a class="reference external" href="https://github.com/VUnit/vunit/issues/359/">#359</a></p></li>
+<li><p>Add Avalon stream source and sink. <a class="reference external" href="https://github.com/VUnit/vunit/issues/361/">#361</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>AXI</dt><dd><ul>
+<li><p>Add AXI stream monitor</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Wishbone</dt><dd><ul>
+<li><p>Strict command order in wishbone master. <a class="reference external" href="https://github.com/VUnit/vunit/issues/372/">#372</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Remove warnings when using built-in RivieraPRO libraries. <a class="reference external" href="https://github.com/VUnit/vunit/issues/374/">#374</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.8.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.7.0...v3.8.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id14">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.7.0/">3.7.0</a> - 2018-07-21<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed lint issues from new pylint version.</p></li>
+<li><p>Log output of failed vsim startup to stderr. <a class="reference external" href="https://github.com/VUnit/vunit/issues/354/">#354</a></p></li>
+<li><p>Allow case-insensitive lookup of entities. <a class="reference external" href="https://github.com/VUnit/vunit/issues/#346/">##346</a></p></li>
+<li><p>Added vhdl_standard attribute at class initialization. <a class="reference external" href="https://github.com/VUnit/vunit/issues/#350/">##350</a></p></li>
+<li><p>Adding csv mapping support for files and libraries. <a class="reference external" href="https://github.com/VUnit/vunit/issues/349/">#349</a></p></li>
+<li><p>Fix broken vivado example wrt verilog headers. <a class="reference external" href="https://github.com/VUnit/vunit/issues/344/">#344</a></p></li>
+<li><p>Allow adding duplicate libraries. <a class="reference external" href="https://github.com/VUnit/vunit/issues/341/">#341</a></p></li>
+<li><p>Make adding duplicate file INFO instead of WARNING. <a class="reference external" href="https://github.com/VUnit/vunit/issues/341/">#341</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.7.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.6.2...v3.7.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id15">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.6.2/">3.6.2</a> - 2018-06-21<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed memory leak when popping messages from queues.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.6.2/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.6.1...v3.6.2">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id16">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.6.1/">3.6.1</a> - 2018-06-20<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Increase message id on publish</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.6.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.6.0...v3.6.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id17">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.6.0/">3.6.0</a> - 2018-06-19<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Ignore files added twice with identical contents. Closes #341</p></li>
+<li><p>Made queues type safe</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.6.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.5.0...v3.6.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id18">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.5.0/">3.5.0</a> - 2018-06-04<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added the ability to specify actor for AXI stream masters and slaves</p></li>
+<li><p>Added as_sync function to bus masters and AXI stream masters</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.5.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.4.0...v3.5.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id19">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.4.0/">3.4.0</a> - 2018-05-31<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Updated context files</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.4.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.3.0...v3.4.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id20">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.3.0/">3.3.0</a> - 2018-05-24<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add SystemVerilog support for test benches without test cases. <a class="reference external" href="https://github.com/VUnit/vunit/issues/328/">#328</a></p></li>
+<li><p>Graceful recovery and error message from failed VHDL parsing.</p></li>
+<li><p>Stripping clean from re-compile command.</p></li>
+<li><p>Add <a class="reference external" href="https://github.com/Paebbels/JSON-for-VHDL">JSON-for-VHDL</a> as a submodule.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.3.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.2.0...v3.3.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id21">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.2.0/">3.2.0</a> - 2018-05-07<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">output</span></code> argument to <code class="docutils literal notranslate"><span class="pre">post_check</span></code>. <a class="reference external" href="https://github.com/VUnit/vunit/issues/332/">#332</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.2.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.1.0...v3.2.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id22">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.1.0/">3.1.0</a> - 2018-04-27<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">--fail-fast</span></code> CLI argument to stop on first test failure.</p></li>
+<li><p>Delay simulator selection until VUnit class instantiation instead of import</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">post_run</span></code> to VUnit main.</p></li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">disable_coverage</span></code> compile option.</p></li>
+<li><p>Improve AXI read/write slaves</p>
+<ul>
+<li><p>Add debug logging</p></li>
+<li><p>Add setting of stall, fifo depth and response latency</p></li>
+<li><p>Add burst length statistics</p></li>
+</ul>
+</li>
+<li><p>Improve AXI-lite master</p>
+<ul>
+<li><p>Add debug logging</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.1.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.0.3...v3.1.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id23">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.0.3/">3.0.3</a> - 2018-04-22<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">check_equal</span></code> for real with <code class="docutils literal notranslate"><span class="pre">max_diff</span></code></p></li>
+<li><p>Improve <code class="docutils literal notranslate"><span class="pre">com</span></code> library performance</p></li>
+<li><p>Added support for message forwarding</p></li>
+<li><p>Improve axi stream verification components</p></li>
+<li><p>Add wishbone verification component</p></li>
+<li><p>Protect against unexpected mutation of compile and sim options</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.0.3/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.0.2...v3.0.3">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id24">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.0.2/">3.0.2</a> - 2018-02-22<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added is_empty on queues</p></li>
+<li><p>Documented queue_t and integer_array_t</p></li>
+<li><p>Fixed memory leak</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.0.2/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.0.1...v3.0.2">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id25">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.0.1/">3.0.1</a> - 2018-02-19<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Replace deprecated aliases with constants to work around Sigasi-limitation.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.0.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v3.0.0...v3.0.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id26">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v3.0.0/">3.0.0</a> - 2018-02-12<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><em>beta</em> version of a <a class="reference internal" href="verification_components/user_guide.html#vc-library"><span class="std std-ref">verification component</span></a> library.</p>
+<ul>
+<li><p>AXI read/write slaves</p></li>
+<li><p>Memory model</p></li>
+<li><p>AXI master</p></li>
+<li><p>AXI stream</p></li>
+<li><p>UART RX/TX</p></li>
+<li><p>(B)RAM master</p></li>
+</ul>
+</li>
+<li><p>Hiearchical and color logging support.</p></li>
+<li><p>Communication library usability improvements.</p>
+<ul>
+<li><p>Push/pop message creation and debugging tools.</p></li>
+</ul>
+</li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/3.0.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.4.3...v3.0.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id27">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.4.3/">2.4.3</a> - 2018-01-24<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>SystemVerilog: Fix dependency scanning with instance directly after block label  <a class="reference external" href="https://github.com/VUnit/vunit/issues/305/">#305</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.4.3/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.4.2...v2.4.3">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id28">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.4.2/">2.4.2</a> - 2018-01-20<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>SystemVerilog: Allow MACRO argument within ({[]}). <a class="reference external" href="https://github.com/VUnit/vunit/issues/300/">#300</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.4.2/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.4.1...v2.4.2">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id29">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.4.1/">2.4.1</a> - 2018-01-16<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>SystemVerilog: Fix WATCHDOG macro with local timescale set <a class="reference external" href="https://github.com/VUnit/vunit/issues/299/">#299</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.4.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.4.0...v2.4.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id30">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.4.0/">2.4.0</a> - 2018-01-12<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Ignore test cases in SystemVerilog comments.</p></li>
+<li><p>Make integer_array_t metadata get-functions public.</p></li>
+<li><p>dictionary: add default value option to get function.</p></li>
+<li><p>Improve get_implementation_subset <a class="reference external" href="https://github.com/VUnit/vunit/issues/286/">#286</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.4.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.3.0...v2.4.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id31">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.3.0/">2.3.0</a> - 2017-12-19<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix commas in Modelsim generics <a class="reference external" href="https://github.com/VUnit/vunit/issues/284/">#284</a>.</p></li>
+<li><p>Fix problem with vsim_extra_args between entity and architecture in riviera and activehdl.</p></li>
+<li><p>Update Verilog preprocessor to read using latin-1 encoding. <a class="reference external" href="https://github.com/VUnit/vunit/issues/285/">#285</a>.</p></li>
+<li><p>Improve compile printouts <a class="reference external" href="https://github.com/VUnit/vunit/issues/283/">#283</a>.</p></li>
+<li><p>Add -q/–quiet flag. <a class="reference external" href="https://github.com/VUnit/vunit/issues/283/">#283</a>.</p></li>
+<li><p>Add printout of output file location. <a class="reference external" href="https://github.com/VUnit/vunit/issues/283/">#283</a>.</p></li>
+<li><p>Dropped support and testing of Python 3.3 (might still work anyway).</p></li>
+<li><p>Fix of Modelsim <cite>–coverage</cite> argument <a class="reference external" href="https://github.com/VUnit/vunit/issues/288/">#288</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.3.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.2.0...v2.3.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id32">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.2.0/">2.2.0</a> - 2017-09-29<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add support for tokenizing verilog multi line strings. <a class="reference external" href="https://github.com/VUnit/vunit/issues/278/">#278</a></p></li>
+<li><p>Added support for restarting window in check_stable</p></li>
+<li><p>Added support for num_cks=0 in check_next.</p></li>
+<li><p>Error on adding duplicate source files. <a class="reference external" href="https://github.com/VUnit/vunit/issues/274/">#274</a></p></li>
+<li><p>Update Vivado example.</p></li>
+<li><p>Add support for non-system-verilog verilog files. <a class="reference external" href="https://github.com/VUnit/vunit/issues/268/">#268</a></p></li>
+<li><p>Add dependency scanning of the use of an instantiated package. <a class="reference external" href="https://github.com/VUnit/vunit/issues/233/">#233</a></p></li>
+<li><p>Add human readable test output paths. <a class="reference external" href="https://github.com/VUnit/vunit/issues/211/">#211</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.2.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.1.1...v2.2.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id33">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.1.1/">2.1.1</a> - 2017-07-19<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fix <code class="docutils literal notranslate"><span class="pre">init_file(s)</span></code> broken in 2.1.0</p></li>
+<li><p>Fix test bench regex that could match *_tb*. <a class="reference external" href="https://github.com/VUnit/vunit/issues/263/">#263</a></p></li>
+<li><p>Add external library sanity check. <a class="reference external" href="https://github.com/VUnit/vunit/issues/230/">#230</a></p></li>
+<li><p>Add non-empty operation check. <a class="reference external" href="https://github.com/VUnit/vunit/issues/250/">#250</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.1.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.1.0...v2.1.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id34">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.1.0/">2.1.0</a> - 2017-07-19<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">{rivierapro,</span> <span class="pre">modelsim}_init_files.after_load</span></code>
+sim_options. They allow setting a list of DO/TCL files to be
+executed during <code class="docutils literal notranslate"><span class="pre">vunit_load</span></code> after the top level has been loaded
+using the <code class="docutils literal notranslate"><span class="pre">vsim</span></code> command.</p></li>
+<li><p>Add input validation to sim and compile options</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.1.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.0.1...v2.1.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id35">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.0.1/">2.0.1</a> - 2017-07-10<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Various small fixes</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.0.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v2.0.0...v2.0.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id36">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v2.0.0/">2.0.0</a> - 2017-02-21<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="public-interface-changes">
+<h3>Public interface changes<a class="headerlink" href="#public-interface-changes" title="Permalink to this headline">¶</a></h3>
+<p>Some <code class="docutils literal notranslate"><span class="pre">run.py</span></code> scripts can be broken by this. Both <code class="docutils literal notranslate"><span class="pre">set_generic</span></code>
+and <code class="docutils literal notranslate"><span class="pre">add_config</span></code> works differently internally.</p>
+<p><code class="docutils literal notranslate"><span class="pre">set_generic</span></code> and <code class="docutils literal notranslate"><span class="pre">set_sim_option</span></code> now only affects files added
+before the call so reordering within the <code class="docutils literal notranslate"><span class="pre">run.py</span></code> can be needed.</p>
+<p><code class="docutils literal notranslate"><span class="pre">add_config</span></code> on the test case level will no longer discard
+configurations added on the test bench level. This affects users
+mixing adding configurations on both test and test case level for the
+same test bench. Adding a configuration on the test bench level is now
+seen as a shorthand for adding the configuration to all test cases
+within the test bench. Configurations are only held at the test case
+level now. Before there could be configurations on multiple levels
+where the most specific level ignored all others. I now recommend
+writing a for loop over test_bench.get_tests() adding configurations
+to each test individually, see the updated generate_tests example.</p>
+<p>We have also forbidden to have configurations without name (“”), this
+is since the default configuration of all test cases has no name. The
+<code class="docutils literal notranslate"><span class="pre">post_check</span></code> and <code class="docutils literal notranslate"><span class="pre">pre_config</span></code> can now be set using
+<code class="docutils literal notranslate"><span class="pre">set_pre_config</span></code> also without using <code class="docutils literal notranslate"><span class="pre">add_config</span></code> removing the need
+to add a single unnamed configuration and instead setting these in the
+default configuration.</p>
+<p>This internal restructuring has been made to allow a sane data model
+of configurations where they are attached to test cases. This allows
+us to expose configurations objects on the public API in the future
+allowing users more control and visibility. The current behavior of
+configurations is also better documented than it ever was.</p>
+<p>I suggest reading the section on <a class="reference internal" href="py/ui.html#configurations"><span class="std std-ref">configurations</span></a> in the docs.</p>
+<ul class="simple">
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">disable_ieee_warnings</span></code> and <code class="docutils literal notranslate"><span class="pre">set_pli</span></code> with corresponding simulation options.</p></li>
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">--version</span></code> flag</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">--gui</span></code> flag for GHDL to open gtkwave. Also allows saving waveform without opening gui with <code class="docutils literal notranslate"><span class="pre">--gtkwave-fmt</span></code> flag.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/2.0.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.4.0...v2.0.0">Commits since previous release</a></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id37">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.4.0/">1.4.0</a> - 2017-02-05<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Removed bug when compiling Verilog with Active-HDL</p></li>
+<li><p>Updated array package</p></li>
+<li><p>Added support for simulation init script</p></li>
+<li><p>Added support for setting VHDL asserts stop level from run script</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.4.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.3.1...v1.4.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id38">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.3.1/">1.3.1</a> - 2017-01-17<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed compile errors with GHDL 0.33</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.3.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.3.0...v1.3.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id39">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.3.0/">1.3.0</a> - 2017-01-06<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added support for pass acknowledge messages for check subprograms.</p></li>
+<li><p>Made design unit duplication a warning instead of runtime error again.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.3.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.2.0...v1.3.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id40">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.2.0/">1.2.0</a> - 2016-12-19<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Updated OSVVM submodule</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.2.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.1.1...v1.2.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id41">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.1.1/">1.1.1</a> - 2016-12-08<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Adds vunit_restart and vunit_compile TCL commands for both ModelSim and RivieraPro</p></li>
+<li><p>Also support persistent simulator to save startup overhead for RivieraPro.</p></li>
+<li><p>Changes –new-vsim into -u/–unique-sim which also works for riviera</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.1.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v1.0.0...v1.1.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id42">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v1.0.0/">1.0.0</a> - 2016-11-22<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Adds ActiveHDL custom simulation flags support</p></li>
+<li><p>Made library simulator flag argument deterministic and same as the order added to VUnit</p></li>
+<li><p>Added check_equal between std_logic_vector and natural for unsigned comparison</p></li>
+<li><p>Can now set vhdl_standard on an external library</p></li>
+<li><p>Added no_parse argument to add_source_files(s) to inhibit any dependency or test scanning</p></li>
+<li><p>Renamed public method depends_on to add_dependency_on</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/1.0.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.71.0...v1.0.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id43">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.71.0/">0.71.0</a> - 2016-10-20<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Improved location preprocessing control</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.71.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.70.0...v0.71.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id44">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.70.0/">0.70.0</a> - 2016-10-13<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Hashing test output_path to protect against special characters and long paths on Windows.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">.vo</span></code> as recognized Verilog file ending.</p></li>
+<li><p>Enable setting vhdl_standard per file.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.70.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.69.0...v0.70.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id45">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.69.0/">0.69.0</a> - 2016-09-09<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
+<p>Added check_equal for strings.</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.69.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.68.1...v0.69.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id46">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.68.1/">0.68.1</a> - 2016-09-03<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h2>
+<p>New version to fix broken PyPi upload</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.68.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.68.0...v0.68.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id47">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.68.0/">0.68.0</a> - 2016-09-03<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h2>
+<p>Added check_equal for time and updated documentation.</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.68.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.67.0...v0.68.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id48">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.67.0/">0.67.0</a> - 2016-08-08<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>A number of minor enhancements and bug fixes</p></li>
+<li><p>Added vunit_restart TCL procedure to ModelSim</p></li>
+<li><p>Print out remaining number of tests when pressing ctrl-c</p></li>
+<li><p>Updated OSVVM and made it a git submodule. Run</p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git submodule update --init --recursive</span>
+</pre></div>
+</div>
+<p>after updating an existing Git repository or</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone --recursive https://github.com/VUnit/vunit.git</span>
+</pre></div>
+</div>
+<p>when creating a new clone to get the OSVVM subdirectory of VUnit populated. Doesn’t affect installations made from PyPi</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.67.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.66.0...v0.67.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id49">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.66.0/">0.66.0</a> - 2016-04-03<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Fixed <a class="reference external" href="https://github.com/VUnit/vunit/issues/109/">#109</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/141/">#141</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/153/">#153</a>, <a class="reference external" href="https://github.com/VUnit/vunit/issues/155/">#155</a>.</p></li>
+<li><p>Fixed relative path for multiple drives on windows.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.66.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.65.0...v0.66.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id50">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.65.0/">0.65.0</a> - 2016-03-13<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added sim and compile options to set rivierapro/activehdl flags. <a class="reference external" href="https://github.com/VUnit/vunit/issues/143/">#143</a>.</p></li>
+<li><p>Removed builtin <code class="docutils literal notranslate"><span class="pre">-dbg</span></code> flag to vcom for aldec tools. Use set_compile_option instead to set it yourself.</p></li>
+<li><p>Fixed a bug with custom relative output_path.</p></li>
+<li><p>Documentation fixes &amp; improvements.</p></li>
+<li><p>Update rivierapro and activehdl toolchain discovery. <a class="reference external" href="https://github.com/VUnit/vunit/issues/148/">#148</a>.</p></li>
+<li><p>Added possibility to set <code class="docutils literal notranslate"><span class="pre">VUNIT_&lt;SIMULATOR_NAME&gt;_PATH</span></code> environment
+variable to specify simulation executable path. <a class="reference external" href="https://github.com/VUnit/vunit/issues/148/">#148</a>.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">-k/--keep-compiling</span></code> flag. <a class="reference external" href="https://github.com/VUnit/vunit/issues/140/">#140</a>.</p></li>
+<li><p>Added optional <code class="docutils literal notranslate"><span class="pre">output_path</span></code> argument to <code class="docutils literal notranslate"><span class="pre">pre_config</span></code>. <a class="reference external" href="https://github.com/VUnit/vunit/issues/146/">#146</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.65.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.64.0...v0.65.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id51">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.64.0/">0.64.0</a> - 2016-03-03<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Added python version check. Closes <a class="reference external" href="https://github.com/VUnit/vunit/issues/141/">#141</a>.</p></li>
+<li><p>Not adding .all suffix when there are named configurations</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.64.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.63.0...v0.64.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id52">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.63.0/">0.63.0</a> - 2016-03-02<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Update test scanner pattern to be based on <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code>. <a class="reference external" href="https://github.com/VUnit/vunit/issues/138/">#138</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.63.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.62.1...v0.63.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id53">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.62.1/">0.62.1</a> - 2016-02-28<a class="headerlink" href="#id53" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.62.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.62.0...v0.62.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id54">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.62.0/">0.62.0</a> - 2016-02-27<a class="headerlink" href="#id54" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Early runtime error when gtkwave is missing. Closes <a class="reference external" href="https://github.com/VUnit/vunit/issues/137/">#137</a></p></li>
+<li><p>Added add_compile_option. Closes <a class="reference external" href="https://github.com/VUnit/vunit/issues/118/">#118</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.62.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.61.0...v0.62.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id55">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.61.0/">0.61.0</a> - 2016-02-23<a class="headerlink" href="#id55" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">.all</span></code> suffix to test benches with no test to better align with XUnit architecture.
+- Enables better hierarchical JUnit XML report view in Jenkins.</p></li>
+<li><p>Fixes <a class="reference external" href="https://github.com/VUnit/vunit/issues/129/">#129</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.61.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.60.1...v0.61.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id56">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.60.1/">0.60.1</a> - 2016-02-16<a class="headerlink" href="#id56" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Avoids crash with errors in Verilog defines from Python string in run.py</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.60.1/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.60.0...v0.60.1">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id57">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.60.0/">0.60.0</a> - 2016-02-15<a class="headerlink" href="#id57" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Better error messages when there are circular dependencies.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">defines</span></code> argument to add_source_file(s) <a class="reference external" href="https://github.com/VUnit/vunit/issues/126/">#126</a></p></li>
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">--files</span></code> deterministic with Python 3 <a class="reference external" href="https://github.com/VUnit/vunit/issues/116/">#116</a></p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.60.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.59.0...v0.60.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id58">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.59.0/">0.59.0</a> - 2016-02-13<a class="headerlink" href="#id58" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Covered a miss in circular dependency detection.</p></li>
+<li><p>Added detection of circular includes and macro expansions in verilog preprocessing.</p></li>
+<li><p>Added caching of verilog parse results for significant speed when running run.py more than once.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.59.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.58.0...v0.59.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id59">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.58.0/">0.58.0</a> - 2016-02-11<a class="headerlink" href="#id59" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Parsing Verilog package references. <a class="reference external" href="https://github.com/VUnit/vunit/issues/119/">#119</a></p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">scan_tests_from_file</span></code> public method. <a class="reference external" href="https://github.com/VUnit/vunit/issues/121/">#121</a>.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.58.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.57.0...v0.58.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id60">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.57.0/">0.57.0</a> - 2016-02-08<a class="headerlink" href="#id60" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Adds <code class="docutils literal notranslate"><span class="pre">include_dirs</span></code> argument also to <code class="docutils literal notranslate"><span class="pre">Library</span></code> add_source_file(s)</p></li>
+<li><p>Ignores more builtin Verilog preprocessor directives.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.57.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.56.0...v0.57.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id61">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.56.0/">0.56.0</a> - 2016-02-07<a class="headerlink" href="#id61" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Verilog preprocessing of resetall / undefineall / undef</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.56.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.54.0...v0.56.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id62">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.54.0/">0.54.0</a> - 2016-02-06<a class="headerlink" href="#id62" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Adds support for Verilog preprocessor ifdef/ifndef/elsif/else/endif</p></li>
+<li><p>Fixes regression in modelsim persistent mode. Makes many short tests faster.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.54.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.53.0...v0.54.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id63">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.53.0/">0.53.0</a> - 2016-02-06<a class="headerlink" href="#id63" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">add_source_files</span></code> accepts a list of files</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">-f/--files</span></code> command line flag to list all files in compile order</p></li>
+<li><p>Verilog parser improvements in robustness and error messages.</p></li>
+</ul>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.53.0/">Download from PyPI</a></p>
+<p><a class="reference external" href="https://github.com/VUnit/vunit/compare/v0.52.0...v0.53.0">Commits since previous release</a></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="id64">
+<h2><a class="reference external" href="https://github.com/vunit/vunit/tree/v0.52.0/">0.52.0</a> - 2016-01-29<a class="headerlink" href="#id64" title="Permalink to this headline">¶</a></h2>
+<p>Added function to get the number of messages missed by a com package actor.</p>
+<p><a class="reference external" href="https://pypi.python.org/pypi/vunit_hdl/0.52.0/">Download from PyPI</a></p>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#latest">4.2.0 - 2019-10-12 (latest)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">4.1.0 - 2019-09-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">4.0.8 - 2018-12-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">4.0.7 - 2018-11-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4.0.6 - 2018-11-15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">4.0.5 - 2018-11-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">4.0.4 - 2018-11-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">4.0.3 - 2018-11-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">4.0.2 - 2018-10-25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">4.0.1 - 2018-10-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">4.0.0 - 2018-10-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">3.9.0 - 2018-10-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">3.8.0 - 2018-08-26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">3.7.0 - 2018-07-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">3.6.2 - 2018-06-21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">3.6.1 - 2018-06-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">3.6.0 - 2018-06-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">3.5.0 - 2018-06-04</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">3.4.0 - 2018-05-31</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id20">3.3.0 - 2018-05-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id21">3.2.0 - 2018-05-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">3.1.0 - 2018-04-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id23">3.0.3 - 2018-04-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">3.0.2 - 2018-02-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">3.0.1 - 2018-02-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">3.0.0 - 2018-02-12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id27">2.4.3 - 2018-01-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id28">2.4.2 - 2018-01-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">2.4.1 - 2018-01-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id30">2.4.0 - 2018-01-12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id31">2.3.0 - 2017-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id32">2.2.0 - 2017-09-29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id33">2.1.1 - 2017-07-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id34">2.1.0 - 2017-07-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id35">2.0.1 - 2017-07-10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id36">2.0.0 - 2017-02-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#public-interface-changes">Public interface changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id37">1.4.0 - 2017-02-05</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id38">1.3.1 - 2017-01-17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id39">1.3.0 - 2017-01-06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id40">1.2.0 - 2016-12-19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id41">1.1.1 - 2016-12-08</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id42">1.0.0 - 2016-11-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id43">0.71.0 - 2016-10-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id44">0.70.0 - 2016-10-13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id45">0.69.0 - 2016-09-09</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id46">0.68.1 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id47">0.68.0 - 2016-09-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id48">0.67.0 - 2016-08-08</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id49">0.66.0 - 2016-04-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id50">0.65.0 - 2016-03-13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id51">0.64.0 - 2016-03-03</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id52">0.63.0 - 2016-03-02</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id53">0.62.1 - 2016-02-28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id54">0.62.0 - 2016-02-27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id55">0.61.0 - 2016-02-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id56">0.60.1 - 2016-02-16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id57">0.60.0 - 2016-02-15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id58">0.59.0 - 2016-02-13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id59">0.58.0 - 2016-02-11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id60">0.57.0 - 2016-02-08</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id61">0.56.0 - 2016-02-07</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id62">0.54.0 - 2016-02-06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id63">0.53.0 - 2016-02-06</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id64">0.52.0 - 2016-01-29</a></li>
+</ul>
+</li>
+</ul>
+
+
+  <h3><a href="blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/release_notes.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

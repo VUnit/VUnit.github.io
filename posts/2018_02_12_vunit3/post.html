@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>VUnit 3.0 &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="vunit-3-0">
+<h1>VUnit 3.0<a class="headerlink" href="#vunit-3-0" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center">
+<img alt="VUnit 3.0" src="../../_images/VUnit3.0.png" />
+</div>
+<p>A new year has come and it is time for a third major update of VUnit. The update contains
+a number of major enhancement briefly presented in this post.</p>
+<div class="section" id="message-passing">
+<h2>Message Passing<a class="headerlink" href="#message-passing" title="Permalink to this headline">¶</a></h2>
+<p>We have improved the ease of use of the <a class="reference internal" href="../../com/user_guide.html#com-user-guide"><span class="std std-ref">com</span></a>
+message passing library. Message creation and parsing is now very simple using
+push/pop of any standard data type together with message types.</p>
+<p>A sending process pushes data into a message and sends it to the receiver, a
+bus functional model (BFM) in this example.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">msg</span> <span class="o">:=</span> <span class="n">new_msg</span><span class="p">(</span><span class="n">write_msg</span><span class="p">);</span>
+<span class="n">push_integer</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">address</span><span class="p">);</span>
+<span class="n">push_std_ulogic_vector</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="n">send</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">bfm</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The message passing details would typically be wrapped into a procedure to provide a
+more user friendly interface for the BFM</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">write</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Message types are registered with <cite>com</cite> to get a system unique identifier.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">write_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;write&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The type makes it easy for the receiver to handle incoming messages correctly.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">receive</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">bfm</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+<span class="n">msg_type</span> <span class="o">:=</span> <span class="n">message_type</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="n">msg_type</span> <span class="o">=</span> <span class="n">write_msg</span> <span class="k">then</span>
+  <span class="n">address</span> <span class="o">:=</span> <span class="n">pop_integer</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+  <span class="n">data</span> <span class="o">:=</span> <span class="n">pop_std_ulogic_vector</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+  <span class="n">perform_pin_wiggling_on_bus_interface</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="k">elsif</span> <span class="n">msg_type</span> <span class="o">=</span> <span class="n">read_msg</span> <span class="k">then</span>
+  <span class="p">...</span>
+</pre></div>
+</div>
+<p>We have also added better debug capabilities. It’s possible to inspect the state of the
+message passing system and trace messages can be enabled to see the dynamic behavior.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">    0 ps - vunit_lib:com -   TRACE - [2:- test sequencer -&gt; memory BFM (read)] =&gt; memory BFM inbox</span>
+<span class="go">10000 ps - vunit_lib:com -   TRACE - memory BFM inbox =&gt; [2:- test sequencer -&gt; memory BFM (read)]</span>
+<span class="go">20000 ps - memory BFM    -   DEBUG - Reading x&quot;21&quot; from address x&quot;80&quot;</span>
+<span class="go">20000 ps - vunit_lib:com -   TRACE - [3:2 memory BFM -&gt; test sequencer (read reply)] =&gt; test sequencer inbox</span>
+<span class="go">30000 ps - vunit_lib:com -   TRACE - test sequencer inbox =&gt; [3:2 memory BFM -&gt; test sequencer (read reply)]</span>
+</pre></div>
+</div>
+<p>For more information see the <a class="reference internal" href="../../com/user_guide.html#com-user-guide"><span class="std std-ref">com user guide</span></a>.</p>
+</div>
+<div class="section" id="verification-components">
+<h2>Verification Components<a class="headerlink" href="#verification-components" title="Permalink to this headline">¶</a></h2>
+<p>In VUnit 3.0 we have a <em>beta</em> version of a <a class="reference internal" href="../../verification_components/user_guide.html#vc-library"><span class="std std-ref">verification
+component</span></a> library. Using the improved <code class="docutils literal notranslate"><span class="pre">com</span></code> message
+passing it is very easy to create advanced verification components and
+we hope to get many pull requests from users for other bus types in
+the future. We’ve already seen some initiatives from the VUnit community
+based on the release candidates for VUnit 3.0.</p>
+<p>We say it is <em>beta</em> since we want to keep the door open to make
+breaking changes as we learn more together with our users. The AXI
+models are however already used in production environments.</p>
+<dl class="simple">
+<dt>Out of the box we provide the following verification components:</dt><dd><ul class="simple">
+<li><p>AXI read/write slaves</p></li>
+<li><p>Memory model</p></li>
+<li><p>AXI master</p></li>
+<li><p>AXI stream</p></li>
+<li><p>UART RX/TX</p></li>
+<li><p>(B)RAM master</p></li>
+</ul>
+</dd>
+</dl>
+<p>For more information see the <a class="reference internal" href="../../verification_components/user_guide.html#vc-library"><span class="std std-ref">verification component library user guide</span></a>.</p>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>VUnit 3.0 contains a number of logging framework enhancements that goes
+hand in hand with the verification components. We have improved the
+log source hierarchy support which allows loggers to be arranged in a tree structure.</p>
+<div class="figure align-center">
+<img alt="logging hierarchy" src="../../_images/logging_hierarchy.png" />
+</div>
+<p>The position in the hierarchy is based on the logger path or instance name or by explicitly describing parent/child
+relationships between loggers. Once you have a hierarchy in place you can apply configuration settings
+and read status for the full tree, a subtree or an individual logger. The example below has the logger
+tree depicted above and changes the visibilty for debug messages in the vc logger subtree.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span> <span class="nc">a</span> <span class="k">of</span> <span class="nc">tb</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="n">main</span> <span class="o">:</span> <span class="k">process</span>
+    <span class="k">constant</span> <span class="n">main_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">main</span><span class="na">&#39;path_name</span><span class="p">);</span> <span class="c1">-- Hierarchy position based on path name</span>
+  <span class="k">begin</span>
+    <span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">runner_cfg</span><span class="p">);</span>
+
+    <span class="n">warning</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;A warning message&quot;</span><span class="p">);</span>
+    <span class="n">info</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;An information message&quot;</span><span class="p">);</span>
+    <span class="n">debug</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;A debug message&quot;</span><span class="p">);</span> <span class="c1">-- By default debug messages are not visible on the display</span>
+
+    <span class="n">show</span><span class="p">(</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;tb:vc&quot;</span><span class="p">),</span> <span class="n">display_handler</span><span class="p">,</span> <span class="n">debug</span><span class="p">);</span>  <span class="c1">-- Show debug messages in vc_logger subtree (defined below)</span>
+
+    <span class="k">wait</span> <span class="k">for</span> <span class="mi">15</span> <span class="n">ns</span><span class="p">;</span>
+    <span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+
+  <span class="n">vc</span> <span class="o">:</span> <span class="k">block</span> <span class="k">is</span>
+    <span class="k">constant</span> <span class="n">vc_logger</span>    <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">vc</span><span class="na">&#39;path_name</span><span class="p">);</span>
+    <span class="k">constant</span> <span class="n">alpha_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span> <span class="c1">-- Hierarchy position set as a child to vc_logger</span>
+    <span class="k">constant</span> <span class="n">beta_logger</span>  <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;beta&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span>
+  <span class="k">begin</span>
+    <span class="n">alpha</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">alpha_component</span> <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">alpha_logger</span><span class="p">);</span>
+    <span class="n">beta</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">beta_component</span> <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">beta_logger</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">block</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The result is that debug messages from the <cite>main_logger</cite> is hidden while debug messages from the
+alpha and beta components are visible.</p>
+<div class="figure align-center">
+<img alt="log output" src="../../_images/log_output.png" />
+</div>
+<p>Note that VUnit 3.0 introduces color logging for better identification of the more important log entries.</p>
+<p>VUnit 3.0 also introduces mocking that allows you to verify how a component interacts with the logging
+framework. Below is a test case that creates an error scenario that verification component alpha is
+expected to find and report.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that error x is triggered in scenario y&quot;</span><span class="p">)</span> <span class="k">then</span>
+  <span class="n">mock</span><span class="p">(</span><span class="n">alpha_logger</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+
+  <span class="o">&lt;</span><span class="n">Code</span> <span class="n">creating</span> <span class="n">scenario</span> <span class="n">y</span> <span class="n">which</span> <span class="k">is</span> <span class="n">expected</span> <span class="k">to</span> <span class="n">trigger</span> <span class="n">error</span> <span class="n">x</span><span class="o">&gt;</span>
+
+  <span class="n">check_log</span><span class="p">(</span><span class="n">alpha_logger</span><span class="p">,</span> <span class="s">&quot;An error message&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+
+  <span class="n">unmock</span><span class="p">(</span><span class="n">alpha_logger</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><cite>check_log</cite> checks the oldest log call to <cite>alpha_logger</cite>. The log call must be an error log
+with the given message string or the test case will fail. If there are remaining logs which
+haven’t been checked when calling <cite>unmock</cite> the test case will also fail.</p>
+<p>It’s possible to call <cite>mock</cite> without the second parameter but that would force us to also check the
+debug messages and that’s typically not needed. <cite>check_log</cite> also has a number of other parameters to
+verify other attributes of a log call, time for example. However, in many cases we don’t care about the
+exact time of the log so that parameter is optional.</p>
+<p>For more information see the <a class="reference internal" href="../../logging/user_guide.html#logging-library"><span class="std std-ref">logging user guide</span></a>.</p>
+<p>As always, comments and feedback are welcome.</p>
+<p>– The VUnit development team</p>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  
+  <a href="../2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">
+    <i class="fa fa-arrow-circle-left"></i>
+    VUnit BFMs - as Simple as Emailing
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  
+  <a href="../2018_03_22_vunit_community_developed_bfms/post.html">
+    VUnit Community Developed BFMs
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'vunitframework';
+        var disqus_identifier = '/posts/2018_02_12_vunit3/post/';
+        var disqus_title = 'VUnit 3.0';
+        var disqus_url = 'http://vunit.github.io/posts/2018_02_12_vunit3/post';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    12 February 2018
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span><i class="fa-fw fa fa-user"></i></span>
+    
+      
+      <a href="../../blog/author/kraigher.html">kraigher</a>,
+      
+    
+      
+      <a href="../../blog/author/lasplund.html">lasplund</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li id="tags"><span><i class="fa-fw fa fa-tag"></i></span>
+    
+      
+      <a href="../../blog/tag/vunit.html">VUnit</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'vunitframework'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2018_02_12_vunit3/post/"> </a>
+  </li>
+  
+  </ul>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+      <li><a href="../2017_11_23_vunit_matlab_integration/post.html">23 November - VUnit Matlab Integration</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/posts/2018_02_12_vunit3/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

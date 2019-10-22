@@ -1,0 +1,441 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bus Master VCI &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Stream Master VCI" href="stream.html" />
+    <link rel="prev" title="Memory Model" href="../memory_model.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bus-master-vci">
+<span id="id1"></span><h1>Bus Master VCI<a class="headerlink" href="#bus-master-vci" title="Permalink to this headline">¶</a></h1>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Bus master verification component interface</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Defines bus master verification component interface</span>
+
+<span class="k">library</span> <span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nn">work.logger_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="n">context</span> <span class="nn">work</span><span class="p">.</span><span class="n">com_context</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.sync_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.queue_pkg.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">package</span> <span class="n">bus_master_pkg</span> <span class="k">is</span>
+
+  <span class="c1">-- Handle to VC instance with bus master VCI</span>
+  <span class="k">type</span> <span class="n">bus_master_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="c1">-- These fields are private, do not use directly</span>
+    <span class="n">p_actor</span> <span class="o">:</span> <span class="n">actor_t</span><span class="p">;</span>
+    <span class="n">p_data_length</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+    <span class="n">p_address_length</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+    <span class="n">p_byte_length</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+    <span class="n">p_logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+
+  <span class="c1">-- Reference to non-blocking bus command</span>
+  <span class="k">alias</span> <span class="n">bus_reference_t</span> <span class="k">is</span> <span class="n">msg_t</span><span class="p">;</span>
+
+  <span class="c1">-- Default logger object for bus master instances</span>
+  <span class="k">constant</span> <span class="n">bus_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;vunit_lib:bus_master_pkg&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Create new handle for bus master VC</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">new_bus</span><span class="p">(</span><span class="n">data_length</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                          <span class="n">address_length</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                          <span class="n">byte_length</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">8</span><span class="p">;</span>
+                          <span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">bus_logger</span><span class="p">;</span>
+                          <span class="n">actor</span> <span class="o">:</span> <span class="n">actor_t</span> <span class="o">:=</span> <span class="n">null_actor</span><span class="p">)</span> <span class="k">return</span> <span class="n">bus_master_t</span><span class="p">;</span>
+
+  <span class="c1">-- Return the logger used by the bus master</span>
+  <span class="k">function</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="c1">-- Return the length of the data on this bus</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">data_length</span><span class="p">(</span><span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Return the length of the address on this bus</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">address_length</span><span class="p">(</span><span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Return the length of a byte on this bus</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">byte_length</span><span class="p">(</span><span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Return the length of the byte enable signal on this bus</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">byte_enable_length</span><span class="p">(</span><span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Convert natural address to std_logic_vector using the correct number of bits</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">to_address</span><span class="p">(</span><span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span>
+                             <span class="n">bus_master_t</span><span class="p">;</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+
+  <span class="c1">-- Blocking: Write the bus</span>
+  <span class="k">procedure</span> <span class="n">write_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="c1">-- default byte enable is all bytes</span>
+                      <span class="k">constant</span> <span class="n">byte_enable</span> <span class="o">:</span> <span class="kt">std_logic_vector</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">write_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="c1">-- default byte enable is all bytes</span>
+                      <span class="k">constant</span> <span class="n">byte_enable</span> <span class="o">:</span> <span class="kt">std_logic_vector</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+  <span class="c1">-- Procedures for burst bus write: Caller is responsible for allocation and</span>
+  <span class="c1">-- deallocation of data queue. Procedure cunsumes burst_length data words</span>
+  <span class="c1">-- from data queue. If data queue has less data words, all data</span>
+  <span class="c1">-- words are consumed and pop from empty queue error is raised.</span>
+  <span class="k">procedure</span> <span class="n">burst_write_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">burst_write_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">);</span>
+
+  <span class="c1">-- Non blocking: Read the bus returning a reference to the future reply</span>
+  <span class="k">procedure</span> <span class="n">read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                     <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                     <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">burst_read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">burst_read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">);</span>
+
+  <span class="c1">-- Blocking: Await read bus reply data</span>
+  <span class="k">procedure</span> <span class="n">await_read_bus_reply</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                                 <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">;</span>
+                                 <span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="k">inout</span> <span class="kt">std_logic_vector</span><span class="p">);</span>
+  <span class="c1">-- Procedure for burst read reply: Caller is responsible for allocation and</span>
+  <span class="c1">-- deallocation of data queue. Procedure pushes burst_length data words</span>
+  <span class="c1">-- into data queue.</span>
+  <span class="k">procedure</span> <span class="n">await_burst_read_bus_reply</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                                 <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                                 <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+                                 <span class="k">variable</span> <span class="n">reference</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">bus_reference_t</span><span class="p">);</span>
+
+  <span class="c1">-- Blocking: Read bus and check result against expected data</span>
+  <span class="k">procedure</span> <span class="n">check_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">expected</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">check_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">expected</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Blocking: read bus with immediate reply</span>
+  <span class="k">procedure</span> <span class="n">read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                     <span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="k">inout</span> <span class="kt">std_logic_vector</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                     <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                     <span class="k">variable</span> <span class="n">data</span> <span class="o">:</span> <span class="k">inout</span> <span class="kt">std_logic_vector</span><span class="p">);</span>
+  <span class="c1">-- Procedure for burst bus read: Caller is responsible for allocation and</span>
+  <span class="c1">-- deallocation of data queue. Procedure pushes burst_length data words</span>
+  <span class="c1">-- into data queue.</span>
+  <span class="k">procedure</span> <span class="n">burst_read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">burst_read_bus</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">burst_length</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                      <span class="k">constant</span> <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">);</span>
+
+  <span class="c1">-- Blocking: Wait until a read from address equals the value using</span>
+  <span class="c1">-- std_match If timeout is reached error with msg</span>
+  <span class="k">procedure</span> <span class="n">wait_until_read_equals</span><span class="p">(</span>
+    <span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+    <span class="n">bus_handle</span>   <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+    <span class="n">addr</span>         <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+    <span class="n">value</span>        <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+    <span class="n">timeout</span>      <span class="o">:</span> <span class="kt">delay_length</span> <span class="o">:=</span> <span class="kt">delay_length</span><span class="na">&#39;high</span><span class="p">;</span>
+    <span class="n">msg</span>    <span class="o">:</span> <span class="kt">string</span>       <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Blocking: Wait until a read from address has the bit with this</span>
+  <span class="c1">-- index set to value If timeout is reached error with msg</span>
+  <span class="k">procedure</span> <span class="n">wait_until_read_bit_equals</span><span class="p">(</span>
+    <span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+    <span class="n">bus_handle</span>   <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">;</span>
+    <span class="n">addr</span>         <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+    <span class="n">idx</span>          <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+    <span class="n">value</span>        <span class="o">:</span> <span class="kt">std_logic</span><span class="p">;</span>
+    <span class="n">timeout</span>      <span class="o">:</span> <span class="kt">delay_length</span> <span class="o">:=</span> <span class="kt">delay_length</span><span class="na">&#39;high</span><span class="p">;</span>
+    <span class="n">msg</span>    <span class="o">:</span> <span class="kt">string</span>       <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Convert a bus master to a sync handle</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">as_sync</span><span class="p">(</span><span class="n">bus_master</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">sync_handle_t</span><span class="p">;</span>
+
+  <span class="c1">-- Wait until all operations scheduled before this command has finished</span>
+  <span class="k">procedure</span> <span class="n">wait_until_idle</span><span class="p">(</span><span class="k">signal</span> <span class="n">net</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">network_t</span><span class="p">;</span>
+                            <span class="n">bus_handle</span> <span class="o">:</span> <span class="n">bus_master_t</span><span class="p">);</span>
+
+  <span class="c1">-- Message type definitions, used by VC-instances</span>
+  <span class="k">constant</span> <span class="n">bus_write_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;write bus&quot;</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">bus_read_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;read bus&quot;</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">bus_burst_write_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;burst write bus&quot;</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">bus_burst_read_msg</span> <span class="o">:</span> <span class="n">msg_type_t</span> <span class="o">:=</span> <span class="n">new_msg_type</span><span class="p">(</span><span class="s">&quot;burst read bus&quot;</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">package</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../user_guide.html">User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli.html">Command Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py/ui.html">Python Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../data_types/user_guide.html">Data Types</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../user_guide.html">Verification Component Library</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../memory_model.html">Memory Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user_guide.html#verification-components">Verification Components</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../user_guide.html#verification-component-interfaces">Verification Component Interfaces</a><ul class="current">
+<li class="toctree-l5 current"><a class="current reference internal" href="#">Bus Master VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="stream.html">Stream Master VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="stream.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sync.html">Synchronization VCI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../../posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../../posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../../posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../../posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../../posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/verification_components/vci/bus_master.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

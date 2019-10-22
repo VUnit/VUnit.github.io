@@ -1,0 +1,1029 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Logging Library &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Check Library" href="../check/user_guide.html" />
+    <link rel="prev" title="VHDL Libraries" href="../vhdl_libraries.html" />
+  
+
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="logging-library">
+<span id="id1"></span><h1>Logging Library<a class="headerlink" href="#logging-library" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The VUnit logging library is used internally by VUnit for various
+logging purposes but it can also be used standalone for general purpose
+logging. It provides many of the features that you find in SW logging
+frameworks. For example</p>
+<ul class="simple">
+<li><p>Logging of simple text messages with different pre-defined log levels</p></li>
+<li><p>Can create hierarchical loggers which can be individually configured</p></li>
+<li><p>Can be mocked to be able to unit-test failures from verification libraries</p></li>
+<li><p>Configurable formatting of message output</p></li>
+<li><p>Automatic file and line number tagging of output messages</p></li>
+<li><p>File and stdout output channels with independent formatting and
+visibility settings</p></li>
+</ul>
+</div>
+<div class="section" id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
+<p>A log entry is made to a logger. You can think of a logger as a named
+channel. There is a default logger that is used when none is specified
+but you can also create multiple custom loggers. For example</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>will use the default logger while</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="s">&quot;Hello world&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>will use the custom <code class="docutils literal notranslate"><span class="pre">my_logger</span></code>.</p>
+<p>Log messages are then handled by a log handler. By default there are
+two output handlers, one for handling display (stdout) output and one
+for handling output to a file. Every log entry you do is passed to
+both these handlers. Each handler may have a different output format
+and log level setting. The format is used to control the layout and
+amount of information being displayed.</p>
+</div>
+<div class="section" id="log-levels">
+<h2>Log Levels<a class="headerlink" href="#log-levels" title="Permalink to this headline">¶</a></h2>
+<p>Every log entry you make has a log level which is defined by dedicated
+procedure calls for each log level. The standard log levels and their
+associated procedure calls are:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Visible to display by default</span>
+<span class="n">failure</span><span class="p">(</span><span class="s">&quot;Fatal error, there is most likely no point in going further&quot;</span><span class="p">);</span>
+<span class="n">error</span><span class="p">(</span><span class="s">&quot;An error but we could still keep running for a while&quot;</span><span class="p">);</span>
+<span class="n">warning</span><span class="p">(</span><span class="s">&quot;A warning&quot;</span><span class="p">);</span>
+<span class="n">info</span><span class="p">(</span><span class="s">&quot;Informative message for very useful public information&quot;</span><span class="p">);</span>
+
+<span class="c1">-- Not visible by default</span>
+<span class="n">pass</span><span class="p">(</span><span class="s">&quot;Message from a passing check&quot;</span><span class="p">);</span>
+<span class="n">debug</span><span class="p">(</span><span class="s">&quot;Debug message for seldom useful or internal information&quot;</span><span class="p">);</span>
+<span class="n">trace</span><span class="p">(</span><span class="s">&quot;Trace messages only used for tracing program flow&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>There are also conditional log procedures for warning, error and failure:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">warning_if</span><span class="p">(</span><span class="n">True</span><span class="p">,</span> <span class="s">&quot;A warning happened&quot;</span><span class="p">);</span>
+<span class="n">warning_if</span><span class="p">(</span><span class="n">False</span><span class="p">,</span> <span class="s">&quot;A warning did not happen&quot;</span><span class="p">);</span>
+
+<span class="c1">-- There are also variants for error and failure as well as with</span>
+<span class="c1">-- non-default logger argument.</span>
+</pre></div>
+</div>
+<p>It’s also possible to create custom log levels. For example</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">license_info</span> <span class="o">:=</span> <span class="n">new_log_level</span><span class="p">(</span><span class="s">&quot;license&quot;</span><span class="p">,</span> <span class="n">fg</span> <span class="o">=&gt;</span> <span class="n">red</span><span class="p">,</span> <span class="n">bg</span> <span class="o">=&gt;</span> <span class="n">yellow</span><span class="p">,</span> <span class="n">style</span> <span class="o">=&gt;</span> <span class="n">bright</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The last optional parameters define the foreground, background and style of the output color.
+Valid values are defined in ansi_pkg.</p>
+<p>To make a log entry with the custom level use any of the <cite>log</cite> procedures:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Mozilla Public License, v. 2.0.&quot;</span><span class="p">,</span> <span class="n">license_info</span><span class="p">);</span>
+<span class="n">log</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="s">&quot;Mozilla Public License, v. 2.0.&quot;</span><span class="p">,</span> <span class="n">license_info</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stopping-simulation">
+<h2>Stopping simulation<a class="headerlink" href="#stopping-simulation" title="Permalink to this headline">¶</a></h2>
+<p>By default the simulation will come to a stop if a single log with
+level <code class="docutils literal notranslate"><span class="pre">error</span></code> or <code class="docutils literal notranslate"><span class="pre">failure</span></code> is made. In VUnit a simulation stop
+before <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> is considered a failure.</p>
+<p>Simulation stop is controlled via a stop count mechanism. The stop count mechanism works in the following way:</p>
+<ul class="simple">
+<li><p>Stop count may be ether set or not set for a specific logger and log level.</p></li>
+<li><p>When a log is made to a logger it is checked if there is a stop count set.</p>
+<ul>
+<li><p>If set it is decremented and reaching zero means simulation stops.</p></li>
+<li><p>If not set the decrementation is recursively propagated to the parent logger.</p></li>
+</ul>
+</li>
+<li><p>It is possible to disable stopping simulation by setting an infinite stop count.</p></li>
+<li><p>By default only the root logger has a stop count set.</p>
+<ul>
+<li><p>Root logger has stop count set to 1 for <code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">failure</span></code>.</p></li>
+<li><p>Root logger has stop disabled for all other log levels.</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="example">
+<h3>Example:<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Allow 10 errors from my_logger and its children</span>
+<span class="n">set_stop_count</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+
+<span class="c1">-- Disable stop on errors from my_logger and its children</span>
+<span class="n">disable_stop</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span>
+
+<span class="c1">-- Short hand for stopping on error and failure but not warning globally</span>
+<span class="n">set_stop_level</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+
+<span class="c1">-- Short hand for stopping on warning, error and failure for specific logger</span>
+<span class="n">set_stop_level</span><span class="p">(</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;my_library:my_component&quot;</span><span class="p">),</span> <span class="n">warning</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="formatting">
+<h2>Formatting<a class="headerlink" href="#formatting" title="Permalink to this headline">¶</a></h2>
+<p>The default display format is <code class="docutils literal notranslate"><span class="pre">verbose</span></code> and the default file format
+is <code class="docutils literal notranslate"><span class="pre">csv</span></code> to enable simple log file parsing. The format can be
+changed to any of <code class="docutils literal notranslate"><span class="pre">raw</span></code>, <code class="docutils literal notranslate"><span class="pre">level</span></code>, <code class="docutils literal notranslate"><span class="pre">verbose</span></code> and <code class="docutils literal notranslate"><span class="pre">csv</span></code>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">set_format</span><span class="p">(</span><span class="n">display_handler</span><span class="p">,</span> <span class="n">level</span><span class="p">);</span>
+<span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>which will result in the following output.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO: Hello world</span>
+</pre></div>
+</div>
+<p>There default <code class="docutils literal notranslate"><span class="pre">verbose</span></code> format which adds more details to the
+output looks like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">1000 ps - default -    INFO - Hello world</span>
+</pre></div>
+</div>
+<p>The verbose output will always contain the simulator time, the log
+level, the logger, and the message.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">raw</span></code> formatter just emits the log message and nothing else. The
+<code class="docutils literal notranslate"><span class="pre">csv</span></code> formatter emits all information in the log entry as a comma
+separated list for convenient parsing.</p>
+</div>
+<div class="section" id="print-procedure">
+<h2>Print Procedure<a class="headerlink" href="#print-procedure" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">print</span></code> is a procedure that unconditionally outputs its message to stdout or file without any formatting.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Message to stdout&quot;</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;Append this message to an existing file or create a new file if it doesn&#39;t exist&quot;</span><span class="p">,</span> <span class="s">&quot;path/to/file&quot;</span><span class="p">);</span>
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;Create new file with this message&quot;</span><span class="p">,</span> <span class="s">&quot;path/to/file&quot;</span><span class="p">,</span> <span class="n">write_mode</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>It’s also possible to print to an open file object.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Message to file object&quot;</span><span class="p">,</span> <span class="n">my_file_object</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This procedure can be used to optimize performance by printing many messages before flushing or closing the file.</p>
+</div>
+<div class="section" id="logging-hierarchy">
+<h2>Logging hierarchy<a class="headerlink" href="#logging-hierarchy" title="Permalink to this headline">¶</a></h2>
+<p>Custom hierarchical loggers can be created to provide more information and control of what is being logged.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">temp_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;temperature_sensor&quot;</span><span class="p">);</span>
+<span class="n">warning</span><span class="p">(</span><span class="n">temp_logger</span><span class="p">,</span> <span class="s">&quot;Over-temperature (73 degrees C)!&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>results in something like this with the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> formatter.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">1000 ps - temperature_sensor -    INFO - Over-temperature (73 degrees C)!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-visibility">
+<h2>Log visibility<a class="headerlink" href="#log-visibility" title="Permalink to this headline">¶</a></h2>
+<p>Log visibility to a log handler can be configured for specific log levels of a logger.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Disable all logging to the display.</span>
+<span class="n">hide_all</span><span class="p">(</span><span class="n">display_handler</span><span class="p">);</span>
+
+<span class="c1">-- Show debug log level of system0 logger to the display</span>
+<span class="n">show</span><span class="p">(</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;system0&quot;</span><span class="p">),</span> <span class="n">display_handler</span><span class="p">,</span> <span class="n">debug</span><span class="p">);</span>
+
+<span class="c1">-- Show all logging from the uart module in system0 to the display</span>
+<span class="n">show_all</span><span class="p">(</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;system0:uart&quot;</span><span class="p">),</span> <span class="n">display_handler</span><span class="p">);</span>
+
+<span class="c1">-- Hide all debug output to display handler</span>
+<span class="n">hide</span><span class="p">(</span><span class="n">display_handler</span><span class="p">,</span> <span class="n">debug</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-loggers">
+<h2>Custom Loggers<a class="headerlink" href="#custom-loggers" title="Permalink to this headline">¶</a></h2>
+<p>Previous chapters have used the built-in default logger for the
+examples but you can also create your own loggers. You do that by
+declaring a constant of type <code class="docutils literal notranslate"><span class="pre">logger_t</span></code>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span> <span class="n">my_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;system0:uart0&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>and then you use that variable as the first parameter in the procedure
+calls presented in the previous chapters, for example.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="p">(</span><span class="n">my_logger</span><span class="p">,</span> <span class="s">&quot;Hello world&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Logger names are hierarchical which means setting the log level of
+<code class="docutils literal notranslate"><span class="pre">system0</span></code> will also set it for <code class="docutils literal notranslate"><span class="pre">uart0</span></code>.</p>
+</div>
+<div class="section" id="mocking">
+<h2>Mocking<a class="headerlink" href="#mocking" title="Permalink to this headline">¶</a></h2>
+<p>When writing libraries and verification components it is very
+important to verify that they produce failures as intended. Using the
+VUnit logging system it is very easy to test that the expected
+failures are produced by mocking a logger object and checking the
+expected calls to it.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;my_library&quot;</span><span class="p">);</span>
+<span class="n">mock</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">failure</span><span class="p">);</span>
+<span class="n">my_library</span><span class="p">.</span><span class="n">verify_something</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+<span class="n">check_only_log</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&quot;Failed to verify something&quot;</span><span class="p">,</span> <span class="n">failure</span><span class="p">);</span>
+<span class="n">unmock</span><span class="p">(</span><span class="n">logger</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">check_only_log</span></code> procedure checks that one and only one log
+message was produced.  There is also the <code class="docutils literal notranslate"><span class="pre">check_log</span></code> procedure which
+checks and consumes one log message from the list of recorded log calls to
+check a sequence of log messages.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">mock</span></code> procedures ensures that all future calls to the logger
+are recorded and not sent to a any log handler or cause simulation
+abort. The <code class="docutils literal notranslate"><span class="pre">unmock</span></code> procedure restores the logger to its normal
+state.  The <code class="docutils literal notranslate"><span class="pre">unmock</span></code> call also checks that all recorded log messages
+have been checked by a corresponding <code class="docutils literal notranslate"><span class="pre">check_log</span></code> or
+<code class="docutils literal notranslate"><span class="pre">check_only_log</span></code> procedure.</p>
+<p>It is possible to mock several logger or log levels simultaneously.
+All mocked log messages are written to the same global mock queue.
+The number of log messages in this queue is returned by the
+<code class="docutils literal notranslate"><span class="pre">mock_queue_length</span></code> function.</p>
+<p>The mock queue length can be used in a test bench to wait for a log to
+occur before issuing the <code class="docutils literal notranslate"><span class="pre">check_log</span></code> procedure.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">mock</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="n">failure</span><span class="p">);</span>
+<span class="n">trigger_error</span><span class="p">(</span><span class="n">clk</span><span class="p">);</span>
+<span class="k">wait</span> <span class="k">until</span> <span class="n">mock_queue_length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">and</span> <span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">);</span>
+<span class="n">check_only_log</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&quot;Error was triggered&quot;</span><span class="p">,</span> <span class="n">failure</span><span class="p">);</span>
+<span class="n">unmock</span><span class="p">(</span><span class="n">logger</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disabled-logs">
+<h2>Disabled logs<a class="headerlink" href="#disabled-logs" title="Permalink to this headline">¶</a></h2>
+<p>In addition to visibility settings a log level from a specific logger
+can be disabled. The use case for disabling a log is to ignore an
+irrelevant or unwanted log message. Disabling prevents simulation
+stop and all visibility to log handlers. A disabled log is still
+counted to get statistics on disabled log messages.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Irrelevant warning</span>
+<span class="n">disable</span><span class="p">(</span><span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;memory_ip:timing_check&quot;</span><span class="p">),</span> <span class="n">warning</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-location-preprocessing">
+<h2>Log Location Preprocessing<a class="headerlink" href="#log-location-preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>The optional VUnit location preprocessor can be used to add file name
+and line number location information to all log calls. This
+functionality is enabled from the <code class="docutils literal notranslate"><span class="pre">run.py</span></code> file like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ui</span> <span class="o">=</span> <span class="n">VUnit</span><span class="o">.</span><span class="n">from_argv</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">enable_location_preprocessing</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and will change the output to something like this.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">1000 ps - temperature_sensor -    INFO - Over-temperature (73 degrees C)! (logging_example.vhd:79)</span>
+</pre></div>
+</div>
+<p>If you’ve placed your log call(s) in a convenience procedure you most
+likely want the location of the calls to that procedure to be in the
+output and not the location of the log call in the definition of the
+convenience procedure. You can do that by adding the <code class="docutils literal notranslate"><span class="pre">line_num</span></code> and
+<code class="docutils literal notranslate"><span class="pre">file_name</span></code> parameters to the <strong>end</strong> of the parameter list for that
+convenience procedure</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">procedure</span> <span class="n">my_convenience_procedure</span><span class="p">(</span>
+  <span class="o">&lt;</span><span class="n">my</span> <span class="n">parameters</span><span class="o">&gt;</span>
+  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="o">&lt;</span><span class="n">some</span> <span class="n">code</span><span class="o">&gt;</span>
+  <span class="n">info</span><span class="p">(</span><span class="s">&quot;Some message&quot;</span><span class="p">,</span> <span class="n">line_num</span> <span class="o">=&gt;</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=&gt;</span> <span class="n">file_name</span><span class="p">);</span>
+  <span class="o">&lt;</span><span class="n">some</span> <span class="n">code</span><span class="o">&gt;</span>
+<span class="k">end</span> <span class="k">procedure</span> <span class="nc">my_convenience_procedure</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>and then let the location preprocessor know about the added procedure</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ui</span> <span class="o">=</span> <span class="n">VUnit</span><span class="o">.</span><span class="n">from_argv</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">enable_location_preprocessing</span><span class="p">(</span><span class="n">additional_subprograms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;my_convenience_procedure&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deprecated-interfaces">
+<h2>Deprecated Interfaces<a class="headerlink" href="#deprecated-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>To better support testbenches developed before VUnit 3.0 it’s still possible to configure a logger using the
+<code class="docutils literal notranslate"><span class="pre">logger_init</span></code> procedure. The procedure uses best effort to map old behavior to contemporary functionality.</p>
+</div>
+<div class="section" id="public-api">
+<h2>Public API<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logger-pkg">
+<h3>logger_pkg<a class="headerlink" href="#logger-pkg" title="Permalink to this headline">¶</a></h3>
+<p>Contains <code class="docutils literal notranslate"><span class="pre">logger_t</span></code> datatype and logger local procedures.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nn">work.log_levels_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.log_handler_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.integer_vector_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">package</span> <span class="n">logger_pkg</span> <span class="k">is</span>
+
+  <span class="c1">-- Logger record, all fields are private</span>
+  <span class="k">type</span> <span class="n">logger_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="n">p_data</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">null_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="p">(</span><span class="n">p_data</span> <span class="o">=&gt;</span> <span class="n">null_ptr</span><span class="p">);</span>
+  <span class="k">type</span> <span class="n">logger_vec_t</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="n">logger_t</span><span class="p">;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">root_logger</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get a logger with name.</span>
+  <span class="c1">-- Can also optionally be relative to a parent logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">name</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                             <span class="n">parent</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">null_logger</span><span class="p">)</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="c1">-------------------------------------</span>
+  <span class="c1">-- Log procedures for each log level</span>
+  <span class="c1">-------------------------------------</span>
+  <span class="k">procedure</span> <span class="n">trace</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                  <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">debug</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                  <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">pass</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                 <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                 <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">info</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                 <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                 <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">warning</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                    <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                    <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">error</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                  <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">failure</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                    <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                    <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">warning_if</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                       <span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                       <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                       <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                       <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">error_if</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                     <span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                     <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                     <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                     <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">failure_if</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                       <span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                       <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                       <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                       <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">------------------------------------------------</span>
+  <span class="c1">-- Log procedure short hands for default logger</span>
+  <span class="c1">------------------------------------------------</span>
+
+  <span class="c1">-- The default logger, all log calls without logger argument go to this logger.</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">default_logger</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">trace</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">debug</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">pass</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                 <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                 <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">info</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                 <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                 <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">warning</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                    <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">error</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                  <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                  <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">failure</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                    <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">warning_if</span><span class="p">(</span><span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                       <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                       <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                       <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">error_if</span><span class="p">(</span><span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                     <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                     <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                     <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">failure_if</span><span class="p">(</span><span class="n">condition</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                       <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                       <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                       <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Log procedure with level as argument</span>
+  <span class="k">procedure</span> <span class="n">log</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span> <span class="o">:=</span> <span class="n">info</span><span class="p">;</span>
+                <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">log</span><span class="p">(</span><span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span> <span class="o">:=</span> <span class="n">info</span><span class="p">;</span>
+                <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Get the name of this logger get_name(get_logger(&quot;parent:child&quot;)) = &quot;child&quot;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_name</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="c1">-- Get the full name of this logger get_name(get_logger(&quot;parent:child&quot;)) = &quot;parent:child&quot;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_full_name</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="c1">-- Get the parent of this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_parent</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get the number of children of this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">num_children</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Get the idx&#39;th child of this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_child</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span> <span class="n">idx</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="n">logger_t</span><span class="p">;</span>
+
+  <span class="c1">-- Set the threshold for stopping simulation for a specific log level and</span>
+  <span class="c1">-- logger tree</span>
+  <span class="k">procedure</span> <span class="n">set_stop_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                           <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                           <span class="n">value</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                           <span class="n">unset_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+
+  <span class="c1">-- Disable stopping simulation for a specific log level and</span>
+  <span class="c1">-- logger tree</span>
+  <span class="k">procedure</span> <span class="n">disable_stop</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                         <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                         <span class="n">unset_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+
+  <span class="c1">-- Set the threshold for stopping simulation for a specific log level in</span>
+  <span class="c1">-- the entire logging tree.</span>
+
+  <span class="c1">-- NOTE: Removes all other stop count settings for log_level in entire tree.</span>
+  <span class="k">procedure</span> <span class="n">set_stop_count</span><span class="p">(</span><span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                           <span class="n">value</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">);</span>
+
+  <span class="c1">-- Disable stopping simulation for a specific log level in</span>
+  <span class="c1">-- the entire logging tree.</span>
+
+  <span class="c1">-- NOTE: Removes all other stop count settings for log_level in entire tree.</span>
+  <span class="k">procedure</span> <span class="n">disable_stop</span><span class="p">(</span><span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Shorthand for configuring the stop counts for (warning, error, failure) in</span>
+  <span class="c1">-- a logger subtree. Set stop count to infinite for all levels &lt; log_level and</span>
+  <span class="c1">-- 1 for all (warning, error, failure) &gt;= log_level.</span>
+
+  <span class="c1">-- NOTE: Removes all other stop count settings from logger subtree.</span>
+  <span class="k">procedure</span> <span class="n">set_stop_level</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                           <span class="n">log_level</span> <span class="o">:</span> <span class="n">alert_log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Shorthand for configuring the stop counts in entire logger tree.</span>
+  <span class="c1">-- Same behavior as set_stop_level for specific logger subtree above</span>
+  <span class="k">procedure</span> <span class="n">set_stop_level</span><span class="p">(</span><span class="n">level</span> <span class="o">:</span> <span class="n">alert_log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Unset stop count for stopping simulation for a specific log level and</span>
+  <span class="c1">-- logger tree</span>
+  <span class="k">procedure</span> <span class="n">unset_stop_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                             <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                             <span class="n">unset_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if logger has stop count set</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">has_stop_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Get the stop count for logger and log_level if set, else fail</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_stop_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">positive</span><span class="p">;</span>
+
+  <span class="c1">-- Disable a log_level from specific logger including all children.</span>
+  <span class="c1">-- Disable is used when a log message is unwanted and it should be ignored.</span>
+
+  <span class="c1">-- NOTE: A disabled log message is still counted to get a disabled log count</span>
+  <span class="c1">--       statistics.</span>
+  <span class="c1">--       errors and failures can be disabled but the final_log_check must</span>
+  <span class="c1">--       explicitly allow it as well as an extra safety mechanism.</span>
+  <span class="k">procedure</span> <span class="n">disable</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                    <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                    <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if the logger and log_level is disabled</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">is_disabled</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                              <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Hide log messages of specified level to this handler.</span>
+  <span class="k">procedure</span> <span class="n">hide</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Hide log messages from the logger of the specified level to this handler</span>
+  <span class="k">procedure</span> <span class="n">hide</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                 <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Hide log messages of the specified levels to this handler.</span>
+  <span class="k">procedure</span> <span class="n">hide</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_levels</span> <span class="o">:</span> <span class="n">log_level_vec_t</span><span class="p">);</span>
+
+  <span class="c1">-- Hide log messages from the logger of the specified levels to this handler</span>
+  <span class="k">procedure</span> <span class="n">hide</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_levels</span> <span class="o">:</span> <span class="n">log_level_vec_t</span><span class="p">;</span>
+                 <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Show log messages of the specified log_level to this handler</span>
+  <span class="k">procedure</span> <span class="n">show</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Show log messages from the logger of the specified log_level to this handler</span>
+  <span class="k">procedure</span> <span class="n">show</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                 <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Show log messages of the specified log_levels to this handler</span>
+  <span class="k">procedure</span> <span class="n">show</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_levels</span> <span class="o">:</span> <span class="n">log_level_vec_t</span><span class="p">);</span>
+
+  <span class="c1">-- Show log messages from the logger of the specified log_levels to this handler</span>
+  <span class="k">procedure</span> <span class="n">show</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                 <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                 <span class="n">log_levels</span> <span class="o">:</span> <span class="n">log_level_vec_t</span><span class="p">;</span>
+                 <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Show all log levels to the log handler</span>
+  <span class="k">procedure</span> <span class="n">show_all</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">);</span>
+
+  <span class="c1">-- Show all log levels to the handler from specific logger</span>
+  <span class="k">procedure</span> <span class="n">show_all</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                     <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                     <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Hide all log levels from this handler</span>
+  <span class="k">procedure</span> <span class="n">hide_all</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">);</span>
+
+  <span class="c1">-- Hide all log levels from this handler from specific logger</span>
+  <span class="k">procedure</span> <span class="n">hide_all</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                     <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                     <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Return true if logging to this logger at this level is visible anywhere</span>
+  <span class="c1">-- Can be used to avoid expensive string creation when not logging a specific</span>
+  <span class="c1">-- level</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">is_visible</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                             <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Return true if logging to this logger at this level is visible to handler</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">is_visible</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                             <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                             <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Get the current visible log levels for a specific logger to this log handler</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_visible_log_levels</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                                         <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">log_level_vec_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get the current invisible log levels for a specific logger to this log handler</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_invisible_log_levels</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                                           <span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">log_level_vec_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get the number of log handlers attached to this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">num_log_handlers</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Get the idx&#39;th log handler attached to this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_log_handler</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span> <span class="n">idx</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="n">log_handler_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get all log handlers attached to this logger</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_log_handlers</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="n">log_handler_vec_t</span><span class="p">;</span>
+
+  <span class="c1">-- Set the log handlers for this logger</span>
+  <span class="k">procedure</span> <span class="n">set_log_handlers</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                             <span class="n">log_handlers</span> <span class="o">:</span> <span class="n">log_handler_vec_t</span><span class="p">;</span>
+                             <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+  <span class="c1">-- Get the total number of log calls to all loggers</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_log_count</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Get number of log calls to a specific level or all levels when level = null_log_level</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_log_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                                <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span> <span class="o">:=</span> <span class="n">null_log_level</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Reset the log call count of a specific level or all levels when level = null_log_level</span>
+  <span class="k">procedure</span> <span class="n">reset_log_count</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                            <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span> <span class="o">:=</span> <span class="n">null_log_level</span><span class="p">;</span>
+                            <span class="n">include_children</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">true</span><span class="p">);</span>
+
+
+  <span class="c1">-- Perform a check of the log counts and fail unless there are no errors or failures.</span>
+  <span class="c1">-- By default no disabled errors or failures are not allowed.</span>
+  <span class="c1">-- Disabled errors and failrues can be allowed by setting the corresponding</span>
+  <span class="c1">-- arguments to true.</span>
+  <span class="c1">-- By default warnings are allowed but failure on warning can be enabled.</span>
+  <span class="c1">-- When fail on warning is enabled it also allows disabled warnings.</span>
+  <span class="k">procedure</span> <span class="n">final_log_check</span><span class="p">(</span><span class="n">allow_disabled_errors</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">;</span>
+                            <span class="n">allow_disabled_failures</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">;</span>
+                            <span class="n">fail_on_warning</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">final_log_check</span><span class="p">(</span><span class="n">allow_disabled_errors</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">;</span>
+                                  <span class="n">allow_disabled_failures</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">;</span>
+                                  <span class="n">fail_on_warning</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">---------------------------------------------------------------------</span>
+  <span class="c1">-- Mock procedures to enable unit testing of code performing logging</span>
+  <span class="c1">---------------------------------------------------------------------</span>
+
+  <span class="c1">-- Mock the logger preventing simulaton abort and recording all logs to it</span>
+  <span class="k">procedure</span> <span class="n">mock</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">);</span>
+
+  <span class="c1">-- Mock log_level of logger preventing simulaton abort and recording all logs to it</span>
+  <span class="k">procedure</span> <span class="n">mock</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span> <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">);</span>
+
+  <span class="c1">-- Unmock the logger returning it to its normal state</span>
+  <span class="c1">-- Results in failures if there are still unchecked log calls recorded</span>
+  <span class="k">procedure</span> <span class="n">unmock</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if the logger is mocked</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">is_mocked</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Constant to ignore time value when checking log call</span>
+  <span class="k">constant</span> <span class="n">no_time_check</span> <span class="o">:</span> <span class="kt">time</span> <span class="o">:=</span> <span class="o">-</span><span class="mi">1</span> <span class="n">ns</span><span class="p">;</span>
+
+  <span class="c1">-- Check that the earliest recorded log call in the mock state matches this</span>
+  <span class="c1">-- call or fails. Also consumes this recorded log call such that subsequent</span>
+  <span class="c1">-- check_log calls can be used to verify a sequence of log calls</span>
+  <span class="k">procedure</span> <span class="n">check_log</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                      <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                      <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                      <span class="n">log_time</span> <span class="o">:</span> <span class="kt">time</span> <span class="o">:=</span> <span class="n">no_time_check</span><span class="p">;</span>
+                      <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                      <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Check that there is only one recorded log call remaining</span>
+  <span class="k">procedure</span> <span class="n">check_only_log</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+                           <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                           <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                           <span class="n">log_time</span> <span class="o">:</span> <span class="kt">time</span> <span class="o">:=</span> <span class="n">no_time_check</span><span class="p">;</span>
+                           <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                           <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Check that there are no remaining recorded log calls, automatically called</span>
+  <span class="c1">-- during unmock</span>
+  <span class="k">procedure</span> <span class="n">check_no_log</span><span class="p">;</span>
+
+  <span class="c1">-- Return the number of unchecked messages in the mock queue</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">mock_queue_length</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+<span class="k">end</span> <span class="k">package</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-handler-pkg">
+<h3>log_handler_pkg<a class="headerlink" href="#log-handler-pkg" title="Permalink to this headline">¶</a></h3>
+<p>Contains <code class="docutils literal notranslate"><span class="pre">log_handler_t</span></code> datatype and log handler local configuration
+procedures.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nn">work.integer_vector_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.log_levels_pkg.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">package</span> <span class="n">log_handler_pkg</span> <span class="k">is</span>
+  <span class="k">type</span> <span class="n">deprecated_log_format_t</span> <span class="k">is</span> <span class="p">(</span>
+    <span class="c1">-- The raw log format contains just the message without any other information</span>
+    <span class="n">raw</span><span class="p">,</span>
+
+    <span class="c1">-- The level log format contains the level and message</span>
+    <span class="n">level</span><span class="p">,</span>
+
+    <span class="c1">-- The verbose log format contains all information</span>
+    <span class="n">verbose</span><span class="p">,</span>
+
+    <span class="c1">-- The csv format contains all information in machine readable format</span>
+    <span class="n">csv</span><span class="p">,</span>
+
+    <span class="c1">-- Deprecated value not supported by new interfaces but kept for backward</span>
+    <span class="c1">-- compatibility reasons. NOT for new designs</span>
+    <span class="n">off</span><span class="p">);</span>
+
+  <span class="k">subtype</span> <span class="n">log_format_t</span> <span class="k">is</span> <span class="n">deprecated_log_format_t</span> <span class="k">range</span> <span class="n">raw</span> <span class="k">to</span> <span class="n">csv</span><span class="p">;</span>
+
+  <span class="c1">-- Log handler record, all fields are private</span>
+  <span class="k">type</span> <span class="n">log_handler_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="n">p_data</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">null_log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span> <span class="o">:=</span> <span class="p">(</span><span class="n">p_data</span> <span class="o">=&gt;</span> <span class="n">null_ptr</span><span class="p">);</span>
+  <span class="k">type</span> <span class="n">log_handler_vec_t</span> <span class="k">is</span> <span class="k">array</span> <span class="p">(</span><span class="kt">natural</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="n">log_handler_t</span><span class="p">;</span>
+
+  <span class="c1">-- Display handler; Write to stdout</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">display_handler</span> <span class="k">return</span> <span class="n">log_handler_t</span><span class="p">;</span>
+
+  <span class="c1">-- Get the name of the file used by the handler</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_file_name</span> <span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="c1">-- File name used by the display handler</span>
+  <span class="k">constant</span> <span class="n">stdout_file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&gt;1&quot;</span><span class="p">;</span>
+
+  <span class="k">constant</span> <span class="n">null_file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+
+  <span class="c1">-- Set the format to be used by the log handler</span>
+  <span class="k">procedure</span> <span class="n">set_format</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                       <span class="n">format</span> <span class="o">:</span> <span class="n">log_format_t</span><span class="p">;</span>
+                       <span class="n">use_color</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+
+  <span class="c1">-- Get the format used by the log handler</span>
+  <span class="k">procedure</span> <span class="n">get_format</span><span class="p">(</span><span class="k">constant</span> <span class="n">log_handler</span> <span class="o">:</span> <span class="k">in</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                       <span class="k">variable</span> <span class="n">format</span> <span class="o">:</span> <span class="k">out</span> <span class="n">log_format_t</span><span class="p">;</span>
+                       <span class="k">variable</span> <span class="n">use_color</span> <span class="o">:</span> <span class="k">out</span> <span class="kt">boolean</span><span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">new_log_handler</span><span class="p">(</span><span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                                  <span class="n">format</span> <span class="o">:</span> <span class="n">log_format_t</span> <span class="o">:=</span> <span class="n">verbose</span><span class="p">;</span>
+                                  <span class="n">use_color</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">)</span> <span class="k">return</span> <span class="n">log_handler_t</span><span class="p">;</span>
+
+  <span class="c1">---------------------------------------------</span>
+  <span class="c1">-- Private parts not intended for public use</span>
+  <span class="c1">---------------------------------------------</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_id</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+  <span class="k">procedure</span> <span class="n">update_max_logger_name_length</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span> <span class="n">value</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">);</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_max_logger_name_length</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">log_to_handler</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                           <span class="n">logger_name</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                           <span class="n">msg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                           <span class="n">log_level</span> <span class="o">:</span> <span class="n">log_level_t</span><span class="p">;</span>
+                           <span class="n">log_time</span> <span class="o">:</span> <span class="kt">time</span><span class="p">;</span>
+                           <span class="n">sequence_number</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                           <span class="n">line_num</span> <span class="o">:</span> <span class="kt">natural</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span>
+                           <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">init_log_handler</span><span class="p">(</span><span class="n">log_handler</span> <span class="o">:</span> <span class="n">log_handler_t</span><span class="p">;</span>
+                             <span class="n">format</span> <span class="o">:</span> <span class="n">log_format_t</span><span class="p">;</span>
+                             <span class="n">file_name</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+                             <span class="n">use_color</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">package</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>A runnable example using logging can be found in <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/logging//">Logging Example</a>.</p>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Logging Library</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#architecture">Architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-levels">Log Levels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stopping-simulation">Stopping simulation</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#example">Example:</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#formatting">Formatting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#print-procedure">Print Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logging-hierarchy">Logging hierarchy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-visibility">Log visibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#custom-loggers">Custom Loggers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mocking">Mocking</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#disabled-logs">Disabled logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-location-preprocessing">Log Location Preprocessing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deprecated-interfaces">Deprecated Interfaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#public-api">Public API</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#logger-pkg">logger_pkg</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#log-handler-pkg">log_handler_pkg</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_types/user_guide.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../verification_components/user_guide.html">Verification Component Library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/logging/user_guide.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

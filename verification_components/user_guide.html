@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Verification Component Library &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Memory Model" href="memory_model.html" />
+    <link rel="prev" title="Data Types" href="../data_types/user_guide.html" />
+  
+
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="verification-component-library">
+<span id="vc-library"></span><h1>Verification Component Library<a class="headerlink" href="#verification-component-library" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This library is released as a <em>BETA</em> version. This means
+non-backwards compatible changes are still likely based on
+feedback from our users.</p>
+</div>
+<p>The VUnit Verification Component Library (VCL) contains a number of
+useful <a class="reference internal" href="#verification-components"><span class="std std-ref">Verification Components</span></a> (VC)
+as well as a set of utilities for writing your own verification
+component. Verification components allow a better overview in the test
+bench by raising the abstraction level of bus transactions. Even if
+you do not need the advanced features that VCs offer you may still
+benefit from using per-verified models of an AXI-bus instead of
+re-implementing it yourself.</p>
+<p>Included verification components (VCs):</p>
+<ul class="simple">
+<li><p>Avalon Memory-Mapped master</p></li>
+<li><p>Avalon Memory-Mapped slave</p></li>
+<li><p>Avalon Streaming sink</p></li>
+<li><p>Avalon Streaming source</p></li>
+<li><p>AXI-Lite master</p></li>
+<li><p>AXI read slave</p></li>
+<li><p>AXI write slave</p></li>
+<li><p>AXI stream master</p></li>
+<li><p>AXI stream monitor</p></li>
+<li><p>AXI stream protocol checker</p></li>
+<li><p>AXI stream slave</p></li>
+<li><p>RAM master</p></li>
+<li><p>Wishbone master</p></li>
+<li><p>Wishbone slave</p></li>
+<li><p>UART master</p></li>
+<li><p>UART slave</p></li>
+</ul>
+<p>In addition to VCs VUnit also has the concept of <a class="reference internal" href="#verification-component-interfaces"><span class="std std-ref">Verification
+Component Interfaces</span></a> (VCI). A
+single VC typically implements several VCIs. For example an AXI-lite
+VC or RAM master VC can support the same generic bus master and
+synchronization VCI while also supporting their own bus specific VCIs.</p>
+<p>The main benefit of generic VCIs is to reduce redundancy between VCs
+and allow the user to write generic code that will work regardless of
+the specific VC instance used. For example control registers might be
+defined as a RAM-style bus in a submodule but be mapped to an AXI-lite
+interface on the top level. The same testbench code for talking to the
+submodule can be used in both the submodule test bench as well as the
+top level test bench regardless of the fact that two different VCs
+have been used. Without generic VCIs copy pasting the code and
+changing the type of read/write procedure call would be required.</p>
+<p>Included verification component interfaces (VCIs):</p>
+<dl class="simple">
+<dt><a class="reference internal" href="vci/bus_master.html#bus-master-vci"><span class="std std-ref">Bus master</span></a></dt><dd><p>Generic read and write of bus with address and byte enable.</p>
+</dd>
+<dt><a class="reference internal" href="vci/stream.html#stream-vci"><span class="std std-ref">Stream</span></a></dt><dd><p>Push and pop of data stream without address.</p>
+</dd>
+<dt><a class="reference internal" href="vci/sync.html#sync-vci"><span class="std std-ref">Synchronization</span></a></dt><dd><p>Wait for time and events.</p>
+</dd>
+</dl>
+<p>Neither a VC or a VCI there is the <a class="reference internal" href="memory_model.html#memory-model"><span class="std std-ref">memory model</span></a>
+which is a model of a memory space such as the DRAM address space in a
+computer system. The memory mapped slave VCs such as AXI and Wishbone
+make transactions against the memory model which provides access
+permissions, expected data settings as well as the actual buffer for
+reading and writing data.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="verification-components">
+<span id="id1"></span><h2>Verification Components<a class="headerlink" href="#verification-components" title="Permalink to this headline">¶</a></h2>
+<p>A verification component (VC) is an entity that is normally connected
+to the DUT via a bus signal interface such as AXI-Lite. The main test
+sequence in the test bench sends messages to the VCs that will then
+perform the actual bus signal transactions. The benefit of this is
+both to raise the abstraction level of the test bench as well as
+making it easy to have parallel activity on several bus interfaces.</p>
+<p>A VC typically has an associated package defining procedures for
+sending to and receiving messages from the VC. Each VC instance is
+associated with a handle that is created in the test bench and set as
+a generic on the VC instantiation. The handle is given as and argument
+to the procedure calls to direct messages to the specfic VC instance.</p>
+</div>
+<div class="section" id="verification-component-interfaces">
+<span id="id2"></span><h2>Verification Component Interfaces<a class="headerlink" href="#verification-component-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>A verification component interface (VCI) is a procedural interface to
+a VC. A VCI is defined as procedures in a package file. Several VC can
+support the same generic VCI to enable code re-use both for the users
+and the VC-developers.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_types/user_guide.html">Data Types</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Verification Component Library</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="memory_model.html">Memory Model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verification-components">Verification Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verification-component-interfaces">Verification Component Interfaces</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="vci/bus_master.html">Bus Master VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="vci/stream.html">Stream Master VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="vci/stream.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l5"><a class="reference internal" href="vci/sync.html">Synchronization VCI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/verification_components/user_guide.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

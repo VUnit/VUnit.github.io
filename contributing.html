@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Contributing &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release notes" href="release_notes.html" />
+    <link rel="prev" title="Testimonials" href="testimonials/testimonials.html" />
+  
+
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>Contributing in the form of code, feedback, ideas or bug reports are
+welcome. Code contributions are expected to pass all tests and style
+checks. If there are any problems let us know.</p>
+<p>Before doing any major changes we recommend creating an issue or
+chatting with us on gitter to discuss first. In this way you do not
+get started on the wrong track and wasting time.</p>
+<p>Being a testing framework we value automated testing and all
+contributions in both the Python and VHDL/SystemVerilog domain are
+expected to add new tests along with the new functionality.</p>
+<div class="section" id="copyright">
+<h2>Copyright<a class="headerlink" href="#copyright" title="Permalink to this headline">¶</a></h2>
+<p>Any contribution must give the copyright to Lars Asplund.
+This is necessary to manage the project freely.
+Copyright is given by adding the copyright notice to the beginning of each file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This Source Code Form is subject to the terms of the Mozilla Public</span>
+<span class="c1"># License, v. 2.0. If a copy of the MPL was not distributed with this file,</span>
+<span class="c1"># You can obtain one at http://mozilla.org/MPL/2.0/.</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2014-2018, Lars Asplund lars.anders.asplund@gmail.com</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-related">
+<h2>Python related<a class="headerlink" href="#python-related" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-the-tests">
+<h3>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h3>
+<p>The test suite is divided into three parts:</p>
+<dl class="simple">
+<dt><strong>vunit/test/unit/</strong></dt><dd><p>Short and concise unit tests for internal modules and classes.</p>
+</dd>
+<dt><strong>vunit/test/acceptance/</strong></dt><dd><p>End to end tests of public functionality. Depends on external tools
+such as simulators.</p>
+</dd>
+<dt><strong>vunit/test/lint/</strong></dt><dd><p>Style checks such as pycodestyle and license header verification.</p>
+</dd>
+</dl>
+<p>The test suites must pass with both Python 2.7 and Python 3.x as well
+as with all supported simulators.</p>
+<p>For running the test locally we recommend using <a class="reference external" href="https://pypi.python.org/pypi/pytest">pytest</a>.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Example of running all unit tests</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest vunit/test/unit/
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Other than the dependencies required to use VUnit as a user the
+following are also required for developers to run the test suite manually:</p>
+<dl class="simple">
+<dt><a class="reference external" href="https://pypi.python.org/pypi/mock">mock</a></dt><dd><p>For Python 2.7 only, built into Python 3.x</p>
+</dd>
+<dt><a class="reference external" href="https://pypi.python.org/pypi/pycodestyle">pycodestyle</a></dt><dd><p>Coding style check.</p>
+</dd>
+<dt><a class="reference external" href="https://pypi.python.org/pypi/pylint">pylint</a></dt><dd><p>Code analysis.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="code-coverage">
+<h3>Code coverage<a class="headerlink" href="#code-coverage" title="Permalink to this headline">¶</a></h3>
+<p>Code coverage can be measured using the
+<a class="reference external" href="https://pypi.python.org/pypi/coverage">coverage</a> tool. The following
+commands measure the code coverage while running the entire test suite:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vunit/ &gt; coverage run --branch --source vunit/ -m unittest discover vunit/test/</span>
+<span class="go">vunit/ &gt; coverage html --directory=htmlcov</span>
+<span class="go">vunit/ &gt; open htmlcov/index.html</span>
+</pre></div>
+</div>
+<p>Developers should ensure that new code is well covered. As of writing
+this paragraph the total coverage was 92%. Missing coverage can be
+analyzed by opening the generated <em>htmlcov/index.html</em> produced by the
+above commands.</p>
+</div>
+</div>
+<div class="section" id="vhdl-related">
+<h2>VHDL related<a class="headerlink" href="#vhdl-related" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Running the tests<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Each part of the VUnit VHDL code base has tests with a corresponding <code class="docutils literal notranslate"><span class="pre">run.py</span></code> file.
+For example <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/vunit/vhdl/verification_components/run.py/">vunit/vhdl/verification_components/run.py</a>.</p>
+<div class="section" id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Example of running all verification component tests</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python vunit/vhdl/verification_components/run.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="coding-style">
+<h3>Coding Style<a class="headerlink" href="#coding-style" title="Permalink to this headline">¶</a></h3>
+<p>Contributions of VHDL code should blend in with the VUnit code style.</p>
+<ul class="simple">
+<li><p>Use lower case and <code class="docutils literal notranslate"><span class="pre">snake_case</span></code> for all identifiers and keywords.</p></li>
+<li><p>Do not use prefixes or suffixes like <code class="docutils literal notranslate"><span class="pre">_c</span></code> or <code class="docutils literal notranslate"><span class="pre">_g</span></code> for constants.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">_t</span></code> suffix for type like <code class="docutils literal notranslate"><span class="pre">&lt;typename&gt;_t</span></code>.</p></li>
+<li><p>Never use the fact that VHDL is case-insensitive; Do not use <code class="docutils literal notranslate"><span class="pre">Foo</span></code>
+and <code class="docutils literal notranslate"><span class="pre">foo</span></code> to refer to the same identifier.</p></li>
+<li><p>Name array types <code class="docutils literal notranslate"><span class="pre">&lt;base_type_name&gt;_vec_t</span></code></p></li>
+<li><p>Name packages with suffix <code class="docutils literal notranslate"><span class="pre">_pkg</span></code></p></li>
+<li><p>Name files the same as the package or entity they contain such as <code class="docutils literal notranslate"><span class="pre">&lt;entity_name&gt;.vhd</span></code></p></li>
+<li><p>Never put more than one entity/package in the same file.</p></li>
+<li><p>Keep the architecture in the same file as the entity unless there
+are several architectures. When there are several architectures put
+them all in separate files named
+<code class="docutils literal notranslate"><span class="pre">&lt;entity_name&gt;_&lt;architecture_name&gt;.vhd</span></code>.</p></li>
+<li><p>Put comments documenting functions and procedures above the
+declaration in the package header rather than the definition in the
+package body.</p></li>
+</ul>
+<p>Regarding formatting use look at other VHDL files and follow that
+style. For example <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/uart/src/uart_tx.vhd/">examples/vhdl/uart/src/uart_tx.vhd</a></p>
+</div>
+</div>
+<div class="section" id="continous-integration">
+<h2>Continous Integration<a class="headerlink" href="#continous-integration" title="Permalink to this headline">¶</a></h2>
+<p>VUnit runs all test and lint checks on both Windows using AppVeyor and
+Linux using Travis CI with several versions of Python. GHDL is used to
+run the VHDL tests of all our libraries and examples.</p>
+<p>All tests will be automatically run on any pull request and they are
+expected to pass for us to approve the merge.</p>
+<p>Any commit on master that has a successful CI run will automatically
+update the <a class="reference external" href="https://vunit.github.io">VUnit website</a></p>
+<div class="section" id="testing-with-tox">
+<h3>Testing with Tox<a class="headerlink" href="#testing-with-tox" title="Permalink to this headline">¶</a></h3>
+<p>VUnit uses the Python <a class="reference external" href="http://tox.readthedocs.org/">tox</a> tool in
+the CI flow. Typically developers do not need to run this on their
+local machine.</p>
+<p>Tox makes it easier to automatically test VUnit in various
+configurations. Tox automates creation of virtual environments and
+installation of dependencies needed for testing. In fact, all of the
+tests can be run in a single command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vunit/ &gt; tox</span>
+</pre></div>
+</div>
+<p>If tox is not available in your Python environment, it can be installed from
+PyPI with pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vunit/ &gt; pip install tox</span>
+</pre></div>
+</div>
+<p>For most developers, running the full testsuite will likely lead to failed test
+cases because not all Python interpreters or HDL simulators are installed in
+their environment. More focused testing is possible by specifying which tox
+“environments” should be tested. For example, assume a developer uses Python 2.7
+and Modelsim and would like to test changes using tools available in his
+environment:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vunit/ &gt; tox -e py27-unit,py27-acceptance-modelsim</span>
+</pre></div>
+</div>
+<p>A full list of test environments can be seen by issuing the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">vunit/ &gt; tox -l</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-releases">
+<h3>Making releases<a class="headerlink" href="#making-releases" title="Permalink to this headline">¶</a></h3>
+<p>Releases are automatically made by Travic CI on any <code class="docutils literal notranslate"><span class="pre">master</span></code> commit
+which is tagged.</p>
+<p>To create a new tagged release commit:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Create corresponding release notes in <code class="docutils literal notranslate"><span class="pre">docs/release_notes/X.Y.Z.rst</span></code>.</dt><dd><ul>
+<li><p>The release notes files in <code class="docutils literal notranslate"><span class="pre">docs/release_notes/</span></code> are used to
+automatically generate the <a class="reference internal" href="release_notes.html#release-notes"><span class="std std-ref">release notes</span></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Execute <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">tools/release.py</span> <span class="pre">create</span> <span class="pre">X.Y.Z</span></code>.</dt><dd><ul>
+<li><p>Will make commit with the new <code class="docutils literal notranslate"><span class="pre">about.py</span></code> version and release notes and tag it.</p></li>
+<li><p>Will make another commit setting <code class="docutils literal notranslate"><span class="pre">about.py</span></code> to the next pre release candidate version.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Push the tag to remote to trigger the release build.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">vX.Y.Z</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If the release build is successful, you can push the two commits to master.</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">master</span></code></p></li>
+<li><p>If, in the meantime, a new commit has come into origin/master the two
+commits have to be merged into origin/master.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Travic CI makes a release by uploading a new package to PyPI when a tag
+named <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> is found in Git. A new release will not be made if:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">X.Y.Z</span></code> release is already on PyPI.</p></li>
+<li><p>The repo tag does not exist.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#copyright">Copyright</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-related">Python related</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-tests">Running the tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-coverage">Code coverage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vhdl-related">VHDL related</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Running the tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#coding-style">Coding Style</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#continous-integration">Continous Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testing-with-tox">Testing with Tox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-releases">Making releases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/contributing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Memory Model &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bus Master VCI" href="vci/bus_master.html" />
+    <link rel="prev" title="Verification Component Library" href="user_guide.html" />
+  
+
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="memory-model">
+<span id="id1"></span><h1>Memory Model<a class="headerlink" href="#memory-model" title="Permalink to this headline">¶</a></h1>
+<p>To verify devices such as AXI-masters that access an external memory
+space it is useful to have a memory model with the following capabilities:</p>
+<ol class="arabic simple">
+<li><p>Allocate data buffers</p></li>
+<li><p>Write data to input buffers</p></li>
+<li><p>Set expected data for output buffers</p></li>
+<li><p>Read data from output buffers</p></li>
+<li><p>Set read/write permission on memory regions</p></li>
+</ol>
+<p>In the test bench the Device Under Test (DUT) is connected to a
+verification component (VC) such as an AXI slave bus functional
+model. The VC has a reference to the memory model and will translate
+all bus transactions into byte accesses to the memory model.</p>
+<p>When the VC makes byte accesses to the memory models they are checked
+for permission and expected data buffer violations. In case of
+violations error messages give valuable contextual information such as
+the name of the buffer where an offending access has been made as well
+as the relative address within the buffer.</p>
+<p>The test bench can provide input data to the DUT by allocating a data
+buffer and filling it with data. Strict access permissions can be set
+to ensure that the DUT does not make unwanted memory accesses. Output
+data can be checked by reading from the output data buffer and
+comparing to expected values. Expected data can also be set directly
+on the memory model with the advantage that the error is detected as
+soon as the first incorrect byte is written to the memory which can
+provide valuable contextual information.</p>
+<div class="section" id="memory-model-utilities">
+<h2>Memory Model Utilities<a class="headerlink" href="#memory-model-utilities" title="Permalink to this headline">¶</a></h2>
+<p>There is also a <code class="docutils literal notranslate"><span class="pre">memory_utils_pkg</span></code> providing functions to read and
+write other VUnit data types such as <code class="docutils literal notranslate"><span class="pre">integer_array_t</span></code> to the memory
+model.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Memory model API</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Model of a memory address space</span>
+
+<span class="k">library</span> <span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nn">work.types_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.string_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.integer_vector_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.logger_pkg.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">package</span> <span class="n">memory_pkg</span> <span class="k">is</span>
+
+  <span class="k">type</span> <span class="n">endianness_arg_t</span> <span class="k">is</span> <span class="p">(</span><span class="n">little_endian</span><span class="p">,</span>
+                            <span class="n">big_endian</span><span class="p">,</span>
+                            <span class="n">default_endian</span><span class="p">);</span>
+  <span class="k">subtype</span> <span class="n">endianness_t</span> <span class="k">is</span> <span class="n">endianness_arg_t</span> <span class="k">range</span> <span class="n">little_endian</span> <span class="k">to</span> <span class="n">big_endian</span><span class="p">;</span>
+
+  <span class="c1">-- Memory model object</span>
+  <span class="k">type</span> <span class="n">memory_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="c1">-- Private</span>
+    <span class="n">p_meta</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+    <span class="n">p_default_endian</span> <span class="o">:</span> <span class="n">endianness_t</span><span class="p">;</span>
+    <span class="n">p_check_permissions</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+    <span class="n">p_data</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+    <span class="n">p_buffers</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+    <span class="n">p_logger</span> <span class="o">:</span> <span class="n">logger_t</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">null_memory</span> <span class="o">:</span> <span class="n">memory_t</span> <span class="o">:=</span> <span class="p">(</span><span class="n">p_logger</span> <span class="o">=&gt;</span> <span class="n">null_logger</span><span class="p">,</span>
+                                      <span class="n">p_check_permissions</span> <span class="o">=&gt;</span> <span class="kt">boolean</span><span class="na">&#39;low</span><span class="p">,</span>
+                                      <span class="n">p_default_endian</span> <span class="o">=&gt;</span> <span class="n">endianness_t</span><span class="na">&#39;low</span><span class="p">,</span>
+                                      <span class="k">others</span> <span class="o">=&gt;</span> <span class="n">null_ptr</span><span class="p">);</span>
+
+  <span class="c1">-- Default memory logger</span>
+  <span class="k">constant</span> <span class="n">memory_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;vunit_lib:memory_pkg&quot;</span><span class="p">);</span>
+
+  <span class="c1">-- Create a new memory object</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">new_memory</span><span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">memory_logger</span><span class="p">;</span>
+                             <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_t</span> <span class="o">:=</span> <span class="n">little_endian</span><span class="p">)</span> <span class="k">return</span> <span class="n">memory_t</span><span class="p">;</span>
+
+  <span class="c1">-- Empties the memory by removing all data and permissions</span>
+  <span class="k">procedure</span> <span class="n">clear</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">);</span>
+
+  <span class="c1">-- Return the number of allocated bytes in the memory</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">num_bytes</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="c1">-- Memory data read and write functions</span>
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="k">procedure</span> <span class="n">write_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                       <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                       <span class="n">byte</span> <span class="o">:</span> <span class="n">byte_t</span><span class="p">);</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">read_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                            <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="n">byte_t</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">write_word</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                       <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                       <span class="n">word</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                       <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_arg_t</span> <span class="o">:=</span> <span class="n">default_endian</span><span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">read_word</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                            <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                            <span class="n">bytes_per_word</span> <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+                            <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_arg_t</span> <span class="o">:=</span> <span class="n">default_endian</span><span class="p">)</span> <span class="k">return</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+
+  <span class="c1">-- Write integer</span>
+  <span class="k">procedure</span> <span class="n">write_integer</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                          <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                          <span class="n">word</span> <span class="o">:</span> <span class="kt">integer</span><span class="p">;</span>
+                          <span class="n">bytes_per_word</span> <span class="o">:</span> <span class="kt">natural</span> <span class="k">range</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">4</span> <span class="o">:=</span> <span class="mi">4</span><span class="p">;</span>
+                          <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_arg_t</span> <span class="o">:=</span> <span class="n">default_endian</span><span class="p">);</span>
+
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="c1">-- Memory access permission control functions</span>
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="k">type</span> <span class="n">permissions_t</span> <span class="k">is</span> <span class="p">(</span><span class="n">no_access</span><span class="p">,</span>
+                         <span class="n">write_only</span><span class="p">,</span>
+                         <span class="n">read_only</span><span class="p">,</span>
+                         <span class="n">read_and_write</span><span class="p">);</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_permissions</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                  <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="n">permissions_t</span><span class="p">;</span>
+  <span class="k">procedure</span> <span class="n">set_permissions</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                            <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                            <span class="n">permissions</span> <span class="o">:</span> <span class="n">permissions_t</span><span class="p">);</span>
+
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="c1">-- Functions to set memory expected data</span>
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">has_expected_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                    <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+  <span class="k">procedure</span> <span class="n">clear_expected_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">set_expected_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                              <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                              <span class="n">expected</span> <span class="o">:</span> <span class="n">byte_t</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">set_expected_word</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                              <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                              <span class="n">expected</span> <span class="o">:</span> <span class="kt">std_logic_vector</span><span class="p">;</span>
+                              <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_arg_t</span> <span class="o">:=</span> <span class="n">default_endian</span><span class="p">);</span>
+  <span class="k">procedure</span> <span class="n">set_expected_integer</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                 <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                                 <span class="n">expected</span> <span class="o">:</span> <span class="kt">integer</span><span class="p">;</span>
+                                 <span class="n">bytes_per_word</span> <span class="o">:</span> <span class="kt">natural</span> <span class="k">range</span> <span class="mi">1</span> <span class="k">to</span> <span class="mi">4</span> <span class="o">:=</span> <span class="mi">4</span><span class="p">;</span>
+                                 <span class="n">endian</span> <span class="o">:</span> <span class="n">endianness_arg_t</span> <span class="o">:=</span> <span class="n">default_endian</span><span class="p">);</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">get_expected_byte</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                    <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="n">byte_t</span><span class="p">;</span>
+
+  <span class="c1">-- Check that all expected bytes within address range was written</span>
+  <span class="c1">-- with correct value</span>
+  <span class="k">procedure</span> <span class="n">check_expected_was_written</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                       <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                                       <span class="n">num_bytes</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if all expected bytes within address range was written</span>
+  <span class="c1">-- with correct value</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">expected_was_written</span><span class="p">(</span><span class="n">memory</span>    <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                       <span class="n">address</span>   <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                                       <span class="n">num_bytes</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Check that all expected bytes within the entire memory was written</span>
+  <span class="c1">-- with correct value</span>
+  <span class="k">procedure</span> <span class="n">check_expected_was_written</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if all expected bytes within the entire memory was written</span>
+  <span class="c1">-- with correct value</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">expected_was_written</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-----------------------------------------------------</span>
+  <span class="c1">-- Memory buffer allocation</span>
+  <span class="c1">-----------------------------------------------------</span>
+
+  <span class="c1">-- Reference to an allocated buffer with the memory</span>
+  <span class="k">type</span> <span class="n">buffer_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="c1">-- Private</span>
+    <span class="n">p_memory_ref</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+    <span class="n">p_name</span> <span class="o">:</span> <span class="n">string_ptr_t</span><span class="p">;</span>
+    <span class="n">p_address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+    <span class="n">p_num_bytes</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">null_buffer</span> <span class="o">:</span> <span class="n">buffer_t</span> <span class="o">:=</span> <span class="p">(</span><span class="n">p_memory_ref</span> <span class="o">=&gt;</span> <span class="n">null_memory</span><span class="p">,</span>
+                                      <span class="n">p_name</span> <span class="o">=&gt;</span> <span class="n">null_string_ptr</span><span class="p">,</span>
+                                      <span class="n">p_address</span> <span class="o">=&gt;</span> <span class="kt">natural</span><span class="na">&#39;low</span><span class="p">,</span>
+                                      <span class="n">p_num_bytes</span> <span class="o">=&gt;</span> <span class="kt">natural</span><span class="na">&#39;low</span><span class="p">);</span>
+
+  <span class="c1">-- Allocate a buffer</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">allocate</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                           <span class="n">num_bytes</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                           <span class="n">name</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+                           <span class="n">alignment</span> <span class="o">:</span> <span class="kt">positive</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span>
+                           <span class="n">permissions</span> <span class="o">:</span> <span class="n">permissions_t</span> <span class="o">:=</span> <span class="n">read_and_write</span><span class="p">)</span> <span class="k">return</span> <span class="n">buffer_t</span><span class="p">;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">name</span><span class="p">(</span><span class="n">buf</span> <span class="o">:</span> <span class="n">buffer_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">num_bytes</span><span class="p">(</span><span class="n">buf</span> <span class="o">:</span> <span class="n">buffer_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">base_address</span><span class="p">(</span><span class="n">buf</span> <span class="o">:</span> <span class="n">buffer_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">last_address</span><span class="p">(</span><span class="n">buf</span><span class="o">:</span> <span class="n">buffer_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="c1">-- Check that all expected bytes was written with correct value in buffer</span>
+  <span class="k">procedure</span> <span class="n">check_expected_was_written</span><span class="p">(</span><span class="n">buf</span> <span class="o">:</span> <span class="n">buffer_t</span><span class="p">);</span>
+
+  <span class="c1">-- Returns true if all expected bytes was written with correct value in buffer</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">expected_was_written</span><span class="p">(</span><span class="n">buf</span> <span class="o">:</span> <span class="n">buffer_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Return a string describing the address with name of allocation and</span>
+  <span class="c1">-- permission settings</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">describe_address</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                   <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="c1">-- Return a reference to the memory object that can be used in a verification</span>
+  <span class="c1">-- component. The verification component can use its own logger and</span>
+  <span class="c1">-- permissions should be checked.</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">to_vc_interface</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+
+                                  <span class="c1">-- Override logger, null_logger means no override</span>
+                                  <span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">null_logger</span><span class="p">)</span> <span class="k">return</span> <span class="n">memory_t</span><span class="p">;</span>
+
+  <span class="c1">-- Only perform checks related to address</span>
+  <span class="c1">-- Check for access permissions and address out of range</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">check_address</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                                <span class="n">reading</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+                                <span class="n">check_permissions</span> <span class="o">:</span> <span class="kt">boolean</span> <span class="o">:=</span> <span class="n">false</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Only perform checks related to write_byte data without performing the write</span>
+  <span class="c1">-- Does not check address</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">check_write_data</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span>
+                                   <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span>
+                                   <span class="n">byte</span> <span class="o">:</span> <span class="n">byte_t</span><span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="c1">-- Perform write of one byte without running any address or data checks</span>
+  <span class="k">procedure</span> <span class="n">write_byte_unchecked</span><span class="p">(</span><span class="n">memory</span> <span class="o">:</span> <span class="n">memory_t</span><span class="p">;</span> <span class="n">address</span> <span class="o">:</span> <span class="kt">natural</span><span class="p">;</span> <span class="n">byte</span> <span class="o">:</span> <span class="n">byte_t</span><span class="p">);</span>
+
+<span class="k">end</span> <span class="k">package</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_types/user_guide.html">Data Types</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="user_guide.html">Verification Component Library</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Memory Model</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#memory-model-utilities">Memory Model Utilities</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="user_guide.html#verification-components">Verification Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user_guide.html#verification-component-interfaces">Verification Component Interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/verification_components/memory_model.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Short Introduction to VUnit &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  
+
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="short-introduction-to-vunit">
+<span id="short-introduction-to-vunit-post"></span><h1>Short Introduction to VUnit<a class="headerlink" href="#short-introduction-to-vunit" title="Permalink to this headline">¶</a></h1>
+<p><strong>Originally posted and commented on</strong> <a class="reference external" href="https://www.linkedin.com/pulse/short-introduction-vunit-lars-asplund?trk=mp-author-card">LinkedIn</a>.</p>
+<img alt="../../_images/4x.png" src="../../_images/4x.png" />
+<p><a class="reference external" href="https://github.com/VUnit/vunit">VUnit</a> is a free and open source
+unit testing framework for VHDL that was released in November last year.
+Initially it supported ModelSim, then GHDL support was added in June,
+and a few days ago we added support for Active-HDL and Riviera-PRO. The
+latest addition makes the tool available for a new group of users and
+this is a short introduction for you.</p>
+<p>The basic idea with unit testing is to code and test in short cycles to
+get frequent feedback on progress from day one. Most of us add bugs many
+times a day so we need to complete these cycles at the same pace to
+limit the consequences. If we’re going to test many times a day, not
+only what we just added but also do regression testing, it has to be an
+automated and speed optimized task.</p>
+<p>Automation means that our testbenches and their test cases have to be
+self-checking but also that we need to automate the execution all these
+tests or a selected subset thereof. As soon as we introduce manual steps
+in this workflow we tend to postpone the testing and the short code/test
+cycle is broken.</p>
+<p>VUnit provides a <a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/check/user_guide.md">check
+package</a>
+for making tests self-checking and the <a class="reference external" href="https://github.com/VUnit/vunit/blob/master/user_guide.md">test
+runner</a> is
+responsible for the execution. The test runner will scan your project
+directories for source files and tests, figure out their dependencies
+and what have been modified, compile what’s needed and then run the
+selected tests as specified from command line. For example,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> python run.py <span class="c1"># Incrementally compile and run all testbenches and test cases found. Report pass/fail result for each</span>
+<span class="go">test case</span>
+
+<span class="gp">$</span> python run.py *tb_foo* <span class="c1"># Run all test cases in testbench tb_foo</span>
+
+<span class="gp">$</span> python run.py -p <span class="m">6</span> *tb_foo* <span class="c1"># Speed up the test by running the test cases in 6 parallel threads. Make use of all the</span>
+<span class="go">CPU cores!</span>
+
+<span class="gp">$</span> python run.py --gui <span class="s2">&quot;*tb_foo.Test that reset initializes all outputs&quot;</span> <span class="c1"># Launch the tb_foo test case &quot;Test that reset</span>
+<span class="go">initializes all outputs&quot; in the simulator GUI such that it can be debugged</span>
+</pre></div>
+</div>
+<p>VUnit is lightweight. A typical setup adds 8 lines to your normal
+testbench code and one extra line for each test case in that testbench.
+Everything is pure VHDL so it can be run without the run.py script if
+you want to. The typical run.py script is 4 lines of code plus one extra
+line for each VHDL library you want to create and each directory where
+you want the test runner to scan for source files. You don’t have to
+know Python, just start with a the template and insert your library
+names and source paths.</p>
+<p>In addition to the core functionality described above VUnit contains a
+number of other useful features. For example,</p>
+<ul class="simple">
+<li><p>A message passing mechanism that enables high-level communication
+between testbench components. It allows you to send almost any type
+of data to anyone located anywhere. All you have to deal with is the
+name of the receiver and what data to send. The strongly typed nature
+of VHDL has been hidden which means that you can send data of a
+custom type using the provided send procedure. You don’t have to
+define your own procedures for every data/message type you create.
+Message passing can be used for sending transactions without some of
+the limitations of pin-wiggling and procedure-based transactions but
+it is also the basis for several other communication patterns. For
+more info see the user
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/com/user_guide.md">guide</a>.</p></li>
+<li><p>An array package that can handle multidimensional arrays. It’s
+typically used for input and output data sets to the DUT. The package
+supports reading/writing arrays from/to file which enables file-based
+testing. For more information see this
+<a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/array">example</a>.</p></li>
+<li><p>A general purpose logging framework supporting display and file
+output, different output levels, filtering on level and design
+hierarchy, output formatting, automatic file and line localization of
+log entries, multiple loggers, and spreadsheet tool integration. For
+more information see the user
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/logging/user_guide.md">guide</a>.</p></li>
+</ul>
+<p>VUnit is a truly open project formed by its community. If you want to
+follow the progress you can click on “watch” on the project
+<a class="reference external" href="https://github.com/VUnit/vunit">homepage</a>. If you like what you see
+click on “star”. If it’s something you don’t like or you miss a feature
+you should create an <a class="reference external" href="https://github.com/VUnit/vunit/issues">issue</a>.
+You can also make your own code
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/developing.md">contributions</a>.</p>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  
+  <a href="../2015_10_08_who_is_using_UVM/post.html">
+    Who’s Using UVM (or Not) for FPGA Development, and Why?
+    <i class="fa fa-arrow-circle-right"></i>
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'vunitframework';
+        var disqus_identifier = '/posts/2015_09_24_short_introduction_to_vunit/post/';
+        var disqus_title = 'Short Introduction to VUnit';
+        var disqus_url = 'http://vunit.github.io/posts/2015_09_24_short_introduction_to_vunit/post';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+  
+  
+  <h2>
+  
+  <i class="fa fa-calendar"></i>
+    24 September 2015
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span><i class="fa-fw fa fa-user"></i></span>
+    
+      
+      <a href="../../blog/author/lasplund.html">lasplund</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li id="tags"><span><i class="fa-fw fa fa-tag"></i></span>
+    
+      
+      <a href="../../blog/tag/vunit.html">VUnit</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'vunitframework'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    <i class="fa-fw fa fa-comments"></i>
+    <a href="#disqus_thread" data-disqus-identifier="/posts/2015_09_24_short_introduction_to_vunit/post/"> </a>
+  </li>
+  
+  </ul>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/posts/2015_09_24_short_introduction_to_vunit/post.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

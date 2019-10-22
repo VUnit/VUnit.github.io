@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Python Interface &#8212; VUnit  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="vunit.ui.vunit" href="vunit.html" />
+    <link rel="prev" title="Command Line Interface" href="../cli.html" />
+  
+
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-112393863-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-112393863-1');
+</script>
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="VUnit Blog">
+  
+  
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="python-interface">
+<span id="id1"></span><h1>Python Interface<a class="headerlink" href="#python-interface" title="Permalink to this headline">¶</a></h1>
+<p>The Python interface of VUnit is exposed through the <a class="reference internal" href="vunit.html#vunit.ui.vunit.VUnit" title="vunit.ui.vunit.VUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnit</span>
+<span class="pre">class</span></code></a> that can be imported directly. See the
+<a class="reference internal" href="../user_guide.html#user-guide"><span class="std std-ref">User Guide</span></a> for a quick introduction. The
+following list provides detailed references of the Python API and
+about how to set compilation and simulation options.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="vunit.html">vunit.ui.vunit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#library">Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#sourcefilelist">SourceFileList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#sourcefile">SourceFile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#testbench">TestBench</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#test">Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vunit.html#results">Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="opts.html">Compilation Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="opts.html#simulation-options">Simulation Options</a></li>
+</ul>
+</div>
+<div class="section" id="configurations">
+<span id="id2"></span><h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
+<p>In VUnit Python API the name <code class="docutils literal notranslate"><span class="pre">configuration</span></code> is used to denote the
+user controllable configuration of one test run such as
+generic/parameter settings, simulation options as well as the
+pre_config and post_check <a class="reference internal" href="#pre-and-post-hooks"><span class="std std-ref">callback functions</span></a>.
+User <a class="reference internal" href="#attributes"><span class="std std-ref">attributes</span></a> can also be added as a part of a
+configuration.</p>
+<p>Configurations can either be unique for each test case or must be
+common for the entire test bench depending on the situation.  For test
+benches without test such as <cite>tb_example</cite> in the User Guide the
+configuration is common for the entire test bench. For test benches
+containing tests such as <cite>tb_example_many</cite> the configuration is done
+for each test case. If the <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> attribute has been used
+configuration is performed at the test bench level even if there are
+individual test within since they must run in the same simulation.</p>
+<p>In a VUnit all test benches and test cases are created with an unnamed default
+configuration which is modified by different methods such as <code class="docutils literal notranslate"><span class="pre">set_generic</span></code> etc.
+In addition to the unnamed default configuration multiple named configurations
+can be derived from it by using the <code class="docutils literal notranslate"><span class="pre">add_config</span></code> method. The default
+configuration is only run if there are no named configurations.</p>
+</div>
+<div class="section" id="attributes">
+<span id="id3"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<p>The user may set custom attributes on test cases via comments or via the
+<code class="docutils literal notranslate"><span class="pre">set_attribute</span></code> method. The attributes can for example be used to achieve
+requirements trace-ability. The attributes are exported in the
+<a class="reference internal" href="../cli.html#json-export"><span class="std std-ref">JSON Export</span></a>. All user defined attributes must start
+with a dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>) as non-dot attributes are reserved for built-in
+attributes.</p>
+<p>Attributes set via the python interface will effectively overwrite the value
+of a user attribute set via code comments.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">VHDL Example</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">run</span><span class="p">(</span><span class="s">&quot;Test 1&quot;</span><span class="p">)</span> <span class="k">then</span>
+    <span class="c1">-- vunit: .requirement-117</span>
+<span class="k">end</span> <span class="k">if</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">SystemVerilog Example</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-verilog notranslate"><div class="highlight"><pre><span></span><span class="no">`TEST_SUITE</span> <span class="k">begin</span>
+    <span class="no">`TEST_CASE</span><span class="p">(</span><span class="s">&quot;Test 1&quot;</span><span class="p">)</span> <span class="k">begin</span>
+        <span class="c1">// vunit: .requirement-117</span>
+     <span class="k">end</span>
+ <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Python Example</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_test</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="s2">&quot;.requirement-117&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">JSON Export has attributes attached to each test. The
+attributes added via comments all have null value to be
+forward compatible in a future where user attributes can
+have values. Attributes set via python can have basic type
+values.</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span>
+    <span class="nt">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+         <span class="nt">&quot;.requirement-117&quot;</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="pre-and-post-simulation-hooks">
+<span id="pre-and-post-hooks"></span><h2>Pre and post simulation hooks<a class="headerlink" href="#pre-and-post-simulation-hooks" title="Permalink to this headline">¶</a></h2>
+<p>There are two hooks to run user defined Python code.</p>
+<dl class="field-list">
+<dt class="field-odd">pre_config</dt>
+<dd class="field-odd"><p>A <code class="docutils literal notranslate"><span class="pre">pre_config</span></code> is called before simulation of the test
+case. The function may accept an <code class="docutils literal notranslate"><span class="pre">output_path</span></code> string
+which is the filesystem path to the directory where test
+outputs are stored. The function must return <code class="docutils literal notranslate"><span class="pre">True</span></code> or
+the test will fail immediately.</p>
+<p>The use case is to automatically create input data files
+that is read by the test case during simulation. The test
+bench can access the test case unique <code class="docutils literal notranslate"><span class="pre">output_path</span></code> via
+a <a class="reference internal" href="../user_guide.html#special-generics"><span class="std std-ref">special generic/parameter</span></a>.</p>
+</dd>
+<dt class="field-even">post_check</dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">post_check</span></code> is called after a passing simulation of
+the test case. The function may accept an <code class="docutils literal notranslate"><span class="pre">output_path</span></code>
+string which is the filesystem path to the directory
+where test outputs are stored. The function may accept an
+<code class="docutils literal notranslate"><span class="pre">output</span></code> string which full standard output from the
+test containing the simulator transcript. The function
+must return <code class="docutils literal notranslate"><span class="pre">True</span></code> or the test will fail.</p>
+<p>The use case is to automatically check output data files
+that is written by the test case during simulation. The test
+bench can access the test case unique <code class="docutils literal notranslate"><span class="pre">output_path</span></code> via
+a <a class="reference internal" href="../user_guide.html#special-generics"><span class="std std-ref">special generic/parameter</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">post_check</span></code> function is only called after a
+passing test and skipped in case of failure.</p>
+</div>
+</dd>
+</dl>
+<div class="section" id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DataChecker</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Provides input data to test bench and checks its output data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">pre_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+        <span class="n">write_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;input.csv&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">post_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">compute_expected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">got</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;output.csv&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">check_equal</span><span class="p">(</span><span class="n">got</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+
+<span class="c1"># Just change the original test</span>
+<span class="n">checker</span> <span class="o">=</span> <span class="n">DataChecker</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">create_random_data</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">11</span><span class="p">))</span>
+<span class="n">my_test</span><span class="o">.</span><span class="n">set_pre_config</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">pre_config</span><span class="p">)</span>
+<span class="n">my_test</span><span class="o">.</span><span class="n">set_post_check</span><span class="p">(</span><span class="n">checker</span><span class="o">.</span><span class="n">post_check</span><span class="p">)</span>
+
+<span class="c1"># .. or create many configurations of the test</span>
+<span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">checker</span> <span class="o">=</span> <span class="n">DataChecker</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">create_random_data</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+    <span class="n">my_test</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;seed</span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">seed</span><span class="p">,</span>
+                       <span class="n">pre_config</span><span class="o">=</span><span class="n">checker</span><span class="o">.</span><span class="n">pre_config</span><span class="p">,</span>
+                       <span class="n">post_check</span><span class="o">=</span><span class="n">checker</span><span class="o">.</span><span class="n">post_check</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<span class="target" id="module-vunit.vunit_cli"></span><div class="section" id="adding-custom-command-line-arguments">
+<span id="custom-cli"></span><h4>Adding Custom Command Line Arguments<a class="headerlink" href="#adding-custom-command-line-arguments" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to add custom command line arguments to your <code class="docutils literal notranslate"><span class="pre">run.py</span></code>
+scripts using the <a class="reference internal" href="#vunit.vunit_cli.VUnitCLI" title="vunit.vunit_cli.VUnitCLI"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnitCLI</span></code></a> class.</p>
+<dl class="class">
+<dt id="vunit.vunit_cli.VUnitCLI">
+<em class="property">class </em><code class="sig-prename descclassname">vunit.vunit_cli.</code><code class="sig-name descname">VUnitCLI</code><span class="sig-paren">(</span><em class="sig-param">description=None</em><span class="sig-paren">)</span><a class="headerlink" href="#vunit.vunit_cli.VUnitCLI" title="Permalink to this definition">¶</a></dt>
+<dd><p>VUnit command line interface</p>
+<dl class="method">
+<dt id="vunit.vunit_cli.VUnitCLI.parse_args">
+<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param">argv=None</em><span class="sig-paren">)</span><a class="headerlink" href="#vunit.vunit_cli.VUnitCLI.parse_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argv</strong> – Use explicit argv instead of actual command line argument</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The parsed argument namespace object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p>A <a class="reference internal" href="#vunit.vunit_cli.VUnitCLI" title="vunit.vunit_cli.VUnitCLI"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnitCLI</span></code></a> object has a <code class="docutils literal notranslate"><span class="pre">parser</span></code> field which is an
+<cite>ArgumentParser</cite> object of the <a class="reference external" href="https://docs.python.org/3/library/argparse.html">argparse</a> library.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vunit</span> <span class="kn">import</span> <span class="n">VUnitCLI</span><span class="p">,</span> <span class="n">VUnit</span>
+
+<span class="c1"># Add custom command line argument to standard CLI</span>
+<span class="c1"># Beware of conflicts with existing arguments</span>
+<span class="n">cli</span> <span class="o">=</span> <span class="n">VUnitCLI</span><span class="p">()</span>
+<span class="n">cli</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--custom-arg&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+<span class="c1"># Create VUNit instance from custom arguments</span>
+<span class="n">vu</span> <span class="o">=</span> <span class="n">VUnit</span><span class="o">.</span><span class="n">from_args</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+
+<span class="c1"># Use args.custom_arg here ...</span>
+<span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">custom_arg</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">vunit.vunit_cli.</code><code class="sig-name descname">VUnitCLI</code><span class="sig-paren">(</span><em class="sig-param">description=None</em><span class="sig-paren">)</span></dt>
+<dd><p>VUnit command line interface</p>
+<dl class="method">
+<dt>
+<code class="sig-name descname">parse_args</code><span class="sig-paren">(</span><em class="sig-param">argv=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Parse command line arguments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argv</strong> – Use explicit argv instead of actual command line argument</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The parsed argument namespace object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="vunit.vunit_cli.positive_int">
+<code class="sig-prename descclassname">vunit.vunit_cli.</code><code class="sig-name descname">positive_int</code><span class="sig-paren">(</span><em class="sig-param">val</em><span class="sig-paren">)</span><a class="headerlink" href="#vunit.vunit_cli.positive_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>ArgumentParse positive int check</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/VUnit_logo_420x420.png" alt="Logo"/>
+    
+    <h1 class="logo logo-name">VUnit</h1>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">A test framework for HDL</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=VUnit&repo=vunit&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/VUnit/vunit">
+    <img
+        alt="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+        src="https://secure.travis-ci.org/VUnit/vunit.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<a class="icon" title="Contact us" href="mailto:vunitframework@gmail.com"><span class="fa fa-envelope fa-2x fa-fw"/></a>
+<a class="icon" title="Go to our GitHub Repo" href="https://github.com/VUnit/vunit"><span class="fa fa-github fa-2x fa-fw"/></a>
+<a class="icon" title="View our Twitter Feed" href="https://www.twitter.com/VUnitFramework"><span class="fa fa-twitter fa-2x fa-fw"/></a>
+<a class="icon" title="View our YouTube Channel" href="https://youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg"><span class="fa fa-youtube fa-2x fa-fw"/></a>
+<a class="icon" title="Chat with us on Gitter" href="https://gitter.im/VUnit/vunit"><span class="fa fa-weixin fa-2x fa-fw"/></a>
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../documentation.html">Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Python Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="vunit.html">vunit.ui.vunit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="opts.html">Compilation Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="opts.html#simulation-options">Simulation Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pre-and-post-simulation-hooks">Pre and post simulation hooks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Example</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#adding-custom-command-line-arguments">Adding Custom Command Line Arguments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+</ul>
+
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../posts/2018_09_22_sigasi_adds_full_vunit_support/post.html">12 September - Sigasi Adds Full VUnit Support</a></li>
+    
+      <li><a href="../posts/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework/post.html">22 July - Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+    
+      <li><a href="../posts/2018_03_22_vunit_community_developed_bfms/post.html">22 March - VUnit Community Developed BFMs</a></li>
+    
+      <li><a href="../posts/2018_02_12_vunit3/post.html">12 February - VUnit 3.0</a></li>
+    
+      <li><a href="../posts/2017_12_14_vunit_bfms _as_simple_as_emailing/post.html">14 December - VUnit BFMs - as Simple as Emailing</a></li>
+    
+  </ul>
+
+  <h3><a href="../blog/tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="../blog/tag/osvvm.html">OSVVM</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="../blog/tag/vunit.html">VUnit</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog/archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="../blog/2018.html">2018 (4)</a></li>
+    
+  
+    
+    <li><a href="../blog/2017.html">2017 (7)</a></li>
+    
+  
+    
+    <li><a href="../blog/2016.html">2016 (8)</a></li>
+    
+  
+    
+    <li><a href="../blog/2015.html">2015 (3)</a></li>
+    
+  
+  </ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014-2018, Lars Asplund.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/py/ui.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
