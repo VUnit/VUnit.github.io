@@ -145,7 +145,7 @@ level <code class="docutils literal notranslate"><span class="pre">error</span><
 before <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> is considered a failure.</p>
 <p>Simulation stop is controlled via a stop count mechanism. The stop count mechanism works in the following way:</p>
 <ul class="simple">
-<li><p>Stop count may be ether set or not set for a specific logger and log level.</p></li>
+<li><p>Stop count may be either set or not set for a specific logger and log level.</p></li>
 <li><p>When a log is made to a logger it is checked if there is a stop count set.</p>
 <ul>
 <li><p>If set it is decremented and reaching zero means simulation stops.</p></li>
@@ -279,7 +279,7 @@ message was produced.  There is also the <code class="docutils literal notransla
 checks and consumes one log message from the list of recorded log calls to
 check a sequence of log messages.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">mock</span></code> procedures ensures that all future calls to the logger
-are recorded and not sent to a any log handler or cause simulation
+are recorded and not sent to a log handler or cause simulation
 abort. The <code class="docutils literal notranslate"><span class="pre">unmock</span></code> procedure restores the logger to its normal
 state.  The <code class="docutils literal notranslate"><span class="pre">unmock</span></code> call also checks that all recorded log messages
 have been checked by a corresponding <code class="docutils literal notranslate"><span class="pre">check_log</span></code> or
