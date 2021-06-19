@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sigasi Adds Full VUnit Support &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Sigasi Deepens Its Commitment to the VUnit Testing Framework" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html" />
+    <link rel="prev" title="Continuous Integration With VUnit Action in 10 Lines of Code" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Blog</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Blog</a> &raquo;</li>
+        
+      <li>Sigasi Adds Full VUnit Support</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/blog/2018_09_22_sigasi_adds_full_vunit_support.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sigasi-adds-full-vunit-support">
+<h1>Sigasi Adds Full VUnit Support<a class="headerlink" href="#sigasi-adds-full-vunit-support" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This article was originally posted on <a class="reference external" href="https://www.linkedin.com/pulse/sigasi-adds-full-vunit-support-lars-asplund">LinkedIn</a>
+where you may find some comments on its contents.</p>
+</div>
+<div class="figure align-center">
+<img alt="Sigasi Adds Full VUnit Support" src="../_images/sigasi_full.png" />
+</div>
+<p>Some time ago I gave a <a class="reference external" href="https://www.linkedin.com/pulse/sigasi-deepens-its-commitment-vunit-testing-framework-lars-asplund/?lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B3AKDCea7TJOzkRu%2FF7HHHQ%3D%3D">preview</a>
+of this update of Sigasi Studio and
+today it was released. VUnit is now fully integrated such that tests
+can be executed with a mouse click and verification progress and
+results can be monitored in a dedicated VUnit view.</p>
+<p>For more details have a look at this introduction video.</p>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/4GURRiTdbrY" frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope;
+picture-in-picture" allowfullscreen></iframe></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html" class="btn btn-neutral float-right" title="Sigasi Deepens Its Commitment to the VUnit Testing Framework" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html" class="btn btn-neutral float-left" title="Continuous Integration With VUnit Action in 10 Lines of Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

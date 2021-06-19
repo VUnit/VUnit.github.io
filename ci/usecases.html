@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Practical use cases &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release notes" href="../release_notes.html" />
+    <link rel="prev" title="Manual setup" href="manual.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Practical use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lin-vunit">lin-vunit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lin-docker">lin-docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lin-setup">lin-setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#win-setup">win-setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#win-stable">win-stable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repositories-using-vunit-for-ci">Repositories using VUnit for CI</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Practical use cases</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/ci/usecases.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="practical-use-cases">
+<span id="continuous-integration-usecases"></span><h1>Practical use cases<a class="headerlink" href="#practical-use-cases" title="Permalink to this headline">¶</a></h1>
+<p>Workflow <a class="reference external" href="https://github.com/VUnit/tdd-intro/blob/master/.github/workflows/tests.yml">tests.yml</a> from repo <a class="reference external" href="https://github.com/VUnit/tdd-intro">VUnit/tdd-intro</a>
+showcases five procedures to setup continuous integration in GitHub Actions, using GHDL and VUnit as a regression framework.
+The entrypoint to all the jobs is the same <a class="reference external" href="https://pytest.org">pytest</a> script (<a class="reference external" href="https://github.com/VUnit/tdd-intro/blob/master/test.py">test.py</a>),
+thus, all jobs are equivalent solutions. Tests called through pytest can be defined in any language: VUnit run.py scripts,
+bash/shell scripts, makefiles, etc.</p>
+<p>It is suggested for new users to clone/fork this template repository, and then remove the jobs they don’t want to use. Since
+all are equivalent, using a single job is enough to have HDL designs tested. However, it might be useful to have designs
+tested on different platforms.</p>
+<div class="section" id="lin-vunit">
+<h2>lin-vunit<a class="headerlink" href="#lin-vunit" title="Permalink to this headline">¶</a></h2>
+<p>Uses <em>Docker Action</em> <a class="reference external" href="https://github.com/VUnit/vunit_action">VUnit/vunit_action</a>, based on image <code class="docutils literal notranslate"><span class="pre">ghdl/vunit:llvm</span></code> (see
+<a class="reference external" href="https://github.com/ghdl/docker#-vunit-1-job-6-images-triggered-after-workflow-buster">ghdl/docker: VUnit</a>). It takes a
+single optional argument: the path to the <code class="docutils literal notranslate"><span class="pre">run.py</span></code>. See <a class="reference external" href="https://github.com/VUnit/vunit_action/blob/master/README.md">VUnit/vunit_action: README.md</a>
+for further info.</p>
+<p>This is the most straightforward solution, and the one with fastest startup.</p>
+</div>
+<div class="section" id="lin-docker">
+<h2>lin-docker<a class="headerlink" href="#lin-docker" title="Permalink to this headline">¶</a></h2>
+<p>Docker based job, which can be used in any CI system. An (optional) <a class="reference external" href="https://github.com/VUnit/tdd-intro/blob/master/.github/Dockerfile">Dockerfile</a> is used to add some packages on top of image <code class="docutils literal notranslate"><span class="pre">ghdl/vunit:llvm</span></code> (see <a class="reference internal" href="container.html#continuous-integration-container-customizing"><span class="std std-ref">Customizing existing images</span></a>). However, the same procedure can be used with any other image.</p>
+<p>This is equivalent to <em>lin-vunit</em>, but it is slightly more verbose.</p>
+</div>
+<div class="section" id="lin-setup">
+<h2>lin-setup<a class="headerlink" href="#lin-setup" title="Permalink to this headline">¶</a></h2>
+<p>Uses <em>JavaScript Action</em> <a class="reference external" href="https://github.com/ghdl/setup-ghdl-ci">ghdl/setup-ghdl-ci</a> to install GHDL on the Ubuntu host/VM.
+Then, additional system packages and Python packages are installed explicitly.</p>
+<p>Compared to previous approaches, in this case runtime dependencies are not pre-installed. As a result, startup is slightly
+slower.</p>
+</div>
+<div class="section" id="win-setup">
+<h2>win-setup<a class="headerlink" href="#win-setup" title="Permalink to this headline">¶</a></h2>
+<p>Uses Actions <a class="reference external" href="https://github.com/ghdl/setup-ghdl-ci">ghdl/setup-ghdl-ci</a> and <a class="reference external" href="https://github.com/msys2/setup-msys2">msys2/setup-msys2</a>
+to install latest <em>nightly</em> GHDL, other MSYS2 packages and Python packages in a <em>clean</em> MINGW64 environment.</p>
+<p>This is the recommended approach to run tests on Windows. Action setup-msys2 caches installed packages/dependencies
+automatically.</p>
+</div>
+<div class="section" id="win-stable">
+<h2>win-stable<a class="headerlink" href="#win-stable" title="Permalink to this headline">¶</a></h2>
+<p>The <em>traditional</em> procedure of downloading a tarball/zipfile from GHDL’s latest <em>stable</em> release. Additional Python packages
+are installed explicitly.</p>
+<p>This is more verbose than the previous approach, but it’s currently the only solution to use latest <em>stable</em> GHDL without
+building it from sources.</p>
+</div>
+<div class="section" id="repositories-using-vunit-for-ci">
+<h2>Repositories using VUnit for CI<a class="headerlink" href="#repositories-using-vunit-for-ci" title="Permalink to this headline">¶</a></h2>
+<p>This is a non-exhaustive list of projects where VUnit is used for testing HDL designs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/VUnit/vunit">VUnit/vunit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ghdl/ghdl-cosim">ghdl/ghdl-cosim</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../release_notes.html" class="btn btn-neutral float-right" title="Release notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="manual.html" class="btn btn-neutral float-left" title="Manual setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup/configuration scripts &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Containers and/or Virtual Machines" href="container.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup/configuration scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#github-actions">GitHub Actions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vunit-action">VUnit Action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#self-hosted-runners">Self-hosted runners</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Setup/configuration scripts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/ci/script.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-configuration-scripts">
+<span id="continuous-integration-script"></span><h1>Setup/configuration scripts<a class="headerlink" href="#setup-configuration-scripts" title="Permalink to this headline">¶</a></h1>
+<p>Keeping testing environments up to date with rapidly evolving tools can be time-consuming and can lead to frustration. In this
+section, scripts and configuration tools to automate the setup and/or configuration of simulators and VUnit are presented.</p>
+<div class="section" id="github-actions">
+<span id="continuous-integration-gha"></span><h2>GitHub Actions<a class="headerlink" href="#github-actions" title="Permalink to this headline">¶</a></h2>
+<p>GitHub’s CI/CD service is named <a class="reference external" href="https://github.com/features/actions">GitHub Actions</a> (GHA). It allows to create automated
+<em>workflows</em> for your repositories, which are defined through <a class="reference external" href="https://en.wikipedia.org/wiki/YAML">YAML</a> files. Workflows
+can be triggered by any event, such as push, issue creation or publication of releases.</p>
+<p>GHA provides virtual machines with GNU/Linux (Ubuntu), Windows or macOS. Hence, it is possible to write the steps/tasks using
+the default shells/terminals (<em>bash</em>, <em>powershell</em>, etc.), as in any other CI/CD service. By the same token, any language can
+be used (Python, JavaScript, Ruby, Go, Rust, etc.). However, there are also predefined tasks named <em>Actions</em>. Those are
+written either in <em>JavaScript/TypeScript</em> (for any OS) or packaged in a <em>Container Action</em> (GNU/Linux only). Some Actions are
+provided by GitHub (see <a class="reference external" href="https://github.com/actions">github.com/actions</a>), and some are published in the
+<a class="reference external" href="https://github.com/marketplace?type=actions">GitHub marketplace</a>. Nevertheless, any GitHub repository can contain <em>Actions</em>.</p>
+<p>Hence, the recommended procedure to create workflows is to pick and reuse existing Actions
+(see <a class="reference external" href="https://docs.github.com/actions">docs.github.com/actions</a>).</p>
+<p>Anyway, when further customization is required, the procedures explained in sections <em>Containers and/or Virtual Machines</em> and/or
+<em>Manual setup</em> can also be used in GHA workflows.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Implementation differences between <em>JavaScript</em> and <em>Container</em> actions can be found at
+<a class="reference external" href="https://docs.github.com/actions/creating-actions">docs.github.com/actions/creating-actions</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GitHub Actions is free (as in <em>free beer</em>) for public (open source) repositories. For private repositories,
+2000-3000 minutes are included per month. See section “<em>Simple, pay-as-you-go pricing</em>” at <a class="reference external" href="https://github.com/features/actions">GitHub Actions</a>.</p>
+</div>
+<div class="section" id="vunit-action">
+<span id="continuous-integration-gha-vunit"></span><h3>VUnit Action<a class="headerlink" href="#vunit-action" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/VUnit/vunit_action">VUnit Action</a> is a reusable <em>Action</em>, which is published in the marketplace
+(<a class="reference external" href="https://github.com/marketplace/actions/vunit-action">github.com/marketplace/actions/vunit-action</a>). It helps you build a
+workflow for running your HDL testbenches, and then present the results.</p>
+<p>To use <em>VUnit Action</em> for your project, you need to create a <a class="reference external" href="https://en.wikipedia.org/wiki/YAML">YAML</a> file (<code class="docutils literal notranslate"><span class="pre">some_name.yml</span></code>)
+and place that in a directory named <code class="docutils literal notranslate"><span class="pre">.github\workflows</span></code> (located directly under your project root), in the default branch
+of your repository. The YAML file should contain, at least, the following piece of code.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VUnit Tests</span>
+
+<span class="nt">on</span><span class="p">:</span>
+  <span class="nt">push</span><span class="p">:</span>
+  <span class="nt">pull_request</span><span class="p">:</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+
+  <span class="nt">test</span><span class="p">:</span>
+    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+    <span class="nt">steps</span><span class="p">:</span>
+
+      <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+
+      <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VUnit/vunit_action@v0.1.0</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Currently, VUnit Action is implemented as a <em>Container Action</em>. As a result, tests are executed in a Docker/OCI
+container, regardless of the CI/CD <em>host</em> being <cite>ubuntu-latest</cite>.</p>
+</div>
+<p>Whenever someone pushes code to the project or makes a pull request, this workflow is triggered. First, the code is checked
+out using the <a class="reference external" href="https://github.com/marketplace/actions/checkout">checkout action</a>. Then, the <em>VUnit Action</em> is triggered,
+to run the <code class="docutils literal notranslate"><span class="pre">run.py</span></code> script located in the root of your repository. If the VUnit run script is located elsewhere, you specify
+it in the YAML file:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VUnit/vunit_action@v0.1.0</span>
+  <span class="nt">with</span><span class="p">:</span>
+    <span class="nt">run_file</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">path/to/vunit_run_script.py</span>
+</pre></div>
+</div>
+<p>To build trust with the user community by clearly showing that you have tests up and running, we recommend that you add a
+badge/shield to the README of your project. It will show the latest status of you tests:</p>
+<div class="highlight-md notranslate"><div class="highlight"><pre><span></span>[<span class="nt">![</span>](<span class="na">https://github.com/&lt;user or organisation name&gt;/&lt;name of your repository&gt;/workflows/VUnit%20Tests/badge.svg</span>)](https://github.com/&lt;user or organisation name&gt;/&lt;name of your repository&gt;/actions)
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p><a class="reference external" href="https://shields.io/">shields.io</a> is another badge/shield provider which allows customizing some characteristics,
+such as shape, color, labels, icons, etc. When combining shields corresponding to different services, it is suggested to
+use <em>shields.io</em> in order to get an homogeneous result. Moreover, <em>shields.io</em> provides ready-to-copy snippets for multiple
+languages (Markdown, reStructuredText, HTML, etc.).</p>
+</div>
+<p>Clicking the badge/shield will take you to a list of workflow runs, and then further to the results of those runs:</p>
+<div class="figure align-center" id="id5">
+<img alt="Presenting GHA test results." src="../_images/gha_flow1.png" />
+<p class="caption"><span class="caption-text">Presenting GHA test results.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="self-hosted-runners">
+<h3>Self-hosted runners<a class="headerlink" href="#self-hosted-runners" title="Permalink to this headline">¶</a></h3>
+<p>By default, GitHub Actions workflows are executed on GitHub’s servers. However, it is possible to setup so-called
+<em>self-hosted runners</em>. Those are machines owned by users/developers/organizations/companies, where a client service is
+executed. Then, users can assign specific workflows to be executed on self-hosted runners. See <a class="reference external" href="https://docs.github.com/actions/hosting-your-own-runners">docs.github.com/actions/hosting-your-own-runners</a>.</p>
+<p>As explained in <a class="reference external" href="https://docs.github.com/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories">docs.github.com/actions/hosting-your-own-runners: Self-hosted runner security with public repositories</a>,
+it is strongly discouraged to use self-hosted runners with public repositorites, in order to avoid PRs executing potentially
+dangerous code. That is mainly because self-hosted runners have access to the tools available on the host. Yet, for that same
+reason, using self-hosted runners is a suitable solution for having CI with non-FLOSS simulators.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>VUnit is currently tested in CI with GHDL only. Specific companies provide a limited set of licenses for
+non-FLOSS simulators, which some developers can use locally. Ideally, companies interested in supporting VUnit would
+provide a machine to serve a self-hosted runner in a private fork. If you want to contribute, get in touch!</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="container.html" class="btn btn-neutral float-right" title="Containers and/or Virtual Machines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

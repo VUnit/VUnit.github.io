@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>VUnit Matlab Integration &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VUnit 3.0 - While Waiting for VHDL-2017" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html" />
+    <link rel="prev" title="VUnit BFMs - as Simple as Emailing" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Blog</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">VUnit Matlab Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-testbench">The Testbench</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-run-script">The Run Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-matlab-script">The Matlab Script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#putting-it-all-together">Putting It All Together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Blog</a> &raquo;</li>
+        
+      <li>VUnit Matlab Integration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/blog/2017_11_23_vunit_matlab_integration.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vunit-matlab-integration">
+<h1>VUnit Matlab Integration<a class="headerlink" href="#vunit-matlab-integration" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This article was originally posted on <a class="reference external" href="https://www.linkedin.com/pulse/vunit-matlab-integration-lars-asplund/">LinkedIn</a>
+where you may find some comments on its contents.</p>
+</div>
+<div class="figure align-center">
+<img alt="VUnit Matlab Integration" src="../_images/vunit_matlab.jpg" />
+</div>
+<p>Recently I got a question from an ASIC team if it is possible to
+integrate their VUnit simulations with Matlab. I’ve been getting this
+question several times lately so this post will show you how it can be
+done. It will be based on their use case but hopefully it will serve
+as inspiration if you have other Matlab use cases or want to integrate
+VUnit with some other program.</p>
+<div class="section" id="the-testbench">
+<h2>The Testbench<a class="headerlink" href="#the-testbench" title="Permalink to this headline">¶</a></h2>
+<p>The ASIC team had a slow high-level testbench that they wanted to
+monitor by continuously visualizing the progress of the implemented
+algorithm in the form of a Matlab plot. To emulate that slow test I
+created a testbench which doesn’t have a DUT implementing an algorithm
+but simply generates a sequence of output samples itself. The output
+samples are generated by repeatedly calling a function
+<cite>get_output_sample</cite> that I made really slow by adding an internal delay
+loop. The samples generated form a simple ramp function as shown in
+the figure below.</p>
+<div class="figure align-center">
+<img alt="Testbench Progress" src="../_images/matlab_figure.jpg" />
+</div>
+<p>Here is the main loop of my VUnit testbench.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">test_runner</span><span class="o">:</span> <span class="k">process</span> <span class="k">is</span>
+  <span class="k">variable</span> <span class="n">data_set</span> <span class="o">:</span> <span class="n">integer_array_t</span><span class="p">;</span>
+<span class="k">begin</span>
+  <span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">runner_cfg</span><span class="p">);</span>
+
+  <span class="k">for</span> <span class="n">set</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">num_of_data_sets</span> <span class="k">loop</span>
+    <span class="n">data_set</span> <span class="o">:=</span> <span class="n">new_1d</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="n">data</span> <span class="k">in</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">size_of_data_set</span> <span class="k">loop</span>
+      <span class="n">append</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">get_output_sample</span><span class="p">);</span>
+    <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+
+    <span class="n">save_csv</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">(</span><span class="n">runner_cfg</span><span class="p">),</span> <span class="s">&quot;data_set_&quot;</span> <span class="o">&amp;</span> <span class="n">to_string</span><span class="p">(</span><span class="n">set</span><span class="p">)</span> <span class="o">&amp;</span> <span class="s">&quot;.csv&quot;</span><span class="p">));</span>
+    <span class="n">deallocate</span><span class="p">(</span><span class="n">data_set</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+
+  <span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The code consists of two nested loops. The inner loop creates a
+<cite>data_set</cite> with a number of output samples and the outer loop creates
+several such sets. The samples in a data set is the latest progress of
+my algorithm, the “progress report” I send to Matlab.</p>
+<p><cite>data_set</cite> is declared as an <cite>integer_array_t</cite> from VUnit’s
+<cite>integer_array_pkg</cite>. This package allows you to manage one-, two- or
+three-dimensional arrays of integers and provides procedures for
+storing such arrays on file. Some of you may have seen the VUnit
+<cite>array_t</cite> before. <cite>integer_array_t</cite> is basically the same thing but
+it’s a regular type rather than a protected type. The reasons for this
+were discussed in my previous <a class="reference external" href="https://www.linkedin.com/pulse/vunit-30-while-waiting-vhdl-2017-lars-asplund/?lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B5b9rV7igQdWD8WMA5ZZshg%3D%3D">post</a>.</p>
+<p>In this case I have a one-dimensional array (a vector) created by</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">data_set</span> <span class="o">:=</span> <span class="n">new_1d</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The created vecor is empty by default and grows dynamically with every new sample I append.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">append</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">get_output_sample</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once I have a complete data set I save that to a CSV file and then
+deallocate the data set such that I can repeat the procedure.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">save_csv</span><span class="p">(</span><span class="n">data_set</span><span class="p">,</span> <span class="n">file_name</span> <span class="o">=&gt;</span> <span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">(</span><span class="n">runner_cfg</span><span class="p">),</span> <span class="s">&quot;data_set_&quot;</span> <span class="o">&amp;</span> <span class="n">to_string</span><span class="p">(</span><span class="n">set</span><span class="p">)</span> <span class="o">&amp;</span> <span class="s">&quot;.csv&quot;</span><span class="p">));</span>
+<span class="n">deallocate</span><span class="p">(</span><span class="n">data_set</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The file name probably deserves a comment. <cite>output_path(runner_cfg)</cite> returns a test unique output directory that VUnit provides to the testbench via the ever-present <cite>runner_cfg</cite> generic. I assign a unique name to every CSV file based on the data set number, for example <cite>data_set_3.csv</cite>, and then create the full path by concatenating the directory and file names using the <cite>join</cite> function.</p>
+</div>
+<div class="section" id="the-run-script">
+<h2>The Run Script<a class="headerlink" href="#the-run-script" title="Permalink to this headline">¶</a></h2>
+<p>The run script is similar to most run scripts with a few additions</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prj</span> <span class="o">=</span> <span class="n">VUnit</span><span class="o">.</span><span class="n">from_argv</span><span class="p">()</span>
+<span class="n">prj</span><span class="o">.</span><span class="n">add_array_util</span><span class="p">()</span>
+
+<span class="n">root</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">prj</span><span class="o">.</span><span class="n">add_library</span><span class="p">(</span><span class="s2">&quot;lib&quot;</span><span class="p">)</span>
+<span class="n">lib</span><span class="o">.</span><span class="n">add_source_files</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;*.vhd&quot;</span><span class="p">))</span>
+<span class="n">tb_octave</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">entity</span><span class="p">(</span><span class="s2">&quot;tb_octave&quot;</span><span class="p">)</span>
+
+<span class="n">tb_octave</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Passing test&quot;</span><span class="p">,</span>
+                     <span class="n">generics</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size_of_data_set</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">num_of_data_sets</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">activate_bug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                     <span class="n">pre_config</span><span class="o">=</span><span class="n">make_pre_config</span><span class="p">(</span><span class="s2">&quot;Passing test&quot;</span><span class="p">,</span> <span class="n">num_of_data_sets</span><span class="p">))</span>
+
+<span class="n">prj</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The VUnit array support is an add-on not compiled into <cite>vunit_lib</cite> by
+default. To include it you have to add</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">prj</span><span class="p">.</span><span class="n">add_array_util</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Next I want to create a configuration for my testbench. A VUnit configuration allows me to run my testbench with several different settings. In this example my testbench entity is called <cite>tb_octave</cite> and I get the testbench, compiled into <cite>lib</cite>, with the line</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tb_octave</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">entity</span><span class="p">(</span><span class="s2">&quot;tb_octave&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the <cite>add_config</cite> method I can now add a configuration to the
+testbench which I named <cite>Passing test</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tb_octave</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Passing test&quot;</span><span class="p">,</span>
+                     <span class="n">generics</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size_of_data_set</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">num_of_data_sets</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">activate_bug</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                     <span class="n">pre_config</span><span class="o">=</span><span class="n">make_pre_config</span><span class="p">(</span><span class="n">plot_title</span><span class="o">=</span><span class="s2">&quot;Passing test&quot;</span><span class="p">,</span> <span class="n">num_of_data_sets</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The configuration first sets a number of testbench generics collected
+in a Python dictionary (a list of key/value pairs). You’ve already
+seen the purpose of <cite>size_of_data_set</cite> and <cite>num_of_data_sets</cite> but I
+also have a generic <cite>activate_bug</cite> which I will use later to activate
+a bug in the <cite>get_output_sample</cite> function. I’ve also added something
+called a <cite>pre_config</cite> function. This is a function that VUnit calls
+before starting the simulation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pre_config</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;octave&quot;</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;octave&quot;</span><span class="p">,</span> <span class="s2">&quot;visualize.m&quot;</span><span class="p">),</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_of_data_sets</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p><cite>pre_config</cite> takes a mandatory <cite>output_path</cite> argument which is the
+same directory we saw in the testbench before. Note that the
+<cite>output_path</cite> name doesn’t mean that it can’t be used for simulation
+input. A <cite>pre_config</cite> function can for example be used to generate and
+store an input data file in <cite>output_path</cite> and let the testbench read
+that data.</p>
+<p>In this example I use <cite>pre_config</cite> to call Matlab (or rather Octave
+which is a free Matlab clone) using the Python <cite>run</cite> function. Octave
+is called with a Matlab M script, <cite>visualize.m</cite>, located in the
+<cite>&lt;root&gt;/octave</cite> directory. The script takes three arguments - the
+output path where the testbench stores the CSV files to plot, the
+title of the plot to be created, and the number of data sets that
+Octave should expect.</p>
+<p>But where are <cite>plot_title</cite> and <cite>num_of_data_sets</cite> defined? <cite>pre_config</cite> is called by VUnit and it can only provide arguments it knows about. VUnit knows about the <cite>output_path</cite> it created but doesn’t know anything about the purpose of the <cite>pre_config</cite> function and what it needs to fulfill that purpose. I can hardcode these values but what if I want to reuse <cite>pre_config</cite> with different values? The trick is to generate the <cite>pre_config</cite> function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_pre_config</span><span class="p">(</span><span class="n">plot_title</span><span class="p">,</span> <span class="n">num_of_data_sets</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pre_config</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">run</span><span class="p">([</span><span class="s2">&quot;octave&quot;</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;octave&quot;</span><span class="p">,</span> <span class="s2">&quot;visualize.m&quot;</span><span class="p">),</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">plot_title</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_of_data_sets</span><span class="p">)])</span>
+
+        <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">pre_config</span>
+</pre></div>
+</div>
+<p>The <cite>make_pre_config</cite> function has defined <cite>pre_config</cite> locally and
+returns that function to the caller of <cite>make_pre_config</cite>. Since
+<cite>figure_title</cite> and <cite>num_of_data_sets</cite> are arguments to
+<cite>make_pre_config</cite> they are also visible for <cite>pre_config</cite>, just like
+they would be for a local function in VHDL. It might seem strange that
+<cite>pre_config</cite> remembers the values of these arguments once the function
+has been returned and is used elsewhere. This is known as a closure
+and you can read more about it <a class="reference external" href="https://en.wikipedia.org/wiki/Closure_(computer_programming)">here</a>.</p>
+</div>
+<div class="section" id="the-matlab-script">
+<h2>The Matlab Script<a class="headerlink" href="#the-matlab-script" title="Permalink to this headline">¶</a></h2>
+<p>I’m not a Matlab programmer but the reference manual helped me creating a script that seems to work. Based on the input arguments it creates a named plot and then waits for input files in the output directory. Every new file is read and appended to the plot. I also added a test to see if the plotted graph is monotonically increasing as intended. If so, the script creates an empty file named <cite>pass</cite>. If not, a file named <cite>fail</cite> is created.</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="c">% Parse arguments</span><span class="w"></span>
+<span class="n">arg_list</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">argv</span><span class="p">;</span><span class="w"></span>
+<span class="n">output_path</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arg_list</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
+<span class="n">plot_title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arg_list</span><span class="p">{</span><span class="mi">2</span><span class="p">};</span><span class="w"></span>
+<span class="n">num_of_data_sets</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arg_list</span><span class="p">{</span><span class="mi">3</span><span class="p">};</span><span class="w"></span>
+
+<span class="c">% Configure figure</span><span class="w"></span>
+<span class="n">fig</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">figure</span><span class="p">(</span><span class="s">&#39;Name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;Testbench Progress&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="nb">title</span><span class="p">(</span><span class="n">plot_title</span><span class="p">)</span><span class="w"></span>
+<span class="nb">xlabel</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="nb">ylabel</span><span class="p">(</span><span class="s">&quot;y&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="nb">xlim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="p">])</span><span class="w"></span>
+<span class="nb">ylim</span><span class="p">([</span><span class="mi">0</span><span class="w"> </span><span class="mi">100</span><span class="p">])</span><span class="w"></span>
+<span class="nb">hold</span><span class="w"> </span><span class="n">on</span><span class="w"></span>
+
+<span class="c">% Wait on data set files and plot</span><span class="w"></span>
+<span class="n">data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">str2num</span><span class="p">(</span><span class="n">num_of_data_sets</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="n">file_name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fullfile</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span><span class="w"> </span><span class="nb">strcat</span><span class="p">(</span><span class="s">&quot;data_set_&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">int2str</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;.csv&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">not</span><span class="p">(</span><span class="nb">exist</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;file&#39;</span><span class="p">))</span><span class="w"></span>
+<span class="w">    </span><span class="nb">pause</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"></span>
+<span class="w">  </span><span class="n">data_set</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">csvread</span><span class="p">(</span><span class="n">file_name</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">data_set</span><span class="p">];</span><span class="w"></span>
+<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nb">length</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="nb">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+
+<span class="c">% Verify that the data set is monotonically increasing</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">data</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">  </span><span class="n">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pass&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="k">else</span><span class="w"></span>
+<span class="w">  </span><span class="n">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="nb">fullfile</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fail&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;w&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="nb">disp</span><span class="p">(</span><span class="s">&quot;ERROR: Output is not monotonically increasing!&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="nb">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span><span class="w"></span>
+
+<span class="c">% Quit when figure is closed</span><span class="w"></span>
+<span class="nb">pause</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="nb">waitfor</span><span class="p">(</span><span class="n">fig</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The next step is to let the pass/fail files determine the faith of my
+testbench. This can be done with a VUnit <cite>post_check</cite> function. I
+works just like the <cite>pre_config</cite> function but runs after the
+testbench.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">post_check</span><span class="p">(</span><span class="n">output_path</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;pass&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">exists</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;fail&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>If a pass file is found within 10 seconds the function returns <cite>True</cite>,
+otherwise <cite>False</cite>. A <cite>pre_config</cite> or <cite>post_check</cite> function returning <cite>False</cite>
+will cause my test to fail just like a failing assert within my
+testbench would.</p>
+</div>
+<div class="section" id="putting-it-all-together">
+<h2>Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
+<p>To demonstrate both the passing and the failing case I’ve created two
+configurations for this testbench using a for loop. Note how
+<cite>make_pre_config</cite> allows me to reuse the <cite>pre_config</cite> function with
+different values for <cite>plot_title</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">size_of_data_set</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_of_data_sets</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">activate_bug</span> <span class="ow">in</span> <span class="p">[(</span><span class="s2">&quot;Passing test&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Failing test&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)]:</span>
+    <span class="n">tb_octave</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                         <span class="n">generics</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size_of_data_set</span><span class="o">=</span><span class="n">size_of_data_set</span><span class="p">,</span>
+                                       <span class="n">num_of_data_sets</span><span class="o">=</span><span class="n">num_of_data_sets</span><span class="p">,</span>
+                                       <span class="n">activate_bug</span><span class="o">=</span><span class="n">activate_bug</span><span class="p">),</span>
+                         <span class="n">pre_config</span><span class="o">=</span><span class="n">make_pre_config</span><span class="p">(</span><span class="n">plot_title</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">num_of_data_sets</span><span class="o">=</span><span class="n">num_of_data_sets</span><span class="p">),</span>
+                         <span class="n">post_check</span><span class="o">=</span><span class="n">post_check</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result is shown in this short clip</p>
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/AnlwP3WSA2s" frameborder="0"
+allow="accelerometer; autoplay; encrypted-media; gyroscope;
+picture-in-picture" allowfullscreen></iframe><p>The good thing about the solutions I provided is that it makes it is
+fairly easy to get started. You can download the code and adapt it for
+your needs. If you didn’t know about VUnit configurations and arrays
+you’ve also learned something that is useful in many other
+situations. However, leaving aside my limited Matlab skills, there are
+still a number of flaws with this solution. For example</p>
+<ul class="simple">
+<li><p>With the CSV support provided by VUnit and Matlab it became easy to
+split the data into sets and store them in separate files. I would
+prefer writing and reading a single open file.</p></li>
+<li><p>Copying and modifying code is not good reuse. I need to raise the
+abstraction and remove details.</p></li>
+<li><p>Responsibility for the plot is all over the place. The testbench is
+in charge of the data, the title is set by the Python script, axis
+labels are controlled by the M script, and some properties are
+hardcoded.</p></li>
+</ul>
+<p>It seems that I will have to revisit this post. Until then…</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html" class="btn btn-neutral float-right" title="VUnit 3.0 - While Waiting for VHDL-2017" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2017_12_14_vunit_bfms_as_simple_as_emailing.html" class="btn btn-neutral float-left" title="VUnit BFMs - as Simple as Emailing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

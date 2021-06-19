@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>queue package &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="integer_array package" href="integer_array.html" />
+    <link rel="prev" title="Data Types" href="user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="user_guide.html">Data Types</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><em>queue</em> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer_array.html"><em>integer_array</em> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide.html#external-vhdl-api">External VHDL API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/user_guide.html">Verification Component Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../vhdl_libraries.html">VHDL Libraries</a> &raquo;</li>
+        
+          <li><a href="user_guide.html">Data Types</a> &raquo;</li>
+        
+      <li><em>queue</em> package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/data_types/queue.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="queue-package">
+<span id="queue-pkg"></span><h1><em>queue</em> package<a class="headerlink" href="#queue-package" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span> <span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.math_complex.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.numeric_bit.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.integer_vector_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.string_ptr_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">work.integer_array_pkg.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">package</span> <span class="n">queue_pkg</span> <span class="k">is</span>
+  <span class="k">type</span> <span class="n">queue_t</span> <span class="k">is</span> <span class="k">record</span>
+    <span class="n">p_meta</span> <span class="o">:</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+    <span class="n">data</span>   <span class="o">:</span> <span class="n">string_ptr_t</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">record</span><span class="p">;</span>
+  <span class="k">type</span> <span class="n">queue_vec_t</span> <span class="k">is</span> <span class="k">array</span><span class="p">(</span><span class="kt">integer</span> <span class="k">range</span> <span class="o">&lt;&gt;</span><span class="p">)</span> <span class="k">of</span> <span class="n">queue_t</span><span class="p">;</span>
+  <span class="k">constant</span> <span class="n">null_queue</span> <span class="o">:</span> <span class="n">queue_t</span> <span class="o">:=</span> <span class="p">(</span><span class="n">p_meta</span> <span class="o">=&gt;</span> <span class="n">null_ptr</span><span class="p">,</span> <span class="n">data</span> <span class="o">=&gt;</span> <span class="n">null_string_ptr</span><span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">new_queue</span>
+  <span class="k">return</span> <span class="n">queue_t</span><span class="p">;</span>
+
+  <span class="c1">-- Returns the length of the queue in bytes</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">length</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">natural</span><span class="p">;</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">is_empty</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">flush</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">copy</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">queue_t</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">integer</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">integer</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_integer</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">integer</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_integer</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">integer</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push_byte</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">natural</span> <span class="k">range</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">255</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop_byte</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">integer</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">character</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">character</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_character</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">character</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_character</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">character</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">boolean</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_boolean</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">boolean</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_boolean</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">boolean</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="n">real</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">real</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_real</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">real</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_real</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">real</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">bit</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">bit</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_bit</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">bit</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_bit</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">bit</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">std_ulogic</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">std_ulogic</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_std_ulogic</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">std_ulogic</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_std_ulogic</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">std_ulogic</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">severity_level</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">severity_level</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_severity_level</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">severity_level</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_severity_level</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">severity_level</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">file_open_status</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">file_open_status</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_file_open_status</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">file_open_status</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_file_open_status</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">file_open_status</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">file_open_kind</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">file_open_kind</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_file_open_kind</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">file_open_kind</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_file_open_kind</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">file_open_kind</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">bit_vector</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">bit_vector</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_bit_vector</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">bit_vector</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_bit_vector</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">bit_vector</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">std_ulogic_vector</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">std_ulogic_vector</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_std_ulogic_vector</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">std_ulogic_vector</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_std_ulogic_vector</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">std_ulogic_vector</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="n">complex</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">complex</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_complex</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">complex</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_complex</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">complex</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="n">complex_polar</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">complex_polar</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_complex_polar</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">complex_polar</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_complex_polar</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">complex_polar</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">unsigned</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_numeric_bit_unsigned</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_numeric_bit_unsigned</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">signed</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">signed</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_numeric_bit_signed</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">signed</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_numeric_bit_signed</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="nn">ieee.numeric_bit</span><span class="p">.</span><span class="kt">signed</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">unsigned</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_numeric_std_unsigned</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_numeric_std_unsigned</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">unsigned</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">signed</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">signed</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_numeric_std_signed</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">signed</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_numeric_std_signed</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="nn">ieee.numeric_std</span><span class="p">.</span><span class="kt">signed</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">string</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_string</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">string</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_string</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">string</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">time</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">time</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_time</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="kt">time</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_time</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">time</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="k">variable</span> <span class="n">value</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">integer_vector_ptr_t</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">integer_vector_ptr_t</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_integer_vector_ptr_ref</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">integer_vector_ptr_t</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_integer_vector_ptr_ref</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">integer_vector_ptr_t</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="k">variable</span> <span class="n">value</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">string_ptr_t</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">string_ptr_t</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_string_ptr_ref</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">string_ptr_t</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_string_ptr_ref</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">string_ptr_t</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="k">variable</span> <span class="n">value</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">queue_t</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">queue_t</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_queue_ref</span> <span class="k">is</span> <span class="n">push</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">queue_t</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_queue_ref</span> <span class="k">is</span> <span class="n">pop</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">queue_t</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push_ref</span> <span class="p">(</span>
+    <span class="k">constant</span> <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="k">inout</span> <span class="n">integer_array_t</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop_ref</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">integer_array_t</span><span class="p">;</span>
+
+  <span class="k">alias</span> <span class="n">push_integer_array_t_ref</span> <span class="k">is</span> <span class="n">push_ref</span><span class="p">[</span><span class="n">queue_t</span><span class="p">,</span> <span class="n">integer_array_t</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">pop_integer_array_t_ref</span> <span class="k">is</span> <span class="n">pop_ref</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="n">integer_array_t</span><span class="p">];</span>
+
+  <span class="c1">-- Private</span>
+  <span class="k">type</span> <span class="n">queue_element_type_t</span> <span class="k">is</span> <span class="p">(</span>
+    <span class="n">vhdl_character</span><span class="p">,</span> <span class="n">vhdl_integer</span><span class="p">,</span> <span class="n">vunit_byte</span><span class="p">,</span> <span class="n">vhdl_string</span><span class="p">,</span> <span class="n">vhdl_boolean</span><span class="p">,</span> <span class="n">vhdl_real</span><span class="p">,</span> <span class="n">vhdl_bit</span><span class="p">,</span> <span class="n">ieee_std_ulogic</span><span class="p">,</span>
+    <span class="n">vhdl_severity_level</span><span class="p">,</span> <span class="n">vhdl_file_open_status</span><span class="p">,</span> <span class="n">vhdl_file_open_kind</span><span class="p">,</span> <span class="n">vhdl_bit_vector</span><span class="p">,</span> <span class="n">vhdl_std_ulogic_vector</span><span class="p">,</span>
+    <span class="n">ieee_complex</span><span class="p">,</span> <span class="n">ieee_complex_polar</span><span class="p">,</span> <span class="n">ieee_numeric_bit_unsigned</span><span class="p">,</span> <span class="n">ieee_numeric_bit_signed</span><span class="p">,</span>
+    <span class="n">ieee_numeric_std_unsigned</span><span class="p">,</span> <span class="n">ieee_numeric_std_signed</span><span class="p">,</span> <span class="n">vhdl_time</span><span class="p">,</span> <span class="n">vunit_integer_vector_ptr_t</span><span class="p">,</span>
+    <span class="n">vunit_string_ptr_t</span><span class="p">,</span> <span class="n">vunit_queue_t</span><span class="p">,</span> <span class="n">vunit_integer_array_t</span><span class="p">,</span> <span class="n">vhdl_boolean_vector</span><span class="p">,</span> <span class="n">vhdl_integer_vector</span><span class="p">,</span>
+    <span class="n">vhdl_real_vector</span><span class="p">,</span> <span class="n">vhdl_time_vector</span><span class="p">,</span> <span class="n">ieee_ufixed</span><span class="p">,</span> <span class="n">ieee_sfixed</span><span class="p">,</span> <span class="n">ieee_float</span>
+  <span class="p">);</span>
+
+  <span class="k">function</span> <span class="n">encode</span> <span class="p">(</span>
+    <span class="n">data</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="k">function</span> <span class="n">decode</span> <span class="p">(</span>
+    <span class="n">code</span> <span class="o">:</span> <span class="kt">string</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="n">queue_t</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">decode</span> <span class="p">(</span>
+    <span class="k">constant</span> <span class="n">code</span>   <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+    <span class="k">variable</span> <span class="n">index</span>  <span class="o">:</span> <span class="k">inout</span> <span class="kt">positive</span><span class="p">;</span>
+    <span class="k">variable</span> <span class="n">result</span> <span class="o">:</span> <span class="k">out</span> <span class="n">queue_t</span>
+  <span class="p">);</span>
+
+  <span class="k">alias</span> <span class="n">encode_queue_t</span> <span class="k">is</span> <span class="n">encode</span><span class="p">[</span><span class="n">queue_t</span> <span class="k">return</span> <span class="kt">string</span><span class="p">];</span>
+  <span class="k">alias</span> <span class="n">decode_queue_t</span> <span class="k">is</span> <span class="n">decode</span><span class="p">[</span><span class="kt">string</span> <span class="k">return</span> <span class="n">queue_t</span><span class="p">];</span>
+
+  <span class="k">procedure</span> <span class="n">push_type</span> <span class="p">(</span>
+    <span class="n">queue</span>        <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">element_type</span> <span class="o">:</span> <span class="n">queue_element_type_t</span>
+  <span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">check_type</span> <span class="p">(</span>
+    <span class="n">queue</span>        <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">element_type</span> <span class="o">:</span> <span class="n">queue_element_type_t</span>
+  <span class="p">);</span>
+
+  <span class="k">procedure</span> <span class="n">unsafe_push</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">character</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">unsafe_pop</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">character</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">push_variable_string</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">string</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop_variable_string</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+
+  <span class="k">procedure</span> <span class="n">push_fix_string</span> <span class="p">(</span>
+    <span class="n">queue</span> <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">value</span> <span class="o">:</span> <span class="kt">string</span>
+  <span class="p">);</span>
+
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">pop_fix_string</span> <span class="p">(</span>
+    <span class="n">queue</span>  <span class="o">:</span> <span class="n">queue_t</span><span class="p">;</span>
+    <span class="n">length</span> <span class="o">:</span> <span class="kt">natural</span>
+  <span class="p">)</span> <span class="k">return</span> <span class="kt">string</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">package</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="integer_array.html" class="btn btn-neutral float-right" title="integer_array package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="user_guide.html" class="btn btn-neutral float-left" title="Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

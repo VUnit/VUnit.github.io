@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>VUnit 3.0 - While Waiting for VHDL-2017 &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VUnit 3.0 Color Logging" href="2017_10_31_vunit_3_0_color_logging.html" />
+    <link rel="prev" title="VUnit Matlab Integration" href="2017_11_23_vunit_matlab_integration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Blog</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">VUnit 3.0 - While Waiting for VHDL-2017</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#background">Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-vunit-3-0-approach">The VUnit 3.0 Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-code-example">A Code Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#next-vunit-3-0-preview">Next VUnit 3.0 Preview</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Blog</a> &raquo;</li>
+        
+      <li>VUnit 3.0 - While Waiting for VHDL-2017</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/blog/2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="vunit-3-0-while-waiting-for-vhdl-2017">
+<h1>VUnit 3.0 - While Waiting for VHDL-2017<a class="headerlink" href="#vunit-3-0-while-waiting-for-vhdl-2017" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This article was originally posted on <a class="reference external" href="https://www.linkedin.com/pulse/vunit-30-while-waiting-vhdl-2017-lars-asplund">LinkedIn</a>
+where you may find some comments on its contents.</p>
+</div>
+<div class="figure align-center">
+<img alt="VUnit 3.0 - While Waiting for VHDL-2017" src="../_images/vunit_waiting.jpg" />
+</div>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>When the VUnit project started, its primary mission was to create a
+framework for fully automated testing. However, it was developed
+bottom-up, starting with the logging framework needed to report the
+test results. The inspiration for that framework came from the popular
+software frameworks at the time. They are all quite similar with
+logger objects receiving the log calls, handlers deciding where the
+log messages go and formatters that are responsible for the
+layout. When combined and configured these objects support a great
+variety of logging needs.</p>
+<p>Back then, VHDL-93 was the standard best supported by simulators and
+the logger object was best represented with a record containing its
+configuration. Keeping the record in a shared variable enabled the
+logger to be shared by many and its configuration to be modified when
+needed. Passing a log entry to a logger was simply</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&quot;Hello world in VHDL-93&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>VHDL-93 didn’t specify what happens if you have a multi-core simulator
+accessing a shared variable simultaneously from several cores. To
+address this the protected type was introduced in the VHDL-2000
+release. It provides means to encapsulate properties of an object and
+only allows access through method interfaces. It also became the only
+legal type for shared variables so VUnit loggers switched to using a
+protected type.</p>
+<p>The syntax for accessing the methods of a protected type variable is
+different from standard subprograms</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello world with a protected type variable&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>but VUnit hides this behind standard subprogram calls to keep a
+consistent API for all VHDL versions.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>info(logger, “Hello world for VHDL-93 and later”);</p>
+<p>A drawback with the protected type variable is that it can’t be used
+as freely as other objects. For example</p>
+<ul class="simple">
+<li><p>It can’t be passed to or returned from a function, only procedures</p></li>
+<li><p>It can’t be used in arrays and records</p></li>
+<li><p>It can’t be used for generics</p></li>
+</ul>
+<p>These are restrictions making the use of protected types less flexible
+and something that the upcoming VHDL-2017 standard is starting to
+address. However, the adoption of new standards tend to take several
+years so rather than waiting for such simulator support VUnit 3.0 has
+yet again changed the underlying type of loggers.</p>
+</div>
+<div class="section" id="the-vunit-3-0-approach">
+<h2>The VUnit 3.0 Approach<a class="headerlink" href="#the-vunit-3-0-approach" title="Permalink to this headline">¶</a></h2>
+<p>In VUnit 3.0 the logger type doesn’t contain the logger
+configuration. Instead it’s a reference to where the logger
+configuration is stored. Such a reference can be a constant without
+preventing us from changing the configuration being referenced and a
+constant can be globally shared without having to be of a protected
+type.</p>
+<p>Changing types like this doesn’t change the basic APIs. It’s still</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="p">(</span><span class="n">logger</span><span class="p">,</span> <span class="s">&quot;Hello world in VUnit 3.0&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Maintaining old APIs and backward compatibility is important but with
+this change some old APIs can be improved. For example, we can now use
+functions where we had to use procedures before. The general approach
+to handle API improvements in VUnit 3.0 is that we recommend the new
+interfaces while keeping the more commonly used old interfaces to make
+the transition smoother.</p>
+<p>The move from protected types is not limited to the logging framework,
+we’ve also taken the same approach for checkers in the checker
+library. Again, the basic APIs are the same, some interfaces were
+improved, and we kept commonly used old APIs for backward
+compatibility.</p>
+<p>The fact that we’ve removed protected types from some user objects
+doesn’t mean that we’ve abandoned them completely. We’re still using
+them under the hood in places where we need shared variable structures
+and can live with the limitations.</p>
+</div>
+<div class="section" id="a-code-example">
+<h2>A Code Example<a class="headerlink" href="#a-code-example" title="Permalink to this headline">¶</a></h2>
+<p>As I described previously there are several restrictions that are
+lifted when removing protected types but I will just focus on one area
+in this post. Indirectly it will also be a short introduction to
+hierarchical logging in VUnit.</p>
+<p>The ability to have many loggers means that different verification
+components and processes can be configured individually with respect
+to naming, verbosity control, log files etc. One approach would be to
+leave that responsibility with the verification component but a better
+approach is to leave the decision making with the testbench builder as
+s/he is the consumer of the logs.</p>
+<p>Let’s show some code. Here is the start of a VUnit testbench
+architecture. Nothing more than a main loop logging a couple of
+messages to a custom logger named after the process path name.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span> <span class="nc">a</span> <span class="k">of</span> <span class="nc">tb</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="n">main</span> <span class="o">:</span> <span class="k">process</span>
+    <span class="k">constant</span> <span class="n">main_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">main</span><span class="na">&#39;path_name</span><span class="p">);</span>
+  <span class="k">begin</span>
+    <span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">runner_cfg</span><span class="p">);</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;Starting testbench&quot;</span><span class="p">);</span>
+    <span class="n">debug</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;A debug message&quot;</span><span class="p">);</span>
+
+    <span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The resulting output is</p>
+<div class="figure align-center">
+<img alt="../_images/log1.jpg" src="../_images/log1.jpg" />
+</div>
+<p>It may look like we created a logger named <cite>tb:main</cite> but the colon in
+<cite>main’path_name</cite> has the special purpose of defining a hierarchy of
+loggers with parent/child relationships. So the single call to
+<cite>get_logger</cite> will create two loggers if they don’t already exist. One
+logger is named <cite>main</cite> and is the child of the other logger named
+<cite>tb</cite>. Note that the debug message isn’t visible. By default the <cite>log
+level</cite> is set not to include such details.</p>
+<p>Now let’s create a dummy verification component. It will just take a
+logger as a generic (not possible prior to VUnit 3.0) and then do some
+logging on that logger. Here is the entity declaration.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span> <span class="nc">verification_component</span> <span class="k">is</span>
+  <span class="k">generic</span> <span class="p">(</span><span class="n">logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">verification_component_logger</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">entity</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If this component is instantiated without assigning the <cite>logger</cite> generic
+it will use <cite>verification_component_logger</cite> instead. This is a logger
+defined by the verification component itself and placed in an
+associated package.</p>
+<div class="figure align-center">
+<img alt="../_images/log2.jpg" src="../_images/log2.jpg" />
+</div>
+<p>To make the log more readable and the example more interesting I’m
+going to instantiate two verification components in my testbench and
+provide them with their own loggers.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">:</span> <span class="k">block</span> <span class="k">is</span>
+  <span class="k">constant</span> <span class="n">vc_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">vc</span><span class="na">&#39;path_name</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">alpha_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">beta_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;beta&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span>
+<span class="k">begin</span>
+  <span class="n">alpha</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">verification_component</span>
+    <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">alpha_logger</span><span class="p">);</span>
+
+  <span class="n">beta</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">verification_component</span>
+    <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">beta_logger</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">block</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>What I’ve done here is to collect all my verification components in a
+separate block labelled <cite>vc</cite>. <cite>vc</cite> has its own <cite>vc_logger</cite> based on the path
+name just like I did for <cite>main_logger</cite>. The loggers for the <cite>alpha</cite> and
+<cite>beta</cite> verification components are created in a different way. Rather
+than providing a complete hierarchical name to <cite>get_logger</cite> I just
+provide a simple name and the parent logger.</p>
+<p>My log output will now look like this</p>
+<div class="figure align-center">
+<img alt="../_images/log3.jpg" src="../_images/log3.jpg" />
+</div>
+<p>Now that we have our hierarchy of loggers we can start controlling
+it. First I’m going to make that hidden debug message in the <cite>main</cite>
+process visible by changing the visibility settings. I’m just changing
+the settings for <cite>main_logger</cite> and only for the display handler. What’s
+being logged on file is handled separately by the file handler.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">main</span> <span class="o">:</span> <span class="k">process</span>
+  <span class="k">constant</span> <span class="n">main_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">main</span><span class="na">&#39;path_name</span><span class="p">);</span>
+<span class="k">begin</span>
+  <span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="n">runner_cfg</span><span class="p">);</span>
+
+  <span class="n">show</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="n">display_handler</span><span class="p">,</span> <span class="n">debug</span><span class="p">);</span>
+
+  <span class="n">info</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;Starting testbench&quot;</span><span class="p">);</span>
+  <span class="n">debug</span><span class="p">(</span><span class="n">main_logger</span><span class="p">,</span> <span class="s">&quot;A debug message&quot;</span><span class="p">);</span>
+
+  <span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The result is</p>
+<div class="figure align-center">
+<img alt="../_images/log4.jpg" src="../_images/log4.jpg" />
+</div>
+<p>I can also control the loggers for <cite>alpha</cite> and <cite>beta</cite> individually but
+it’s also possible to address them collectively by controlling a
+shared ancestor in the hierarchy. Let’s add a configuration process
+to <cite>vc</cite>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">:</span> <span class="k">block</span> <span class="k">is</span>
+  <span class="k">constant</span> <span class="n">vc_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="n">vc</span><span class="na">&#39;path_name</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">alpha_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span>
+  <span class="k">constant</span> <span class="n">beta_logger</span> <span class="o">:</span> <span class="n">logger_t</span> <span class="o">:=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s">&quot;beta&quot;</span><span class="p">,</span> <span class="n">vc_logger</span><span class="p">);</span>
+<span class="k">begin</span>
+  <span class="nc">config</span><span class="o">:</span> <span class="k">process</span> <span class="k">is</span>
+  <span class="k">begin</span>
+    <span class="n">show</span><span class="p">(</span><span class="n">vc_logger</span><span class="p">,</span> <span class="n">display_handler</span><span class="p">,</span> <span class="p">(</span><span class="n">debug</span><span class="p">,</span> <span class="n">trace</span><span class="p">));</span>
+    <span class="k">wait</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+
+  <span class="n">alpha</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">verification_component</span>
+    <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">alpha_logger</span><span class="p">);</span>
+
+  <span class="n">beta</span> <span class="o">:</span> <span class="k">entity</span> <span class="nc">work</span><span class="p">.</span><span class="n">verification_component</span>
+    <span class="k">generic</span> <span class="k">map</span> <span class="p">(</span><span class="n">logger</span> <span class="o">=&gt;</span> <span class="n">beta_logger</span><span class="p">);</span>
+<span class="k">end</span> <span class="k">block</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The visibility setting applied to <cite>vc_logger</cite> will also be inherited and
+applied to all its descendants, in this case <cite>alpha</cite> and <cite>beta</cite>.</p>
+<div class="figure align-center">
+<img alt="../_images/log5.jpg" src="../_images/log5.jpg" />
+</div>
+<p>That’s all for now. Hopefully you’ve learned something new about
+hierarchical logging and the possibilities that open up when removing
+protected types from user objects.</p>
+</div>
+<div class="section" id="next-vunit-3-0-preview">
+<h2>Next VUnit 3.0 Preview<a class="headerlink" href="#next-vunit-3-0-preview" title="Permalink to this headline">¶</a></h2>
+<p>The next preview post will be about designing testbenches that need to
+control multiple DUT interfaces at the same time. The difference
+between such a testbench and one acting on a single interface boils
+down to more advanced communication. That is, how we transfer
+information to/from verification components and how we synchronize
+their actions when they work concurrently. There are many ways to do
+this but what’s needed to handle the various use cases is a basically
+an emailing service in VHDL. Computer science calls it message passing
+but the point is that emailing is something we all know. It only takes
+us a few minutes to figure out a new email client so a message passing
+implementation in VHDL shouldn’t be more complicated than that. VUnit
+has provided message passing support for several years but with the
+latest update we have a one-to-one mapping between doing VUnit message
+passing and managing an email thread. The next post will demonstrate
+this and to make the emailing analogy very clear I will also interact
+with my simulation using real emails.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2017_10_31_vunit_3_0_color_logging.html" class="btn btn-neutral float-right" title="VUnit 3.0 Color Logging" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2017_11_23_vunit_matlab_integration.html" class="btn btn-neutral float-left" title="VUnit Matlab Integration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

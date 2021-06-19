@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Data Types &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="queue package" href="queue.html" />
+    <link rel="prev" title="Communication Library" href="../com/user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><em>queue</em> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integer_array.html"><em>integer_array</em> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#external-vhdl-api">External VHDL API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ext_string.html"><em>external string</em> package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ext_integer_vector.html"><em>external integer vector</em> package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/user_guide.html">Verification Component Library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../vhdl_libraries.html">VHDL Libraries</a> &raquo;</li>
+        
+      <li>Data Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/data_types/user_guide.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="data-types">
+<span id="data-types-library"></span><h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<p>VUnit comes with a number of convenient data types included:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>queue_t</strong> (<a class="reference internal" href="queue.html#queue-pkg"><span class="std std-ref">Queue API</span></a>)</dt><dd><p>Queue (FIFO) to which any VHDL primitive data type can be pushed and
+popped (by serializing data to bytes internally). This queue can be
+used to, for example, push expected data from a driver process to a
+checker process in a test bench.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>integer_array_t</strong> (<a class="reference internal" href="integer_array.html#integer-array-pkg"><span class="std std-ref">Integer array API</span></a>)</dt><dd><p>Dynamic array of integers in up to 3 dimensions. Supports dynamic
+append and reshape operations, and reading/writing data to/from
+<em>.csv</em> or <em>.raw</em> byte files.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="external-vhdl-api">
+<span id="data-types-library-external"></span><h2>External VHDL API<a class="headerlink" href="#external-vhdl-api" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center">
+<img alt="Interfacing VHDL and foreign languages with VUnit" src="../_images/cosim.png" />
+</div>
+<p>In version 4.3.0 the prototype of an external VHDL API was introduced. This experimental feature exposes a subset of resources from some of VUnit’s internal data types. Creation functions for these data types accept two new optional parameters:</p>
+<ul class="simple">
+<li><p><strong>mode</strong>: selects between <em>internal</em> (default), external access (<em>extacc</em>) or external function (<em>extfnc</em>).</p></li>
+<li><p><strong>eid</strong>: when the selected mode is external, this parameter is to be used between VHDL and the foreign language as a unique identifier for the vector.</p></li>
+</ul>
+<p>In mode <em>extacc</em>, VHDL retrieves a pointer to an already allocated buffer, and then data is directly read/written from VHDL. Hence, it is required for the pointer, that must be allocated externally, to be accesible to both the VHDL and the foreign language. The expected use case for this mode is to wrap the VHDL simulation in C/C++ or Python, so that the simulation is a child of the main process.</p>
+<p>Conversely, mode <em>extfnc</em> is to be used when data is not available in the same memory space where the VHDL simulation is executed. Each time a value needs to be read/written, a function callback is executed (<code class="docutils literal notranslate"><span class="pre">read_*</span></code>/<code class="docutils literal notranslate"><span class="pre">write_*</span></code>), providing <code class="docutils literal notranslate"><span class="pre">eid</span></code> as an argument.</p>
+<p>List of types that are currently in the external VHDL API:</p>
+<ul class="simple">
+<li><p><strong>string_ptr</strong>, and <strong>byte_vector_ptr</strong> as an alias (<a class="reference internal" href="ext_string.html#ext-string-pkg"><span class="std std-ref">External string API</span></a>)</p></li>
+<li><p><strong>integer_vector_ptr</strong> (<a class="reference internal" href="ext_integer_vector.html#ext-integer-vector-pkg"><span class="std std-ref">External integer vector API</span></a>)</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>By default, bodies of the external API functions/procedures include forced failure assertions. Hence, using <code class="docutils literal notranslate"><span class="pre">mode/=internal</span></code> without providing a <em>bridge</em> to a foreign language will make tests fail. Bridges must be provided through <cite>vu.add_builtins(external=&lt;Options&gt;)</cite>, where <cite>&lt;Options&gt;</cite> defaults to <code class="docutils literal notranslate"><span class="pre">{&quot;string&quot;:</span> <span class="pre">False,</span> <span class="pre">&quot;integer_vector&quot;:</span> <span class="pre">False}</span></code>. Each field should contain a list of VHDL files to replace the <em>dummy</em> default. See <a class="reference external" href="https://github.com/VUnit/cosim">VUnit/cosim</a> for reference implementations of bridges and examples.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="queue.html" class="btn btn-neutral float-right" title="queue package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../com/user_guide.html" class="btn btn-neutral float-left" title="Communication Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

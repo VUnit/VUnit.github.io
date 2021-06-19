@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Compilation Options &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VHDL Libraries" href="../vhdl_libraries.html" />
+    <link rel="prev" title="vunit.ui" href="vunit.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="ui.html">Python Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="vunit.html">vunit.ui</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compilation Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulation-options">Simulation Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui.html#configurations">Configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui.html#attributes">Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui.html#pre-and-post-simulation-hooks">Pre and post simulation hooks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="ui.html">Python Interface</a> &raquo;</li>
+        
+      <li>Compilation Options</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/py/opts.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="compilation-options">
+<span id="compile-options"></span><h1>Compilation Options<a class="headerlink" href="#compilation-options" title="Permalink to this headline">¶</a></h1>
+<p>Compilation options allow customization of compilation behavior. Since simulators have
+differing options available, generic options may be specified through this interface.
+The following compilation options are known.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.a_flags</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">ghdl</span> <span class="pre">-a</span></code> command during compilation.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.flags</span></code></dt><dd><p>Deprecated alias of <code class="docutils literal notranslate"><span class="pre">ghdl.a_flags</span></code>. It will be removed in future releases.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">incisive.irun_vhdl_flags</span></code></dt><dd><p>Extra arguments passed to the Incisive <code class="docutils literal notranslate"><span class="pre">irun</span></code> command when compiling VHDL files.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">incisive.irun_verilog_flags</span></code></dt><dd><p>Extra arguments passed to the Incisive <code class="docutils literal notranslate"><span class="pre">irun</span></code> command when compiling Verilog files.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.vcom_flags</span></code></dt><dd><p>Extra arguments passed to ModelSim <code class="docutils literal notranslate"><span class="pre">vcom</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.vlog_flags</span></code></dt><dd><p>Extra arguments passed to ModelSim <code class="docutils literal notranslate"><span class="pre">vlog</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.vcom_flags</span></code></dt><dd><p>Extra arguments passed to Riviera PRO <code class="docutils literal notranslate"><span class="pre">vcom</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.vlog_flags</span></code></dt><dd><p>Extra arguments passed to Riviera PRO <code class="docutils literal notranslate"><span class="pre">vlog</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">activehdl.vcom_flags</span></code></dt><dd><p>Extra arguments passed to Active HDL <code class="docutils literal notranslate"><span class="pre">vcom</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">activehdl.vlog_flags</span></code></dt><dd><p>Extra arguments passed to Active HDL <code class="docutils literal notranslate"><span class="pre">vcom</span></code> command.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">enable_coverage</span></code></dt><dd><p>Enables compilation flags needed for code coverage and tells VUnit to handle
+the coverage files created at compilation. Only used for coverage with GHDL.
+Must be a boolean value. Default is False.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only affects source files added <em>before</em> the option is set.</p>
+</div>
+</div>
+<div class="section" id="simulation-options">
+<span id="sim-options"></span><h1>Simulation Options<a class="headerlink" href="#simulation-options" title="Permalink to this headline">¶</a></h1>
+<p>Simulation options allow customization of simulation behavior. Since simulators have
+differing options available, generic options may be specified through this interface.
+The following simulation options are known.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">vhdl_assert_stop_level</span></code></dt><dd><p>Will stop a VHDL simulation for asserts on the provided severity level or higher.
+Valid values are <code class="docutils literal notranslate"><span class="pre">&quot;warning&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;error&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;failure&quot;</span></code>. This option takes
+precedence over the fail_on_warning attribute.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">disable_ieee_warnings</span></code></dt><dd><p>Disable ieee warnings. Must be a boolean value. Default is False.</p>
+</dd>
+</dl>
+<dl id="coverage">
+<dt><code class="docutils literal notranslate"><span class="pre">enable_coverage</span></code></dt><dd><p>Enables code coverage collection during simulator for the run affected by the sim_option.
+Must be a boolean value. Default is False.</p>
+<p>When coverage is enabled VUnit only takes the minimal steps required
+to make the simulator create a unique coverage file for the
+simulation run.</p>
+<p>For RiverieraPRO and Modelsim/Questa, the VUnit users must still set <a class="reference internal" href="#sim-options"><span class="std std-ref">sim</span></a> and <a class="reference internal" href="#compile-options"><span class="std std-ref">compile</span></a> options to
+configure the simulator specific coverage options they want. The
+reason for this to allow the VUnit users maximum control of their
+coverage settings.</p>
+<p>For GHDL with GCC backend there is less configurability for coverage, and all
+necessary flags are set by the the <code class="docutils literal notranslate"><span class="pre">enable_coverage</span></code> sim and compile options.</p>
+<p>An example of a <code class="docutils literal notranslate"><span class="pre">run.py</span></code> file using coverage can be found
+<a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/coverage/">here</a>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">pli</span></code></dt><dd><p>A list of PLI file names.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">incisive.irun_sim_flags</span></code></dt><dd><p>Extra arguments passed to the Incisive <code class="docutils literal notranslate"><span class="pre">irun</span></code> command when loading the design.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.vsim_flags</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.vsim_flags.gui</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design in GUI
+mode where it takes precedence over <code class="docutils literal notranslate"><span class="pre">modelsim.vsim_flags</span></code>.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.init_files.after_load</span></code></dt><dd><p>A list of user defined DO/TCL-files that is sourced after the design has been loaded.
+They will be executed during <code class="docutils literal notranslate"><span class="pre">vunit_load</span></code>, after the top level has been loaded
+using the <code class="docutils literal notranslate"><span class="pre">vsim</span></code> command.
+During script evaluation the <code class="docutils literal notranslate"><span class="pre">vunit_tb_path</span></code> variable is defined
+as the path of the folder containing the test bench.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.init_files.before_run</span></code></dt><dd><p>A list of user defined DO/TCL-files that is sourced before the simulation is run.
+They will be executed at the start of <code class="docutils literal notranslate"><span class="pre">vunit_run</span></code> (and therefore also re-executed
+by <code class="docutils literal notranslate"><span class="pre">vunit_restart</span></code>).
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">modelsim.init_file.gui</span></code></dt><dd><p>A user defined TCL-file that is sourced after the design has been loaded in the GUI.
+For example this can be used to configure the waveform viewer.
+During script evaluation the <code class="docutils literal notranslate"><span class="pre">vunit_tb_path</span></code> variable is defined
+as the path of the folder containing the test bench.
+Must be a string.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.vsim_flags</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.vsim_flags.gui</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design in GUI
+mode where it takes precedence over <code class="docutils literal notranslate"><span class="pre">rivierapro.vsim_flags</span></code>.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.init_files.after_load</span></code></dt><dd><p>A list of user defined DO/TCL-files that is sourced after the design has been loaded.
+They will be executed during <code class="docutils literal notranslate"><span class="pre">vunit_load</span></code>, after the top level has been loaded
+using the <code class="docutils literal notranslate"><span class="pre">vsim</span></code> command.
+During script evaluation the <code class="docutils literal notranslate"><span class="pre">vunit_tb_path</span></code> variable is defined
+as the path of the folder containing the test bench.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.init_files.before_run</span></code></dt><dd><p>A list of user defined DO/TCL-files that is sourced before the simulation is run.
+They will be executed at the start of <code class="docutils literal notranslate"><span class="pre">vunit_run</span></code> (and therefore also re-executed
+by <code class="docutils literal notranslate"><span class="pre">vunit_restart</span></code>).
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rivierapro.init_file.gui</span></code></dt><dd><p>A user defined TCL-file that is sourced after the design has been loaded in the GUI.
+For example this can be used to configure the waveform viewer.
+During script evaluation the <code class="docutils literal notranslate"><span class="pre">vunit_tb_path</span></code> variable is defined
+as the path of the folder containing the test bench.
+Must be a string.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">activehdl.vsim_flags</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">activehdl.vsim_flags.gui</span></code></dt><dd><p>Extra arguments passed to <code class="docutils literal notranslate"><span class="pre">vsim</span></code> when loading the design in GUI
+mode where it takes precedence over <code class="docutils literal notranslate"><span class="pre">activehdl.vsim_flags</span></code>.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">activehdl.init_file.gui</span></code></dt><dd><p>A user defined TCL-file that is sourced after the design has been loaded in the GUI.
+For example this can be used to configure the waveform viewer.
+Must be a string.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.elab_flags</span></code></dt><dd><p>Extra elaboration flags passed to <code class="docutils literal notranslate"><span class="pre">ghdl</span> <span class="pre">--elab-run</span></code>.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.sim_flags</span></code></dt><dd><p>Extra simulation flags passed to <code class="docutils literal notranslate"><span class="pre">ghdl</span> <span class="pre">--elab-run</span></code>.
+Must be a list of strings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.elab_e</span></code></dt><dd><p>With <code class="docutils literal notranslate"><span class="pre">--elaborate</span></code>, execute <code class="docutils literal notranslate"><span class="pre">ghdl</span> <span class="pre">-e</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ghdl</span> <span class="pre">--elab-run</span> <span class="pre">--no-run</span></code>.
+Must be a boolean.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ghdl.gtkwave_script.gui</span></code></dt><dd><p>A user defined TCL-file that is sourced after the design has been loaded in the GUI.
+For example this can be used to configure the waveform viewer. Must be a string.
+There are currently limitations in the HEAD revision of GTKWave that prevent the
+user from sourcing a list of scripts directly. The following is the current work
+around to sourcing multiple user TCL-files:
+<code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">&lt;path/to/script.tcl&gt;</span></code></p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../vhdl_libraries.html" class="btn btn-neutral float-right" title="VHDL Libraries" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="vunit.html" class="btn btn-neutral float-left" title="vunit.ui" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Short Introduction to VUnit &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="What is VUnit?" href="../about.html" />
+    <link rel="prev" title="Who’s Using UVM (or Not) for FPGA Development, and Why?" href="2015_10_08_who_is_using_UVM.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Blog</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Blog</a> &raquo;</li>
+        
+      <li>Short Introduction to VUnit</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/blog/2015_09_24_short_introduction_to_vunit.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="short-introduction-to-vunit">
+<span id="short-introduction-to-vunit-post"></span><h1>Short Introduction to VUnit<a class="headerlink" href="#short-introduction-to-vunit" title="Permalink to this headline">¶</a></h1>
+<p><strong>Originally posted and commented on</strong> <a class="reference external" href="https://www.linkedin.com/pulse/short-introduction-vunit-lars-asplund?trk=mp-author-card">LinkedIn</a>.</p>
+<img alt="../_images/4x.png" src="../_images/4x.png" />
+<p><a class="reference external" href="https://github.com/VUnit/vunit">VUnit</a> is a free and open source
+unit testing framework for VHDL that was released in November last year.
+Initially it supported ModelSim, then GHDL support was added in June,
+and a few days ago we added support for Active-HDL and Riviera-PRO. The
+latest addition makes the tool available for a new group of users and
+this is a short introduction for you.</p>
+<p>The basic idea with unit testing is to code and test in short cycles to
+get frequent feedback on progress from day one. Most of us add bugs many
+times a day so we need to complete these cycles at the same pace to
+limit the consequences. If we’re going to test many times a day, not
+only what we just added but also do regression testing, it has to be an
+automated and speed optimized task.</p>
+<p>Automation means that our testbenches and their test cases have to be
+self-checking but also that we need to automate the execution all these
+tests or a selected subset thereof. As soon as we introduce manual steps
+in this workflow we tend to postpone the testing and the short code/test
+cycle is broken.</p>
+<p>VUnit provides a <a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/check/user_guide.md">check
+package</a>
+for making tests self-checking and the <a class="reference external" href="https://github.com/VUnit/vunit/blob/master/user_guide.md">test
+runner</a> is
+responsible for the execution. The test runner will scan your project
+directories for source files and tests, figure out their dependencies
+and what have been modified, compile what’s needed and then run the
+selected tests as specified from command line. For example,</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python run.py <span class="c1"># Incrementally compile and run all testbenches and test cases found. Report pass/fail result for each</span>
+<span class="go">test case</span>
+
+<span class="gp">$ </span>python run.py *tb_foo* <span class="c1"># Run all test cases in testbench tb_foo</span>
+
+<span class="gp">$ </span>python run.py -p <span class="m">6</span> *tb_foo* <span class="c1"># Speed up the test by running the test cases in 6 parallel threads. Make use of all the</span>
+<span class="go">CPU cores!</span>
+
+<span class="gp">$ </span>python run.py --gui <span class="s2">&quot;*tb_foo.Test that reset initializes all outputs&quot;</span> <span class="c1"># Launch the tb_foo test case &quot;Test that reset</span>
+<span class="go">initializes all outputs&quot; in the simulator GUI such that it can be debugged</span>
+</pre></div>
+</div>
+<p>VUnit is lightweight. A typical setup adds 8 lines to your normal
+testbench code and one extra line for each test case in that testbench.
+Everything is pure VHDL so it can be run without the run.py script if
+you want to. The typical run.py script is 4 lines of code plus one extra
+line for each VHDL library you want to create and each directory where
+you want the test runner to scan for source files. You don’t have to
+know Python, just start with a the template and insert your library
+names and source paths.</p>
+<p>In addition to the core functionality described above VUnit contains a
+number of other useful features. For example,</p>
+<ul class="simple">
+<li><p>A message passing mechanism that enables high-level communication
+between testbench components. It allows you to send almost any type
+of data to anyone located anywhere. All you have to deal with is the
+name of the receiver and what data to send. The strongly typed nature
+of VHDL has been hidden which means that you can send data of a
+custom type using the provided send procedure. You don’t have to
+define your own procedures for every data/message type you create.
+Message passing can be used for sending transactions without some of
+the limitations of pin-wiggling and procedure-based transactions but
+it is also the basis for several other communication patterns. For
+more info see the user
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/com/user_guide.md">guide</a>.</p></li>
+<li><p>An array package that can handle multidimensional arrays. It’s
+typically used for input and output data sets to the DUT. The package
+supports reading/writing arrays from/to file which enables file-based
+testing. For more information see this
+<a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/array">example</a>.</p></li>
+<li><p>A general purpose logging framework supporting display and file
+output, different output levels, filtering on level and design
+hierarchy, output formatting, automatic file and line localization of
+log entries, multiple loggers, and spreadsheet tool integration. For
+more information see the user
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/vunit/vhdl/logging/user_guide.md">guide</a>.</p></li>
+</ul>
+<p>VUnit is a truly open project formed by its community. If you want to
+follow the progress you can click on “watch” on the project
+<a class="reference external" href="https://github.com/VUnit/vunit">homepage</a>. If you like what you see
+click on “star”. If it’s something you don’t like or you miss a feature
+you should create an <a class="reference external" href="https://github.com/VUnit/vunit/issues">issue</a>.
+You can also make your own code
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/developing.md">contributions</a>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../about.html" class="btn btn-neutral float-right" title="What is VUnit?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2015_10_08_who_is_using_UVM.html" class="btn btn-neutral float-left" title="Who’s Using UVM (or Not) for FPGA Development, and Why?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

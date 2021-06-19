@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Verification Component Library &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Memory Model" href="memory_model.html" />
+    <link rel="prev" title="external integer vector package" href="../data_types/ext_integer_vector.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../logging/user_guide.html">Logging Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../check/user_guide.html">Check Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../run/user_guide.html">Run Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../com/user_guide.html">Communication Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/user_guide.html">Data Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Verification Component Library</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="memory_model.html">Memory Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verification-component-interfaces">Verification Component Interfaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="vci.html">Bus Master VCI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vci.html#stream-master-vci">Stream Master VCI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vci.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vci.html#synchronization-vci">Synchronization VCI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#verification-components">Verification Components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../vhdl_libraries.html">VHDL Libraries</a> &raquo;</li>
+        
+      <li>Verification Component Library</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/verification_components/user_guide.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="verification-component-library">
+<span id="vc-library"></span><h1>Verification Component Library<a class="headerlink" href="#verification-component-library" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This library is released as a <em>BETA</em> version. This means
+non-backwards compatible changes are still likely based on
+feedback from our users.</p>
+</div>
+<p>The VUnit Verification Component Library (VCL) contains a number of
+useful <a class="reference internal" href="#verification-components"><span class="std std-ref">Verification Components</span></a> (VC)
+as well as a set of utilities for writing your own verification
+component. Verification components allow a better overview in the test
+bench by raising the abstraction level of bus transactions. Even if
+you do not need the advanced features that VCs offer you may still
+benefit from using per-verified models of an AXI-bus instead of
+re-implementing it yourself.</p>
+<p>Included verification components (VCs):</p>
+<ul class="simple">
+<li><p>Avalon Memory-Mapped master</p></li>
+<li><p>Avalon Memory-Mapped slave</p></li>
+<li><p>Avalon Streaming sink</p></li>
+<li><p>Avalon Streaming source</p></li>
+<li><p>AXI-Lite master</p></li>
+<li><p>AXI read slave</p></li>
+<li><p>AXI write slave</p></li>
+<li><p>AXI stream master</p></li>
+<li><p>AXI stream monitor</p></li>
+<li><p>AXI stream protocol checker</p></li>
+<li><p>AXI stream slave</p></li>
+<li><p>RAM master</p></li>
+<li><p>Wishbone master</p></li>
+<li><p>Wishbone slave</p></li>
+<li><p>UART master</p></li>
+<li><p>UART slave</p></li>
+</ul>
+<p>In addition to VCs VUnit also has the concept of <a class="reference internal" href="#verification-component-interfaces"><span class="std std-ref">Verification
+Component Interfaces</span></a> (VCI). A
+single VC typically implements several VCIs. For example an AXI-lite
+VC or RAM master VC can support the same generic bus master and
+synchronization VCI while also supporting their own bus specific VCIs.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The main benefit of generic VCIs is to reduce redundancy between
+VCs and allow the user to write generic code that will work regardless
+of the specific VC instance used. For example control registers might be
+defined as a RAM-style bus in a submodule but be mapped to an AXI-lite
+interface on the top level. The same testbench code for talking to the
+submodule can be used in both the submodule test bench as well as the
+top level test bench regardless of the fact that two different VCs
+have been used. Without generic VCIs copy pasting the code and
+changing the type of read/write procedure call would be required.</p>
+</div>
+<p>Neither a VC or a VCI there is the <a class="reference internal" href="memory_model.html#memory-model"><span class="std std-ref">memory model</span></a>
+which is a model of a memory space such as the DRAM address space in a
+computer system. The memory mapped slave VCs such as AXI and Wishbone
+make transactions against the memory model which provides access
+permissions, expected data settings as well as the actual buffer for
+reading and writing data.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="verification-component-interfaces">
+<span id="id1"></span><h2>Verification Component Interfaces<a class="headerlink" href="#verification-component-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>A verification component interface (VCI) is a procedural interface to
+a VC. A VCI is defined as procedures in a package file. Several VCs can
+support the same generic VCI to enable code re-use both for the users
+and the VC-developers.</p>
+<p>List of VCIs included in the main repository:</p>
+<p>Included verification component interfaces (VCIs):</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="vci.html#bus-master-vci"><span class="std std-ref">Bus master</span></a>: generic read and write of bus with address and byte enable.</p></li>
+<li><p><a class="reference internal" href="vci.html#stream-vci"><span class="std std-ref">Stream</span></a>: push and pop of data stream without address.</p></li>
+<li><p><a class="reference internal" href="vci.html#sync-vci"><span class="std std-ref">Synchronization</span></a>: wait for time and events.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="verification-components">
+<span id="id2"></span><h2>Verification Components<a class="headerlink" href="#verification-components" title="Permalink to this headline">¶</a></h2>
+<p>A verification component (VC) is an entity that is normally connected
+to the DUT via a bus signal interface such as AXI-Lite. The main test
+sequence in the test bench sends messages to the VCs that will then
+perform the actual bus signal transactions. The benefit of this is
+both to raise the abstraction level of the test bench as well as
+making it easy to have parallel activity on several bus interfaces.</p>
+<p>A VC typically has an associated package defining procedures for
+sending to and receiving messages from the VC. Each VC instance is
+associated with a handle that is created in the test bench and set as
+a generic on the VC instantiation. The handle is given as and argument
+to the procedure calls to direct messages to the specfic VC instance.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="memory_model.html" class="btn btn-neutral float-right" title="Memory Model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../data_types/ext_integer_vector.html" class="btn btn-neutral float-left" title="external integer vector package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

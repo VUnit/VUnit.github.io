@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Containers and/or Virtual Machines &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Manual setup" href="manual.html" />
+    <link rel="prev" title="Setup/configuration scripts" href="script.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Containers and/or Virtual Machines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#customizing-existing-images">Customizing existing images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packaging-non-floss-simulators">Packaging non-FLOSS simulators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Containers and/or Virtual Machines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/ci/container.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="containers-and-or-virtual-machines">
+<span id="continuous-integration-container"></span><h1>Containers and/or Virtual Machines<a class="headerlink" href="#containers-and-or-virtual-machines" title="Permalink to this headline">¶</a></h1>
+<p>The ‘classic’ approach to virtual machines is through tools such as <a class="reference external" href="https://www.virtualbox.org/">VirtualBox</a>,
+<a class="reference external" href="https://www.qemu.org/">QEMU</a> or <a class="reference external" href="https://www.vmware.com">VMware</a>. However, for most use cases sharing complete system
+images is overkill. Here, <a class="reference external" href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">containerization or operating-system-level virtualization</a>
+comes into the game. Without going into technical details, containers are a kind of lightweight virtual machines, and the
+most known product that uses the technology is <a class="reference external" href="https://docker.com">Docker</a>.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Products such as <a class="reference external" href="https://www.vagrantup.com/">Vagrant</a> are meant to simplify the usage of virtual machines and/or
+containers by providing a common (black) box approach. In the end, there are enough open/non-open and free/non-free
+solutions for each user/company to choose the one that best fits their needs. From the hardware designer point-of-view,
+we ‘just’ need a box (no matter the exact underlying technology) that includes VUnit and a simulator.</p>
+</div>
+<p>Contributors of project <a class="reference external" href="https://github.com/ghdl/ghdl">GHDL</a> provide ready-to-use docker images at <a class="reference external" href="https://hub.docker.com/u/ghdl/dashboard/">hub.docker.com/u/ghdl/dashboard</a>.
+Some of these include not only GHDL but also VUnit. Precisely, <code class="docutils literal notranslate"><span class="pre">ghdl/vunit:{mcode|llvm|gcc}</span></code> are images based on Debian
+Buster image, with GHDL built from the latest commit of the master branch, and the latest release of VUnit installed through
+<code class="docutils literal notranslate"><span class="pre">pip</span></code>. <code class="docutils literal notranslate"><span class="pre">ghdl/vunit:{mcode|llvm|gcc}-master</span></code> images include the latest commit of VUnit from the master branch. There are
+other ready-to-use images with additional tools. For example, <code class="docutils literal notranslate"><span class="pre">ghdl/ext</span></code> includes <a class="reference external" href="http://gtkwave.sourceforge.net/">GTKWave</a>.</p>
+<p>As a result, the burden for the adoption of continuous integration for VUnit users is significantly reduced by using
+containers; which are available in GNU/Linux, FreeBSD, Windows and macOS, and are supported on most cloud services
+(<a class="reference external" href="https://github.com/features/actions">GitHub Actions</a>, <a class="reference external" href="https://travis-ci.org/">Travis CI</a>,
+<a class="reference external" href="https://aws.amazon.com/docker/">AWS</a>, <a class="reference external" href="https://codefresh.io/">Codefresh</a>, etc.) or CI frameworks
+(<a class="reference external" href="https://jenkins.io/">Jenkins</a>, <a class="reference external" href="https://drone.io/">Drone</a>, <a class="reference external" href="https://docs.gitlab.com/runner/">GitLab Runner</a>, etc.).</p>
+<p>For example, script <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/docker_runall.sh/">examples/vhdl/docker_runall.sh</a> shows how to run all the
+<a class="reference internal" href="../examples.html#examples"><span class="std std-ref">VHDL examples</span></a> on any x86 platform:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run --rm <span class="se">\</span>
+  -v /<span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>://work <span class="se">\</span>
+  -w //work <span class="se">\</span>
+  ghdl/vunit:llvm-master sh -c <span class="s1">&#39; \</span>
+<span class="s1">    VUNIT_SIMULATOR=ghdl; \</span>
+<span class="s1">    for f in $(find ./ -name &#39;</span>run.py<span class="s1">&#39;); do python3 $f; done \</span>
+<span class="s1">  &#39;</span>
+</pre></div>
+</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code>: create and start a container.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rm</span></code>: automatically remove the container when it exits.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code>: bind mount a volume, to share a folder between the host and the container. In this example the current path in the
+host is used (<code class="docutils literal notranslate"><span class="pre">$(pwd)</span></code>), and it is bind to <cite>/work</cite> inside the container. Note that both paths must be absolute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-w</span></code>: sets the working directory inside the container, i.e. where the commands we provide as arguments are executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ghdl/vunit:llvm-master</span></code>: the image we want to create a container from.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">-c</span></code>: the command that is executed as soon as the container is created.</p></li>
+</ul>
+<p>Note that, the arguments to <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">-c</span></code> are the same commands that you would execute locally, shall all the dependencies be
+installed on the host:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">VUNIT_SIMULATOR</span><span class="o">=</span>ghdl
+<span class="k">for</span> f <span class="k">in</span> <span class="k">$(</span>find ./ -name <span class="s1">&#39;run.py&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> python3 <span class="nv">$f</span><span class="p">;</span> <span class="k">done</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The leading slashes in <code class="docutils literal notranslate"><span class="pre">/$(pwd)</span></code> and <code class="docutils literal notranslate"><span class="pre">//work</span></code> are only required for the paths to be properly handled in MINGW64
+shells, and are ignored in other shells. See <a class="reference external" href="https://github.com/docker/for-win/issues/1509">docker/for-win#1509</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Docker offers two variants Community Edition (CE) and Enterprise Edition (EE). Any of them can be used. Moreover,
+part of Docker is being split to <a class="reference external" href="https://mobyproject.org/">Moby project</a>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://blog.docker.com/2017/03/docker-enterprise-edition/">Announcing Docker Enterprise Edition</a></p></li>
+<li><p><a class="reference external" href="https://blog.docker.com/2017/04/introducing-the-moby-project/">Introducing Moby Project: a new open-source project to advance the software containerization movement</a></p></li>
+</ul>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If you don’t want or cannot install docker, you can still use it online. <a class="reference external" href="https://play-with-docker.com">Play with Docker</a>
+(PWD) <em>“is a Docker playground which allows users to run Docker commands in a matter of seconds. It provides a free Alpine
+Linux Virtual Machine in browser, where you can build and run Docker containers and even create clusters”</em>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both GHDL and VUnit are free software. Docker is almost fully open source, but it depends on the host platform.
+See <a class="reference external" href="https://opensource.stackexchange.com/questions/5436/is-docker-still-free-and-open-source">Is Docker still free and open source?</a>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.docker.com/what-container">What is a container</a></p></li>
+<li><p><a class="reference external" href="https://www.docker.com/what-docker">What is docker</a></p></li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://docs.docker.com/engine/reference">docs.docker.com/engine/reference</a></dt><dd><ul>
+<li><p><a class="reference external" href="https://docs.docker.com/engine/reference/run/">run</a></p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/engine/reference/commandline/run/">commandline/run</a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="customizing-existing-images">
+<span id="continuous-integration-container-customizing"></span><h2>Customizing existing images<a class="headerlink" href="#customizing-existing-images" title="Permalink to this headline">¶</a></h2>
+<p>All the (automated) flow to generate images in <a class="reference external" href="https://github.com/ghdl/docker">ghdl/docker</a> is open source and public.
+Hence, any user can learn and extend it. However, many users will want to just add a few dependencies to an existing image,
+without the hassle of handling credentials to access <a class="reference external" href="https://hub.docker.com/">hub.docker.com</a>. That can be achieved with
+a short <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>. For instance:</p>
+<div class="highlight-Dockerfile notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">ghdl/vunit:llvm-master</span>
+
+<span class="k">RUN</span> pip install pytest matplotlib
+</pre></div>
+</div>
+<p>Then, in the CI workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker build -t imageName - &lt; path/to/Dockerfile
+docker run ... imageName ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="packaging-non-floss-simulators">
+<h2>Packaging non-FLOSS simulators<a class="headerlink" href="#packaging-non-floss-simulators" title="Permalink to this headline">¶</a></h2>
+<p>Although the licenses of most commercial simulators do not allow to share ready-to-use docker images, it is straightforward
+to mimic the process for in-house usage. Unlike GHDL, many commercial simulators provide a GUI and/or require a GUI for executing
+the installer. In those contexts, <a class="reference external" href="https://github.com/mviereck/x11docker">mviereck/x11docker</a> and
+<a class="reference external" href="https://github.com/mviereck/runx">mviereck/runx</a> can be useful.
+See <a class="reference external" href="https://github.com/mviereck/x11docker/issues/201">mviereck/x11docker#201</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="manual.html" class="btn btn-neutral float-right" title="Manual setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="script.html" class="btn btn-neutral float-left" title="Setup/configuration scripts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

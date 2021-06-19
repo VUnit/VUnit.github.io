@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testimonials" href="testimonials/testimonials.html" />
+    <link rel="prev" title="What is VUnit?" href="about.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-python-package-manager">Using the Python Package Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-development-version">Using the Development Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#for-vunit-developers">For VUnit Developers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/installing.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing">
+<span id="id1"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>VUnit supports VHDL (93, 2002, 2008 and 2019), Verilog and (experimentally) SystemVerilog; and it is known to work on
+GNU/Linux, Windows and Mac OS; on x86, x64, armv7 and aarch64. Full VUnit functionality requires Python (3.6 or higher) and
+a simulator supported by the VUnit Python test runner (see list below). However, VUnit can run with limited functionality
+entirely within VHDL using the <a class="reference internal" href="run/user_guide.html"><span class="doc">VHDL test runner</span></a>.</p>
+<p>Simulators:</p>
+<div class="admonition-only-vhdl admonition">
+<p class="admonition-title">Only VHDL</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.aldec.com/en/products/functional_verification/riviera-pro">Aldec Riviera-PRO</a>: Tested with Riviera-PRO 2015.06, 2015.10, 2016.02, 2016.10 (x64/x86).</p></li>
+<li><p><a class="reference external" href="https://www.aldec.com/en/products/fpga_simulation/active-hdl">Aldec Active-HDL</a>: Tested with Active-HDL 9.3, 10.1, 10.2, 10.3 (x64/x86)</p></li>
+<li><p><a class="reference external" href="https://github.com/ghdl/ghdl">GHDL</a></p>
+<ul>
+<li><p>Works with versions &gt;= 0.33 (Note: GHDL is a rolling project, it is therefore recommended to use the latest <a class="reference external" href="https://github.com/ghdl/ghdl/releases/tag/nightly">nightly release</a> tarball.)</p></li>
+<li><p>Tested with LLVM and mcode backends, gcc backend might work aswell.</p></li>
+<li><p>Integrated support for using <a class="reference external" href="http://gtkwave.sourceforge.net/">GTKWave</a> to view waveforms.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition-vhdl-or-systemverilog admonition">
+<p class="admonition-title">VHDL or SystemVerilog</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.mentor.com/products/fv/modelsim/">Mentor Graphics ModelSim/Questa</a>: Tested with 10.1 - 10.5</p></li>
+</ul>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.cadence.com/content/cadence-www/global/en_US/home/tools/system-design-and-verification/simulation-and-testbench-verification/incisive-enterprise-simulator.html">Cadence Incisive</a> (<strong>Experimental</strong>)</p>
+<ul>
+<li><p>Community contribution by <a class="reference external" href="https://github.com/cmarqu">Colin Marquardt</a>.
+VUnit maintainers do not have access to this simulator to verify the functionality.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">incisive_vhdl_fixup.py</span></code> to remove VHDL constructs that are
+not compatible with Incisive</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-the-python-package-manager">
+<span id="installing-pypi"></span><h2>Using the Python Package Manager<a class="headerlink" href="#using-the-python-package-manager" title="Permalink to this headline">¶</a></h2>
+<p>The recommended way to get VUnit is to install the <a class="reference internal" href="release_notes.html#latest-release"><span class="std std-ref">latest stable release</span></a> via <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; pip install vunit_hdl</span>
+</pre></div>
+</div>
+<p>Once installed, VUnit may be updated to new versions via a similar method:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; pip install -U vunit_hdl</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-development-version">
+<span id="installing-master"></span><h2>Using the Development Version<a class="headerlink" href="#using-the-development-version" title="Permalink to this headline">¶</a></h2>
+<p>Start by cloning our <a class="reference external" href="https://github.com/vunit/vunit/">GIT repository on GitHub</a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone --recurse-submodules https://github.com/VUnit/vunit.git</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--recurse-submodules</span></code> option initializes <a class="reference external" href="https://github.com/JimLewis/OSVVM">OSVVM</a> which is included as a submodule in the VUnit repository.</p>
+<p>To be able to import <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit" title="vunit.ui.VUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnit</span></code></a> in your <code class="docutils literal notranslate"><span class="pre">run.py</span></code> script
+you need to make it visible to Python or else the following error
+occurs.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Traceback (most recent call last):</span>
+<span class="go">   File &quot;run.py&quot;, line 2, in &lt;module&gt;</span>
+<span class="go">     from vunit import VUnit</span>
+<span class="go">ImportError: No module named vunit</span>
+</pre></div>
+</div>
+<p>There are three methods to make VUnit importable in your <code class="docutils literal notranslate"><span class="pre">run.py</span></code> script.:</p>
+<ol class="arabic">
+<li><p>Install it in your Python environment using:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python setup.py install</span>
+</pre></div>
+</div>
+</li>
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> environment variable to include the path to
+the VUnit repository root directory. Note that you shouldn’t point
+to the vunit directory within the root directory.</p></li>
+<li><p>Add the following to your <code class="docutils literal notranslate"><span class="pre">run.py</span></code> file <strong>before</strong> the <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">vunit</span></code>
+statement:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/path/to/vunit_repo_root/&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">vunit</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="for-vunit-developers">
+<span id="installing-dev"></span><h2>For VUnit Developers<a class="headerlink" href="#for-vunit-developers" title="Permalink to this headline">¶</a></h2>
+<p>For those interested in development of VUnit, it is best to install
+VUnit so that the sources from git are installed in-place instead of
+to the Python site-packages directory. This can be achieved by using
+the <code class="docutils literal notranslate"><span class="pre">-e</span></code> flag with <code class="docutils literal notranslate"><span class="pre">pip</span></code>, or the <code class="docutils literal notranslate"><span class="pre">develop</span></code> option with
+<code class="docutils literal notranslate"><span class="pre">setup.py</span></code>, or setting the <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> environment variable.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; git clone https://github.com/VUnit/vunit.git</span>
+<span class="go">&gt; cd vunit</span>
+
+<span class="go">&gt; python setup.py develop</span>
+<span class="go">or</span>
+<span class="go">&gt; pip install -e .</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>By installing VUnit in this manner, the git sources can be edited directly in
+your workspace while the <code class="docutils literal notranslate"><span class="pre">VUnit</span></code> package is still globally available in your
+Python environment.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="testimonials/testimonials.html" class="btn btn-neutral float-right" title="Testimonials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="about.html" class="btn btn-neutral float-left" title="What is VUnit?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

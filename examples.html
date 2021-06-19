@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examples &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="ci/intro.html" />
+    <link rel="prev" title="Bus Master VCI" href="verification_components/vci.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vhdl">VHDL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Composite generics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">VHDL UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Array and AXI4 Stream Verification Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Vivado IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">VHDL User Guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">AXI DMA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Generating tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Communication library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">JSON-for-VHDL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#systemverilog">SystemVerilog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">SystemVerilog UART</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">SystemVerilog User Guide</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/examples.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="examples">
+<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="vhdl">
+<h2>VHDL<a class="headerlink" href="#vhdl" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/composite_generics/">Composite generics</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference external" href="https://vunit.github.io/posts/2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics/post.html">Enable Your Simulator to Handle Complex Top-Level Generics</a>.</p>
+</div>
+<div class="section" id="id3">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/uart/">VHDL UART</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>A more realistic test bench of an UART to show VUnit VHDL usage on a
+typical module.</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/array_axis_vcs/">Array and AXI4 Stream Verification Components</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Shows how to use <code class="docutils literal notranslate"><span class="pre">integer_array_t</span></code>, <code class="docutils literal notranslate"><span class="pre">axi_stream_master_t</span></code> and <code class="docutils literal notranslate"><span class="pre">axi_stream_slave_t</span></code>.
+A CSV file is read, the content is sent in a row-major order to an AXI Stream buffer
+(FIFO) and it is received back to be saved in a different file. Further information can
+be found in the <a class="reference internal" href="verification_components/user_guide.html#vc-library"><span class="std std-ref">verification component library user guide</span></a>,
+in subsection <a class="reference internal" href="verification_components/vci.html#stream-vci"><span class="std std-ref">Stream</span></a> and in
+<a class="reference external" href="https://github.com/VUnit/vunit/tree/master/vunit/vhdl/verification_components/test/tb_axi_stream.vhd/">vhdl/verification_components/test/tb_axi_stream.vhd</a>.</p>
+</div>
+<div class="section" id="id5">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/array/">Array</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the <code class="docutils literal notranslate"><span class="pre">integer_array_t</span></code> data type, which can be used to
+handle dynamically sized 1D, 2D and 3D data as well as storing and
+loading it from csv and raw files.</p>
+</div>
+<div class="section" id="id6">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/vivado/">Vivado IP</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates compiling and performing behavioral simulation of
+Vivado IPs with VUnit.</p>
+</div>
+<div class="section" id="id7">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/user_guide/">VHDL User Guide</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>The most minimal VUnit VHDL project covering the basics of the
+<a class="reference internal" href="user_guide.html#user-guide"><span class="std std-ref">User Guide</span></a>.</p>
+</div>
+<div class="section" id="id8">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/run/">Run</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the VUnit run library.</p>
+</div>
+<div class="section" id="id9">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/axi_dma/">AXI DMA</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the AXI read and write slave verification components as
+well as the AXI-lite master verification component. An AXI DMA is
+verified which uses an AXI master port to read and write data from
+external memory. The AXI DMA also has a control register interface
+via AXI-lite.</p>
+</div>
+<div class="section" id="id10">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/generate_tests/">Generating tests</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates generating multiple test runs of the same test bench
+with different generic values. Also demonstrates use of <code class="docutils literal notranslate"><span class="pre">output_path</span></code> generic
+to create test bench output files in location specified by VUnit python runner.</p>
+</div>
+<div class="section" id="id11">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/check/">Check</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the VUnit check library.</p>
+</div>
+<div class="section" id="id12">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/com/">Communication library</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the <code class="docutils literal notranslate"><span class="pre">com</span></code> message passing package which can be used
+to communicate arbitrary objects between processes.  Further reading
+can be found in the <a class="reference internal" href="com/user_guide.html#com-user-guide"><span class="std std-ref">com user guide</span></a>.</p>
+</div>
+<div class="section" id="id13">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/json4vhdl/">JSON-for-VHDL</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates the <code class="docutils literal notranslate"><span class="pre">JSON-for-VHDL</span></code> library which can be used to parse JSON content.
+The content can be read from a file, or passed as a stringified generic.
+This is an alternative to composite generics, that supports any depth in the content structure.</p>
+</div>
+<div class="section" id="id14">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/logging/">Logging</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>Demonstrates VUnit’s support for logging.</p>
+</div>
+</div>
+<div class="section" id="systemverilog">
+<h2>SystemVerilog<a class="headerlink" href="#systemverilog" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id15">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/verilog/uart/">SystemVerilog UART</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>A more realistic test bench of an UART to show VUnit SystemVerilog
+usage on a typical module.</p>
+</div>
+<div class="section" id="id16">
+<h3><a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/verilog/user_guide/">SystemVerilog User Guide</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>The most minimal VUnit SystemVerilog project covering the basics of
+the <a class="reference internal" href="user_guide.html#user-guide"><span class="std std-ref">User Guide</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ci/intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="verification_components/vci.html" class="btn btn-neutral float-left" title="Bus Master VCI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

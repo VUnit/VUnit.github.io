@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Enable Your Simulator to Handle Complex Top-Level Generics &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="VUnit - Getting Started 1-2-3" href="2017_01_12_vunit_getting_started_1_2_3.html" />
+    <link rel="prev" title="Sigasi Adds Support for VUnit Testing Framework" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Blog</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Blog</a> &raquo;</li>
+        
+      <li>Enable Your Simulator to Handle Complex Top-Level Generics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/blog/2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="enable-your-simulator-to-handle-complex-top-level-generics">
+<h1>Enable Your Simulator to Handle Complex Top-Level Generics<a class="headerlink" href="#enable-your-simulator-to-handle-complex-top-level-generics" title="Permalink to this headline">¶</a></h1>
+<p>A powerful feature in VUnit is the ability to run testbenches and test cases with different configurations
+(not to be confused with VHDL configurations). The typical use case is to run tests with different generics
+but you can also run with different simulator settings and register Python functions to be run before and
+after the test. The latter can be used to create stimuli and verify test outputs using the power of Python or
+some other external program like Matlab.</p>
+<p>Over time VUnit users tend to get more advanced in the use of generics which inevitably leads to more complex data
+types. Rather than passing many generics of scalar types they want to create composite types like records and
+arrays. Unfortunately, many simulators have restrictions on what type of generics you can pass to the top-level
+testbench entity. Typically you’re limited to a small subset of the standard composite types like <code class="docutils literal notranslate"><span class="pre">string</span></code> and
+<code class="docutils literal notranslate"><span class="pre">std_logic_vector</span></code> and can’t use custom composite types. This is a limitation when trying to write clean and
+efficient code but something that can be worked around using VUnit. The trick is to encode your composite data
+type into something that the simulator _can_ handle and then decode back to the original type within the VHDL
+testbench. <code class="docutils literal notranslate"><span class="pre">string</span></code> is something most (all?) simulators can handle and what I will use in these examples.</p>
+<p>Let’s say that you want pass an <code class="docutils literal notranslate"><span class="pre">integer_vector</span></code> generic called <code class="docutils literal notranslate"><span class="pre">image_resolution</span></code> to your testbench. Such a
+vector can be represented with a list in Python which can be encoded into a comma-separated string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image_resolution</span> <span class="o">=</span> <span class="p">[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">]</span>
+<span class="n">encoded_image_resolution</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">image_resolution</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The Python <code class="docutils literal notranslate"><span class="pre">map</span></code> function applies the provided <code class="docutils literal notranslate"><span class="pre">str</span></code> function to all elements of the <code class="docutils literal notranslate"><span class="pre">image_resolution</span></code> list
+to convert the integers to strings. The resulting string elements are then joined together to create a
+comma-separated string <code class="docutils literal notranslate"><span class="pre">&quot;640,</span> <span class="pre">480&quot;</span></code>.</p>
+<p>Assuming my testbench entity is named <code class="docutils literal notranslate"><span class="pre">tb_composite_generics</span></code>, is compiled into library <code class="docutils literal notranslate"><span class="pre">tb_lib</span></code>, and has a
+test case (badly) named <code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">1</span></code>, I can create a configuration for that test case with these lines in my
+Python run script.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">image_resolution</span> <span class="o">=</span> <span class="p">[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">]</span>
+<span class="n">encoded_image_resolution</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">image_resolution</span><span class="p">))</span>
+
+<span class="n">testbench</span> <span class="o">=</span> <span class="n">tb_lib</span><span class="o">.</span><span class="n">entity</span><span class="p">(</span><span class="s2">&quot;tb_composite_generics&quot;</span><span class="p">)</span>
+<span class="n">test_1</span> <span class="o">=</span> <span class="n">testbench</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="s2">&quot;Test 1&quot;</span><span class="p">)</span>
+
+<span class="n">generics</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">encoded_image_resolution</span><span class="o">=</span><span class="n">encoded_image_resolution</span><span class="p">)</span>
+<span class="n">test_1</span><span class="o">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;VGA&#39;</span><span class="p">,</span> <span class="n">generics</span><span class="o">=</span><span class="n">generics</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Generics are represented with a Python dictionary (list of key=value pairs) where the key is the name of the
+generic, in this case <code class="docutils literal notranslate"><span class="pre">encoded_image_resolution</span></code> which is assigned our variable with the same name. We name
+our configuration to <code class="docutils literal notranslate"><span class="pre">VGA</span></code> and when listing our test cases we will see our test case and its only configuration.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -l</span>
+<span class="go">tb_lib.tb_composite_generics.VGA.Test 1</span>
+<span class="go">Listed 1 tests</span>
+</pre></div>
+</div>
+<p>The beginning of our example testbench at this point looks like this</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span> <span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span> <span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span> <span class="nc">tb_composite_generics</span> <span class="k">is</span>
+  <span class="k">generic</span> <span class="p">(</span>
+    <span class="n">encoded_image_resolution</span> <span class="o">:</span> <span class="kt">string</span><span class="p">;</span>
+    <span class="n">runner_cfg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span> <span class="nc">tb_composite_generics</span><span class="p">;</span>
+
+<span class="k">architecture</span> <span class="nc">tb</span> <span class="k">of</span> <span class="nc">tb_composite_generics</span> <span class="k">is</span>
+  <span class="k">impure</span> <span class="k">function</span> <span class="n">decode</span><span class="p">(</span><span class="n">encoded_integer_vector</span> <span class="o">:</span> <span class="kt">string</span><span class="p">)</span> <span class="k">return</span> <span class="n">integer_vector</span> <span class="k">is</span>
+    <span class="k">variable</span> <span class="n">parts</span> <span class="o">:</span> <span class="n">lines_t</span> <span class="o">:=</span> <span class="n">split</span><span class="p">(</span><span class="n">encoded_integer_vector</span><span class="p">,</span> <span class="s">&quot;, &quot;</span><span class="p">);</span>
+    <span class="k">variable</span> <span class="n">return_value</span> <span class="o">:</span> <span class="n">integer_vector</span><span class="p">(</span><span class="n">parts</span><span class="na">&#39;range</span><span class="p">);</span>
+  <span class="k">begin</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">parts</span><span class="na">&#39;range</span> <span class="k">loop</span>
+      <span class="n">return_value</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">:=</span> <span class="kt">integer</span><span class="na">&#39;value</span><span class="p">(</span><span class="n">parts</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="k">all</span><span class="p">);</span>
+    <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">return_value</span><span class="p">;</span>
+  <span class="k">end</span><span class="p">;</span>
+
+  <span class="k">constant</span> <span class="n">image_resolution</span> <span class="o">:</span> <span class="n">integer_vector</span> <span class="o">:=</span> <span class="n">decode</span><span class="p">(</span><span class="n">encoded_image_resolution</span><span class="p">);</span>
+<span class="k">begin</span>
+</pre></div>
+</div>
+<p>The decoded <code class="docutils literal notranslate"><span class="pre">image_resolution</span></code> constant is initialized by calling the <code class="docutils literal notranslate"><span class="pre">decode</span></code> function with the encoded
+resolution. <code class="docutils literal notranslate"><span class="pre">decode</span></code> is based on VUnit’s <code class="docutils literal notranslate"><span class="pre">split</span></code> function located in the <code class="docutils literal notranslate"><span class="pre">string_ops</span></code> package. It splits
+a string into its parts based on a defined separator, in this case <code class="docutils literal notranslate"><span class="pre">&quot;,</span> <span class="pre">&quot;</span></code>, and returns a pointer to a vector
+with <code class="docutils literal notranslate"><span class="pre">line</span></code> type elements. These <code class="docutils literal notranslate"><span class="pre">line</span></code> elements are converted back to integers which are inserted into
+the returned <code class="docutils literal notranslate"><span class="pre">integer_vector</span></code>. The overall solution is compact. Both the encoding and the decoding are single
+lines of code once the reusable <code class="docutils literal notranslate"><span class="pre">decode</span></code> function has been placed in a support package.</p>
+<p>Sometimes it’s more convenient with record generics. Maybe you want your complete testbench configuration in a
+single <code class="docutils literal notranslate"><span class="pre">tb_cfg</span></code> generic to avoid the hassle of re-routing generics through your design when new ones are added
+or removed. Just add/remove elements in that record. Such a generic can be represented with a Python dictionary</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tb_cfg</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">image_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">480</span><span class="p">,</span> <span class="n">dump_debug_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">encoded_tb_cfg</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tb_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">tb_cfg</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The encoding joins a list of string elements into a comma-separated string like we did before but each element
+in the list is a key:value pair taken from the <code class="docutils literal notranslate"><span class="pre">tb_cfg</span></code> dictionary. The resulting string is
+<code class="docutils literal notranslate"><span class="pre">&quot;image_width:640,</span> <span class="pre">image_height:480,</span> <span class="pre">dump_debug_data:True&quot;</span></code>. This is the same key:value format used in the
+<code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic present in every VUnit testbench so we have built-in support for decoding such a string.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">tb_cfg_t</span> <span class="k">is</span> <span class="k">record</span>
+  <span class="n">image_width</span>     <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+  <span class="n">image_height</span>    <span class="o">:</span> <span class="kt">positive</span><span class="p">;</span>
+  <span class="n">dump_debug_data</span> <span class="o">:</span> <span class="kt">boolean</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">record</span> <span class="nc">tb_cfg_t</span><span class="p">;</span>
+
+<span class="k">impure</span> <span class="k">function</span> <span class="n">decode</span><span class="p">(</span><span class="n">encoded_tb_cfg</span> <span class="o">:</span> <span class="kt">string</span><span class="p">)</span> <span class="k">return</span> <span class="n">tb_cfg_t</span> <span class="k">is</span>
+<span class="k">begin</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">image_width</span> <span class="o">=&gt;</span> <span class="kt">positive</span><span class="na">&#39;value</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="p">,</span> <span class="s">&quot;image_width&quot;</span><span class="p">)),</span>
+          <span class="n">image_height</span> <span class="o">=&gt;</span> <span class="kt">positive</span><span class="na">&#39;value</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="p">,</span> <span class="s">&quot;image_height&quot;</span><span class="p">)),</span>
+          <span class="n">dump_debug_data</span> <span class="o">=&gt;</span> <span class="kt">boolean</span><span class="na">&#39;value</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="p">,</span> <span class="s">&quot;dump_debug_data&quot;</span><span class="p">)));</span>
+<span class="k">end</span> <span class="k">function</span> <span class="nc">decode</span><span class="p">;</span>
+
+<span class="k">constant</span> <span class="n">tb_cfg</span> <span class="o">:</span> <span class="n">tb_cfg_t</span> <span class="o">:=</span> <span class="n">decode</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get</span></code> function returns the value for the provided key as a string so it has to be converted before assigning
+the target record.</p>
+<p>Note that you can also use the <code class="docutils literal notranslate"><span class="pre">tb_cfg</span></code> to configure the structure of the test bench, not only parameter values
+like image resolution. For example</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">dump_debug_data</span><span class="o">:</span> <span class="k">if</span> <span class="n">tb_cfg</span><span class="p">.</span><span class="n">dump_debug_data</span> <span class="k">generate</span>
+  <span class="k">process</span> <span class="k">is</span>
+  <span class="k">begin</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">tb_cfg</span><span class="p">.</span><span class="n">image_height</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">loop</span>
+      <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">tb_cfg</span><span class="p">.</span><span class="n">image_width</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">loop</span>
+        <span class="k">wait</span> <span class="k">until</span> <span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span> <span class="k">and</span> <span class="n">data_valid</span> <span class="o">=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span>
+        <span class="n">debug</span><span class="p">(</span><span class="s">&quot;Dumping tons of debug data&quot;</span><span class="p">);</span>
+      <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+    <span class="k">end</span> <span class="k">loop</span><span class="p">;</span>
+
+    <span class="n">dumping_done</span> <span class="o">&lt;=</span> <span class="n">true</span><span class="p">;</span>
+    <span class="k">wait</span><span class="p">;</span>
+  <span class="k">end</span> <span class="k">process</span><span class="p">;</span>
+<span class="k">end</span> <span class="k">generate</span> <span class="nc">dump_debug_data</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Let’s create two configurations this time. One configuration with a VGA image not dumping the extra debug data and
+one configuration with a tiny image (for a fast simulation) and complete debug information.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">def</span> <span class="n">encode</span><span class="p">(</span><span class="n">tb_cfg</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">return</span> <span class="s">&quot;, &quot;</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;%s:%s&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">str</span><span class="p">(</span><span class="n">tb_cfg</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span> <span class="k">for</span> <span class="n">key</span> <span class="k">in</span> <span class="n">tb_cfg</span><span class="p">])</span>
+
+<span class="n">vga_tb_cfg</span> <span class="o">=</span> <span class="n">dict</span><span class="p">(</span><span class="n">image_width</span><span class="o">=</span><span class="mi">640</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">480</span><span class="p">,</span> <span class="n">dump_debug_data</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
+<span class="n">test_1</span><span class="p">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="na">&#39;VGA</span><span class="p">&#39;,</span> <span class="n">generics</span><span class="o">=</span><span class="n">dict</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="o">=</span><span class="n">encode</span><span class="p">(</span><span class="n">vga_tb_cfg</span><span class="p">)))</span>
+
+<span class="n">tiny_tb_cfg</span> <span class="o">=</span> <span class="n">dict</span><span class="p">(</span><span class="n">image_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">image_height</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dump_debug_data</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+<span class="n">test_1</span><span class="p">.</span><span class="n">add_config</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="na">&#39;tiny</span><span class="p">&#39;,</span> <span class="n">generics</span><span class="o">=</span><span class="n">dict</span><span class="p">(</span><span class="n">encoded_tb_cfg</span><span class="o">=</span><span class="n">encode</span><span class="p">(</span><span class="n">tiny_tb_cfg</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The result is</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -v</span>
+<span class="go">Running test: tb_lib.tb_composite_generics.tiny.Test 1</span>
+<span class="go">Running test: tb_lib.tb_composite_generics.VGA.Test 1</span>
+<span class="go">Running 2 tests</span>
+
+<span class="go">Starting tb_lib.tb_composite_generics.tiny.Test 1</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">DEBUG: Dumping tons of debug data</span>
+<span class="go">simulation stopped @23ns with status 0</span>
+<span class="go">pass (P=1 S=0 F=0 T=2) tb_lib.tb_composite_generics.tiny.Test 1 (0.3 seconds)</span>
+
+<span class="go">Starting tb_lib.tb_composite_generics.VGA.Test 1</span>
+<span class="go">simulation stopped @0ms with status 0</span>
+<span class="go">pass (P=2 S=0 F=0 T=2) tb_lib.tb_composite_generics.VGA.Test 1 (0.3 seconds)</span>
+
+<span class="go">==== Summary ====================================================</span>
+<span class="go">pass tb_lib.tb_composite_generics.tiny.Test 1 (0.3 seconds)</span>
+<span class="go">pass tb_lib.tb_composite_generics.VGA.Test 1  (0.3 seconds)</span>
+<span class="go">=================================================================</span>
+<span class="go">pass 2 of 2</span>
+<span class="go">=================================================================</span>
+<span class="go">Total time was 0.5 seconds</span>
+<span class="go">Elapsed time was 0.5 seconds</span>
+<span class="go">=================================================================</span>
+<span class="go">All passed!</span>
+</pre></div>
+</div>
+<p>That’s all for this time. You can find the code for the final (dummy) testbench
+<a class="reference external" href="https://github.com/VUnit/vunit/blob/master/examples/vhdl/composite_generics/test/tb_composite_generics.vhd">here</a>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2017_01_12_vunit_getting_started_1_2_3.html" class="btn btn-neutral float-right" title="VUnit - Getting Started 1-2-3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html" class="btn btn-neutral float-left" title="Sigasi Adds Support for VUnit Testing Framework" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

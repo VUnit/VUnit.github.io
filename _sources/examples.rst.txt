@@ -1,0 +1,108 @@
+.. _examples:
+
+Examples
+========
+
+VHDL
+~~~~~~~~~~~~~~~~~~~~~~~
+
+`Composite generics <https://github.com/VUnit/vunit/tree/master/examples/vhdl/composite_generics/>`_
+----------------------------------------------------------------------------------------------------
+
+See `Enable Your Simulator to Handle Complex Top-Level Generics <https://vunit.github.io/posts/2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics/post.html>`_.
+
+`VHDL UART <https://github.com/VUnit/vunit/tree/master/examples/vhdl/uart/>`_
+-----------------------------------------------------------------------------
+
+A more realistic test bench of an UART to show VUnit VHDL usage on a
+typical module.
+
+`Array and AXI4 Stream Verification Components <https://github.com/VUnit/vunit/tree/master/examples/vhdl/array_axis_vcs/>`_
+---------------------------------------------------------------------------------------------------------------------------
+
+Shows how to use ``integer_array_t``, ``axi_stream_master_t`` and ``axi_stream_slave_t``.
+A CSV file is read, the content is sent in a row-major order to an AXI Stream buffer
+(FIFO) and it is received back to be saved in a different file. Further information can
+be found in the :ref:`verification component library user guide <vc_library>`,
+in subsection :ref:`Stream <stream_vci>` and in
+:vunit_file:`vhdl/verification_components/test/tb_axi_stream.vhd <vunit/vhdl/verification_components/test/tb_axi_stream.vhd>`.
+
+`Array <https://github.com/VUnit/vunit/tree/master/examples/vhdl/array/>`_
+--------------------------------------------------------------------------
+
+Demonstrates the ``integer_array_t`` data type, which can be used to
+handle dynamically sized 1D, 2D and 3D data as well as storing and
+loading it from csv and raw files.
+
+`Vivado IP <https://github.com/VUnit/vunit/tree/master/examples/vhdl/vivado/>`_
+-------------------------------------------------------------------------------
+
+Demonstrates compiling and performing behavioral simulation of
+Vivado IPs with VUnit.
+
+`VHDL User Guide <https://github.com/VUnit/vunit/tree/master/examples/vhdl/user_guide/>`_
+-----------------------------------------------------------------------------------------
+
+The most minimal VUnit VHDL project covering the basics of the
+:ref:`User Guide <user_guide>`.
+
+`Run <https://github.com/VUnit/vunit/tree/master/examples/vhdl/run/>`_
+----------------------------------------------------------------------
+
+Demonstrates the VUnit run library.
+
+`AXI DMA <https://github.com/VUnit/vunit/tree/master/examples/vhdl/axi_dma/>`_
+------------------------------------------------------------------------------
+
+Demonstrates the AXI read and write slave verification components as
+well as the AXI-lite master verification component. An AXI DMA is
+verified which uses an AXI master port to read and write data from
+external memory. The AXI DMA also has a control register interface
+via AXI-lite.
+
+`Generating tests <https://github.com/VUnit/vunit/tree/master/examples/vhdl/generate_tests/>`_
+----------------------------------------------------------------------------------------------
+
+Demonstrates generating multiple test runs of the same test bench
+with different generic values. Also demonstrates use of ``output_path`` generic
+to create test bench output files in location specified by VUnit python runner.
+
+`Check <https://github.com/VUnit/vunit/tree/master/examples/vhdl/check/>`_
+--------------------------------------------------------------------------
+
+Demonstrates the VUnit check library.
+
+`Communication library <https://github.com/VUnit/vunit/tree/master/examples/vhdl/com/>`_
+----------------------------------------------------------------------------------------
+
+Demonstrates the ``com`` message passing package which can be used
+to communicate arbitrary objects between processes.  Further reading
+can be found in the :ref:`com user guide <com_user_guide>`.
+
+`JSON-for-VHDL <https://github.com/VUnit/vunit/tree/master/examples/vhdl/json4vhdl/>`_
+--------------------------------------------------------------------------------------
+
+Demonstrates the ``JSON-for-VHDL`` library which can be used to parse JSON content.
+The content can be read from a file, or passed as a stringified generic.
+This is an alternative to composite generics, that supports any depth in the content structure.
+
+`Logging <https://github.com/VUnit/vunit/tree/master/examples/vhdl/logging/>`_
+------------------------------------------------------------------------------
+
+Demonstrates VUnit's support for logging.
+
+SystemVerilog
+~~~~~~~~~~~~~~~~~~~~~~~
+
+`SystemVerilog UART <https://github.com/VUnit/vunit/tree/master/examples/verilog/uart/>`_
+-----------------------------------------------------------------------------------------
+
+A more realistic test bench of an UART to show VUnit SystemVerilog
+usage on a typical module.
+
+`SystemVerilog User Guide <https://github.com/VUnit/vunit/tree/master/examples/verilog/user_guide/>`_
+-----------------------------------------------------------------------------------------------------
+
+The most minimal VUnit SystemVerilog project covering the basics of
+the :ref:`User Guide <user_guide>`.
+

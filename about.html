@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>What is VUnit? &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="#" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installing" href="installing.html" />
+    <link rel="prev" title="Short Introduction to VUnit" href="blog/2015_09_24_short_introduction_to_vunit.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">What is VUnit?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main-features">Main Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#credits-and-license">Credits and License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>What is VUnit?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/about.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="what-is-vunit">
+<span id="about"></span><h1>What is VUnit?<a class="headerlink" href="#what-is-vunit" title="Permalink to this headline">¶</a></h1>
+<p>VUnit is an open source unit testing framework for VHDL/SystemVerilog
+released under the terms of <a class="reference external" href="http://mozilla.org/MPL/2.0/">Mozilla Public License, v. 2.0</a>. It
+features the functionality needed to realize continuous and automated
+testing of your HDL code. VUnit doesn’t replace but rather complements
+traditional testing methodologies by supporting a <em>“test early and
+often”</em> approach through automation.</p>
+<p>VUnit reduces the overhead of testing by supporting automatic
+discovery of test benches and compilation order as well as including
+libraries for common verification tasks. It improves the speed of
+development by supporting incremental compilation and by enabling
+large test benches to be split up into smaller independent tests. It
+increases the quality of projects by enabling large regression suites
+to be run on a continuous integration server.</p>
+<p>VUnit does not impose any specific verification methodology on its
+users. The benefits of VUnit can be enjoyed when writing tests first
+or last, when writing long running top level tests or short running
+unit tests, when using directed or constrained random testing. Often
+projects adopt mix of approaches for different testing needs. VUnit
+has been used in production environments where thousands of tests take
+several hours to run on powerful multi-core machines as well as in
+small open source projects where only a small package is tested in a
+few seconds.</p>
+<div class="section" id="main-features">
+<h2>Main Features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Python test suite runner that enables powerful test administration,
+can continue testing after fatal run-time errors (e.g. division by
+zero), and ensures test case independence.</p></li>
+<li><p>Automatic scanning of files for tests, file dependencies, and file
+changes enable automatic (re)compilation and execution of test
+suites.</p></li>
+<li><p>Can run test cases in parallel to take advantage of multi-core
+machines.</p></li>
+<li><p>Support for running test benches with multiple generic/parameter settings.</p></li>
+<li><p><a class="reference internal" href="py/ui.html#python-interface"><span class="std std-ref">Scriptable API</span></a> as well as <a class="reference internal" href="cli.html#cli"><span class="std std-ref">command line</span></a>
+support.</p></li>
+<li><p>Has <code class="docutils literal notranslate"><span class="pre">--gui</span></code> switch to launch test cases in the simulator GUI when debugging is necessary.</p></li>
+<li><p><a class="reference internal" href="check/user_guide.html"><span class="doc">Assertion checker library</span></a> that extends VHDL built-in support
+(assert).</p></li>
+<li><p><a class="reference internal" href="logging/user_guide.html"><span class="doc">Logging framework</span></a> supporting display and file output, different log
+levels, visibility settings of levels and design hierarchy, output formatting
+and multiple loggers. Supports machine readable output formats that for example can be read by a spreadsheet.</p></li>
+<li><p>Requirements trace-ability through <a class="reference internal" href="cli.html#json-export"><span class="std std-ref">JSON Export</span></a> and <a class="reference internal" href="py/ui.html#attributes"><span class="std std-ref">test attributes</span></a>.</p></li>
+<li><p>Optional location preprocessor that traces log and check calls back to file
+and line number.</p></li>
+<li><p>Outputs JUnit report files for better <a class="reference external" href="http://jenkins-ci.org/">Jenkins</a> <a class="reference internal" href="ci/intro.html#continuous-integration"><span class="std std-ref">integration</span></a>.</p></li>
+<li><p>Builds on the commonly used <a class="reference external" href="http://en.wikipedia.org/wiki/XUnit">xUnit</a> architecture.</p></li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of ways to get started.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="user_guide.html#user-guide"><span class="std std-ref">VUnit User Guide</span></a> will guide users on how to use start using
+the basic features of VUnit but also provides information about more
+specific and advanced usage.</p></li>
+<li><p><a class="reference internal" href="run/user_guide.html#run-library"><span class="std std-ref">Run Library User Guide</span></a> presents the run packages.</p></li>
+<li><p><a class="reference internal" href="check/user_guide.html#check-library"><span class="std std-ref">Check Library User Guide</span></a> presents the check packages.</p></li>
+<li><p><a class="reference internal" href="logging/user_guide.html#logging-library"><span class="std std-ref">Logging Library User Guide</span></a> presents the log packages.</p></li>
+<li><p>There are also various presentations of VUnit on <a class="reference external" href="https://www.youtube.com/channel/UCCPVCaeWkz6C95aRUTbIwdg">YouTube</a>. For
+example <a class="reference external" href="https://www.youtube.com/watch?v=PZuBqcxS8t4">an introduction to unit testing (6 min)</a> and a <a class="reference external" href="https://www.youtube.com/watch?v=D8s_VLD91tw">short
+introduction to VUnit (12 min)</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>Any bug reports, feature requests or questions about the usage of VUnit
+can be made by creating a <a class="reference external" href="https://github.com/VUnit/vunit/issues/new">new issue</a>.</p>
+</div>
+<div class="section" id="credits-and-license">
+<h2>Credits and License<a class="headerlink" href="#credits-and-license" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Founders:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/LarsAsplund">Lars Asplund</a></p></li>
+<li><p><a class="reference external" href="https://github.com/kraigher">Olof Kraigher</a></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Notable contributors:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/cmarqu">Colin Marquardt</a>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Cadence Incisive support</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/slaweksiluk">Sławomir Siluk</a>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Verification Components (such as Avalon and Wishbone)</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/umarcor">Unai Martinez-Corral</a>:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>Co-simulation with GHDL’s VHPIDIRECT interface (<a class="reference external" href="https://github.com/VUnit/cosim">VUnit/cosim</a>, based on <a class="reference external" href="https://github.com/ghdl/ghdl-cosim">ghdl/ghdl-cosim</a>)</p></li>
+<li><p>Continuous Integration (CI)</p></li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>VUnit</strong>, except for the projects below, is released under the terms of
+<a class="reference external" href="http://mozilla.org/MPL/2.0/">Mozilla Public License, v. 2.0</a>. © 2014-2021 Lars Asplund, <a class="reference external" href="mailto:lars&#46;anders&#46;asplund&#37;&#52;&#48;gmail&#46;com">lars<span>&#46;</span>anders<span>&#46;</span>asplund<span>&#64;</span>gmail<span>&#46;</span>com</a>.</p>
+<p>The following libraries are <a class="reference external" href="https://github.com/VUnit/vunit/blob/master/.gitmodules">redistributed</a> with VUnit for your convenience:</p>
+<ul class="simple">
+<li><p><strong>OSVVM</strong> (<code class="docutils literal notranslate"><span class="pre">vunit/vhdl/osvvm</span></code>): these files are licensed under the terms of <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, v 2.0</a>, © 2010 - 2021 by <a class="reference external" href="http://www.synthworks.com">SynthWorks Design Inc</a>. All rights reserved.</p></li>
+<li><p><strong>JSON-for-VHDL</strong> (<code class="docutils literal notranslate"><span class="pre">vunit/vhdl/JSON-for-VHDL</span></code>): these files are licensed under the terms of <a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, v 2.0</a>, © 2015 - 2021 Patrick Lehmann.</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installing.html" class="btn btn-neutral float-right" title="Installing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="blog/2015_09_24_short_introduction_to_vunit.html" class="btn btn-neutral float-left" title="Short Introduction to VUnit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

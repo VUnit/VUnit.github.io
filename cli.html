@@ -1,0 +1,686 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Command Line Interface &mdash; VUnit  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/vunit.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python Interface" href="py/ui.html" />
+    <link rel="prev" title="User Guide" href="user_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0c479d" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/VUnit_logo_175x175.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/index.html">Blog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Named Arguments">Named Arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ghdl">ghdl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Incisive irun">Incisive irun</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-session">Example Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opening-a-test-case-in-simulator-gui">Opening a Test Case in Simulator GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-output-paths">Test Output Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulator-selection">Simulator Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulator-specific-environment-variables">Simulator Specific Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-output-path-length-environment-variables">Test Output Path Length Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#json-export">JSON Export</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="py/ui.html">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vhdl_libraries.html">VHDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">VUnit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Command Line Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/VUnit/vunit/blob/master/docs/cli.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-interface">
+<span id="cli"></span><h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>A <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit" title="vunit.ui.VUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnit</span></code></a> object can be created from command
+line arguments by using the <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit.from_argv" title="vunit.ui.VUnit.from_argv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_argv</span></code></a> method effectively creating a custom
+command line tool for running tests in the user project.  Source files
+and libraries are added to the project by using methods on the VUnit
+object. The configuration is followed by a call to the <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit.main" title="vunit.ui.VUnit.main"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main</span></code></a> method which will execute the function
+specified by the command line arguments and exit the script. The added
+source files are automatically scanned for test cases.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p><p>VUnit command line tool version 4.5.1rc0</p>
+</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">attributes</span> <span class="n">WITH_ATTRIBUTES</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">attributes</span> <span class="n">WITHOUT_ATTRIBUTES</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="nb">compile</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">-</span><span class="n">m</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fail</span><span class="o">-</span><span class="n">fast</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">elaborate</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">clean</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT_PATH</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">-</span><span class="n">x</span> <span class="n">XUNIT_XML</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">xunit</span><span class="o">-</span><span class="n">xml</span><span class="o">-</span><span class="nb">format</span> <span class="p">{</span><span class="n">jenkins</span><span class="p">,</span><span class="n">bamboo</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">exit</span><span class="o">-</span><span class="mi">0</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">dont</span><span class="o">-</span><span class="n">catch</span><span class="o">-</span><span class="n">exceptions</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">log</span><span class="o">-</span><span class="n">level</span> <span class="p">{</span><span class="n">info</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">warning</span><span class="p">,</span><span class="n">debug</span><span class="p">}]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="n">NUM_THREADS</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">u</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">export</span><span class="o">-</span><span class="n">json</span> <span class="n">EXPORT_JSON</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">gtkwave</span><span class="o">-</span><span class="n">fmt</span> <span class="p">{</span><span class="n">vcd</span><span class="p">,</span><span class="n">ghw</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">gtkwave</span><span class="o">-</span><span class="n">args</span> <span class="n">GTKWAVE_ARGS</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">cdslib</span> <span class="n">CDSLIB</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">hdlvar</span> <span class="n">HDLVAR</span><span class="p">]</span>
+              <span class="p">[</span><span class="n">tests</span> <span class="p">[</span><span class="n">tests</span> <span class="o">...</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="section" id="Positional Arguments">
+<h3>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>tests</kbd></dt>
+<dd><p>Tests to run</p>
+<p>Default: “*”</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Named Arguments">
+<h3>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>--with-attributes</kbd></dt>
+<dd><p>Only select tests with these attributes set</p>
+</dd>
+<dt><kbd>--without-attributes</kbd></dt>
+<dd><p>Only select tests without these attributes set</p>
+</dd>
+<dt><kbd>-l, --list</kbd></dt>
+<dd><p>Only list all test cases</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-f, --files</kbd></dt>
+<dd><p>Only list all files in compile order</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--compile</kbd></dt>
+<dd><p>Only compile project without running tests</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-m, --minimal</kbd></dt>
+<dd><p>Only compile files required for the (filtered) test benches</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-k, --keep-compiling</kbd></dt>
+<dd><p>Continue compiling even after errors only skipping files that depend on failed files</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--fail-fast</kbd></dt>
+<dd><p>Stop immediately on first failing test</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--elaborate</kbd></dt>
+<dd><p>Only elaborate test benches without running</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--clean</kbd></dt>
+<dd><p>Remove output path first</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-o, --output-path</kbd></dt>
+<dd><p>Output path for compilation and simulation artifacts</p>
+<p>Default: “./vunit_out”</p>
+</dd>
+<dt><kbd>-x, --xunit-xml</kbd></dt>
+<dd><p>Xunit test report .xml file</p>
+</dd>
+<dt><kbd>--xunit-xml-format</kbd></dt>
+<dd><p>Possible choices: jenkins, bamboo</p>
+<p>Only valid with –xunit-xml argument. Defines where in the XML file the simulator output is stored on a failure. “jenkins” = Output stored in &lt;system-out&gt;, “bamboo” = Output stored in &lt;failure&gt;.</p>
+<p>Default: “jenkins”</p>
+</dd>
+<dt><kbd>--exit-0</kbd></dt>
+<dd><p>Exit with code 0 even if a test failed. Still exits with code 1 on fatal errors such as compilation failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--dont-catch-exceptions</kbd></dt>
+<dd><p>Let exceptions bubble up all the way. Useful when running with “python -m pdb”.</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-v, --verbose</kbd></dt>
+<dd><p>Print test output immediately and not only when failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-q, --quiet</kbd></dt>
+<dd><p>Do not print test output even in the case of failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--no-color</kbd></dt>
+<dd><p>Do not color output</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--log-level</kbd></dt>
+<dd><p>Possible choices: info, error, warning, debug</p>
+<p>Log level of VUnit internal python logging. Used for debugging</p>
+<p>Default: “warning”</p>
+</dd>
+<dt><kbd>-p, --num-threads</kbd></dt>
+<dd><p>Number of tests to run in parallel. Test output is not continuously written in verbose mode with p &gt; 1</p>
+<p>Default: 1</p>
+</dd>
+<dt><kbd>-u, --unique-sim</kbd></dt>
+<dd><p>Do not re-use the same simulator process for running different test cases (slower)</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--export-json</kbd></dt>
+<dd><p>Export project information to a JSON file.</p>
+</dd>
+<dt><kbd>--version</kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd>-g, --gui</kbd></dt>
+<dd><p>Open test case(s) in simulator gui with top level pre loaded</p>
+<p>Default: False</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="ghdl">
+<h3>ghdl<a class="headerlink" href="#ghdl" title="Permalink to this headline">¶</a></h3>
+<p>GHDL specific flags</p>
+<dl class="option-list">
+<dt><kbd>--gtkwave-fmt</kbd></dt>
+<dd><p>Possible choices: vcd, ghw</p>
+<p>Save .vcd or .ghw to open in gtkwave</p>
+</dd>
+<dt><kbd>--gtkwave-args</kbd></dt>
+<dd><p>Arguments to pass to gtkwave</p>
+<p>Default: “”</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="Incisive irun">
+<h3>Incisive irun<a class="headerlink" href="#Incisive irun" title="Permalink to this headline">¶</a></h3>
+<p>Incisive irun-specific flags</p>
+<dl class="option-list">
+<dt><kbd>--cdslib</kbd></dt>
+<dd><p>The cds.lib file to use. If not given, VUnit maintains its own cds.lib file.</p>
+</dd>
+<dt><kbd>--hdlvar</kbd></dt>
+<dd><p>The hdl.var file to use. If not given, VUnit does not use a hdl.var file.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="example-session">
+<h2>Example Session<a class="headerlink" href="#example-session" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/user_guide//">VHDL User Guide Example</a> can be run to produce the following output:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">List all tests</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -l</span>
+<span class="go">lib.tb_example.all</span>
+<span class="go">lib.tb_example_many.test_pass</span>
+<span class="go">lib.tb_example_many.test_fail</span>
+<span class="go">Listed 3 tests</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Run all tests</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -v lib.tb_example*</span>
+<span class="go">Running test: lib.tb_example.all</span>
+<span class="go">Running test: lib.tb_example_many.test_pass</span>
+<span class="go">Running test: lib.tb_example_many.test_fail</span>
+<span class="go">Running 3 tests</span>
+
+<span class="go">running lib.tb_example.all</span>
+<span class="go">Hello World!</span>
+<span class="go">pass( P=1 S=0 F=0 T=3) lib.tb_example.all (0.1 seconds)</span>
+
+<span class="go">running lib.tb_example.test_pass</span>
+<span class="go">This will pass</span>
+<span class="go">pass (P=2 S=0 F=0 T=3) lib.tb_example_many.test_pass (0.1 seconds)</span>
+
+<span class="go">running lib.tb_example.test_fail</span>
+<span class="go">Error: It fails</span>
+<span class="go">fail (P=2 S=0 F=1 T=3) lib.tb_example_many.test_fail (0.1 seconds)</span>
+
+<span class="go">==== Summary =========================================</span>
+<span class="go">pass lib.tb_example.all            (0.1 seconds)</span>
+<span class="go">pass lib.tb_example_many.test_pass (0.1 seconds)</span>
+<span class="go">fail lib.tb_example_many.test_fail (0.1 seconds)</span>
+<span class="go">======================================================</span>
+<span class="go">pass 2 of 3</span>
+<span class="go">fail 1 of 3</span>
+<span class="go">======================================================</span>
+<span class="go">Total time was 0.3 seconds</span>
+<span class="go">Elapsed time was 0.3 seconds</span>
+<span class="go">======================================================</span>
+<span class="go">Some failed!</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Run a specific test</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -v lib.tb_example.all</span>
+<span class="go">Running test: lib.tb_example.all</span>
+<span class="go">Running 1 tests</span>
+
+<span class="go">Starting lib.tb_example.all</span>
+<span class="go">Hello world!</span>
+<span class="go">pass (P=1 S=0 F=0 T=1) lib.tb_example.all (0.1 seconds)</span>
+
+<span class="go">==== Summary ==========================</span>
+<span class="go">pass lib.tb_example.all (0.9 seconds)</span>
+<span class="go">=======================================</span>
+<span class="go">pass 1 of 1</span>
+<span class="go">=======================================</span>
+<span class="go">Total time was 0.9 seconds</span>
+<span class="go">Elapsed time was 1.2 seconds</span>
+<span class="go">=======================================</span>
+<span class="go">All passed!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="opening-a-test-case-in-simulator-gui">
+<h2>Opening a Test Case in Simulator GUI<a class="headerlink" href="#opening-a-test-case-in-simulator-gui" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the textual error messages and logs are not enough to
+pinpoint the error and a test case needs to be opened in the GUI for
+visual debugging using single stepping, breakpoints and wave form
+viewing. VUnit makes it easy to open a test case in the GUI by having
+a <code class="docutils literal notranslate"><span class="pre">-g/--gui</span></code> command line flag:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py --gui my_test_case &amp;</span>
+</pre></div>
+</div>
+<p>This launches a simulator GUI window with the top level for the
+selected test case loaded and ready to run. Depending on the simulator
+a help text is printed were a few TCL functions are pre-defined:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># vunit_help</span>
+<span class="c">#   - Prints this help</span>
+<span class="c"># vunit_load [vsim_extra_args]</span>
+<span class="c">#   - Load design with correct generics for the test</span>
+<span class="c">#   - Optional first argument are passed as extra flags to vsim</span>
+<span class="c"># vunit_user_init</span>
+<span class="c">#   - Re-runs the user defined init file</span>
+<span class="c"># vunit_run</span>
+<span class="c">#   - Run test, must do vunit_load first</span>
+<span class="c"># vunit_compile</span>
+<span class="c">#   - Recompiles the source files</span>
+<span class="c"># vunit_restart</span>
+<span class="c">#   - Recompiles the source files</span>
+<span class="c">#   - and re-runs the simulation if the compile was successful</span>
+</pre></div>
+</div>
+<p>The test bench has already been loaded with the <code class="docutils literal notranslate"><span class="pre">vunit_load</span></code>
+command. Breakpoints can now be set and signals added to the log or to
+the waveform viewer manually by the user. The test case is then run
+using the <code class="docutils literal notranslate"><span class="pre">vunit_run</span></code> command. Recompilation can be performed
+without closing the GUI by running <code class="docutils literal notranslate"><span class="pre">vunit_compile</span></code>. It is also
+possible to perform <code class="docutils literal notranslate"><span class="pre">run.py</span></code> with the <code class="docutils literal notranslate"><span class="pre">--compile</span></code> flag in a
+separate terminal.</p>
+</div>
+<div class="section" id="test-output-paths">
+<h2>Test Output Paths<a class="headerlink" href="#test-output-paths" title="Permalink to this headline">¶</a></h2>
+<p>VUnit creates a separate output directory for each test to provide
+isolation. The test output paths are located under
+<code class="docutils literal notranslate"><span class="pre">OUTPUT_PATH/test_output/</span></code>. The test names have been washed of any
+unsuitable characters and a hash has been added as a suffix to ensure
+uniqueness.</p>
+<p>On Windows the paths can be shortened to avoid path length
+limitations. This behavior can be controlled by setting the relevant
+<a class="reference internal" href="#test-output-envs"><span class="std std-ref">environment variables</span></a>.</p>
+<p>To get the exact test name to test output path mapping the file
+<code class="docutils literal notranslate"><span class="pre">OUTPUT_PATH/test_output/test_name_to_path_mapping.txt</span></code> can be used.
+Each line contains a test output path followed by a space seperator
+and then a test name.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> pragma all tests within the
+test bench share the same output folder named after the test bench.</p>
+</div>
+</div>
+<div class="section" id="simulator-selection">
+<span id="id1"></span><h2>Simulator Selection<a class="headerlink" href="#simulator-selection" title="Permalink to this headline">¶</a></h2>
+<p>VUnit automatically detects which simulators are available on the
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable and by default selects the first one
+found. For people who have multiple simulators installed the
+<code class="docutils literal notranslate"><span class="pre">VUNIT_SIMULATOR</span></code> environment variable can be set to one of
+<code class="docutils literal notranslate"><span class="pre">activehdl</span></code>, <code class="docutils literal notranslate"><span class="pre">rivierapro</span></code>, <code class="docutils literal notranslate"><span class="pre">ghdl</span></code> or <code class="docutils literal notranslate"><span class="pre">modelsim</span></code> to explicitly
+specify which simulator to use.</p>
+<p>In addition to VUnit scanning the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> the simulator executable
+path can be explicitly configured by setting a
+<code class="docutils literal notranslate"><span class="pre">VUNIT_&lt;SIMULATOR_NAME&gt;_PATH</span></code> environment variable.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Explicitly set path to GHDL executables</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">VUNIT_GHDL_PATH=/opt/ghdl/bin</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="simulator-specific-environment-variables">
+<h2>Simulator Specific Environment Variables<a class="headerlink" href="#simulator-specific-environment-variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_MODELSIM_INI</span></code> By default VUnit copies the <em>modelsim.ini</em>
+file from the tool install folder as a starting point. Setting this
+environment variable selects another <em>modelsim.ini</em> file as the
+starting point allowing the user to customize it.</p></li>
+</ul>
+</div>
+<div class="section" id="test-output-path-length-environment-variables">
+<span id="test-output-envs"></span><h2>Test Output Path Length Environment Variables<a class="headerlink" href="#test-output-path-length-environment-variables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_SHORT_TEST_OUTPUT_PATHS</span></code> Unfortunately file system paths
+are still practically limited to 260 characters on Windows. VUnit
+tries to limit the length of the test output paths on Windows to
+avoid this limitation but still includes as much of the test name
+name as possible leaving a margin of 100 characters. VUnit however
+cannot forsee user specific test output file lengths and this
+environment variable can be set to minimize output path lengths on
+Windows. On other operating systems this limitation is not relevant.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_TEST_OUTPUT_PATH_MARGIN</span></code> Can be used to change the test
+output path margin on Windows. By default the test output path is
+shortened to allow a 100 character margin.</p></li>
+</ul>
+</div>
+<div class="section" id="json-export">
+<span id="id2"></span><h2>JSON Export<a class="headerlink" href="#json-export" title="Permalink to this headline">¶</a></h2>
+<p>VUnit supports exporting project information through the <code class="docutils literal notranslate"><span class="pre">--export-json</span></code> command
+line argument. A JSON file is written containing the list of all files
+added to the project as well as a list of all tests. Each test has a
+mapping to its source code location.</p>
+<p>The feature can be used for IDE-integration where the IDE can know the
+path to all files, the library mapping of files and the source code
+location of all tests.</p>
+<p>The JSON export file has three top level values:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">export_format_version</span></code>: The <a class="reference external" href="https://semver.org/">semantic</a> version of the format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">files</span></code>: List of project files. Each file item has <code class="docutils literal notranslate"><span class="pre">file_name</span></code> and <code class="docutils literal notranslate"><span class="pre">library_name</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code>: List of tests. Each test has <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, <code class="docutils literal notranslate"><span class="pre">location</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>
+information. Attributes is the list of test attributes. The <code class="docutils literal notranslate"><span class="pre">location</span></code> contains the file name as well as
+the offset and length in characters of the symbol that defines the test. <code class="docutils literal notranslate"><span class="pre">name</span></code> is the name of the test.</p></li>
+</ul>
+</div></blockquote>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Example JSON export file (file names are always absolute but the example has been simplified)</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;export_format_version&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;major&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;minor&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nt">&quot;patch&quot;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;library_name&quot;</span><span class="p">:</span> <span class="s2">&quot;lib&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tb_example_many.vhd&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;library_name&quot;</span><span class="p">:</span> <span class="s2">&quot;lib&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tb_example.vhd&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;tests&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tb_example_many.vhd&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+                <span class="nt">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">556</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lib.tb_example_many.test_pass&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tb_example_many.vhd&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+                <span class="nt">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">624</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lib.tb_example_many.test_fail&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;.attr&quot;</span><span class="p">:</span> <span class="kc">null</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;location&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;tb_example.vhd&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;length&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+                <span class="nt">&quot;offset&quot;</span><span class="p">:</span> <span class="mi">465</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lib.tb_example.all&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Several tests may map to the same source code location if
+the user created multiple <a class="reference internal" href="py/ui.html#configurations"><span class="std std-ref">configurations</span></a> of the same basic tests.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="py/ui.html" class="btn btn-neutral float-right" title="Python Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="user_guide.html" class="btn btn-neutral float-left" title="User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2014-2021, Lars Asplund
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/buildthedocs/sphinx.theme">theme</a>
+    
+    provided by <a href="https://buildthedocs.github.io">Build the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-112393863-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
