@@ -1,0 +1,1210 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="author" title="About these documents" href="../about.html"><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Communication Library User Guide" href="../com/user_guide.html"><link rel="prev" title="checker package" href="../check/checker_pkg.html">
+        <link rel="prefetch" href="../_static/VUnit_logo.png" as="image">
+
+    <link rel="shortcut icon" href="../_static/vunit.ico"><!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Run Library User Guide - VUnit documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">VUnit  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/VUnit_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../blog/index.html">Blog</a><input aria-label="Toggle navigation of Blog" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2023_08_26_vhdl_configurations.html">Improved Support for VHDL Configurations and OSVVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2023_04_01_vunit_phases.html">VUnit Phases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2023_03_31_vunit_events.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2022_09_19_vunit_user_conference.html">VUnit User Conference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2022_09_06_vunit_and_other_frameworks.html">FAQ What is VUnit’s Relation to Other Verification Frameworks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../blog/2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../id/user_guide.html">Identity Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/user_guide.html">Logging Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../check/user_guide.html">Check Library User Guide</a><input aria-label="Toggle navigation of Check Library User Guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../check/check_api.html"><em>check</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../check/checker_pkg.html"><em>checker</em> package</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Run Library User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../com/user_guide.html">Communication Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification_components/user_guide.html">Verification Components User Guide</a><input aria-label="Toggle navigation of Verification Components User Guide" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/memory_model.html">Memory Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html">Bus Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#stream-master-vci">Stream Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#synchronization-vci">Synchronization VCI</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_types/user_guide.html">Data Types User Guide</a><input aria-label="Toggle navigation of Data Types User Guide" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/event_user_guide.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/queue.html"><em>queue</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/integer_array.html"><em>integer_array</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/ext_string.html"><em>external string</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/ext_integer_vector.html"><em>external integer vector</em> package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../py/ui.html">Python Interface</a><input aria-label="Toggle navigation of Python Interface" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../py/vunit.html">vunit.ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/opts.html">Compilation Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/opts.html#simulation-options">Simulation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hdl_libraries.html">HDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/blob/master/docs/run/user_guide.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/edit/master/docs/run/user_guide.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="run-library-user-guide">
+<span id="run-library"></span><h1>Run Library User Guide<a class="headerlink" href="#run-library-user-guide" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>The VHDL run library is a number of VHDL packages providing functionality for running a VUnit testbench. This
+functionality, also known as the VHDL test runner (VR), can be used standalone but the highly recommended approach, and
+the main focus of this user guide, is to use VR together with the Python-based test runner (PR). More information on the PR can be found in the <a class="reference internal" href="../user_guide.html"><span class="doc">PR user guide</span></a> and the <a class="reference internal" href="../py/ui.html"><span class="doc">PR API documentation</span></a>.</p>
+</section>
+<section id="minimal-vunit-testbench">
+<h2>Minimal VUnit Testbench<a class="headerlink" href="#minimal-vunit-testbench" title="Link to this heading">¶</a></h2>
+<p>A (close to) minimal VUnit testbench is outlined below.</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">tb_minimal</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span><span class="n">runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_minimal</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="mi">17</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;17&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>The code has the following important properties:</p>
+<ul class="simple">
+<li><p>The VUnit functionality is located in the <code class="docutils literal notranslate"><span class="pre">vunit_lib</span></code> library and is included with the library and context
+statements in the first two lines.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic is used to control the testbench from PR. If the VR is used standalone, you will
+need a default value, <code class="docutils literal notranslate"><span class="pre">runner_cfg_default</span></code>, for the generic. Note that the generic <strong>must</strong> be named
+<code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> for the testbench to be recognized by PR (there is an exception which we’ll get to later).</p></li>
+<li><p>Every VUnit testbench has a main controlling process. It’s labelled <code class="docutils literal notranslate"><span class="pre">test_runner</span></code> in this example but the name is
+not important. The process starts by setting up VUnit using the <code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> procedure with <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> as
+the second parameter. The first <code class="docutils literal notranslate"><span class="pre">runner</span></code> parameter is a globally defined signal used to synchronize activities
+internal to VUnit. The process ends with a call to the <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> procedure which will perform some
+housekeeping activities and then force the simulation to a stop.</p></li>
+<li><p>Since the call to <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> ends the simulation, you must execute your test code before that.
+You can either place the test code directly between <code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> and <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> or you can use that region to trigger and wait for test activities performed externally (for example in a different process). Alternately, you can combine the two strategies. In this case, the test code is within the same process and use the <code class="docutils literal notranslate"><span class="pre">check_equal</span></code> procedure from the <a class="reference internal" href="../check/user_guide.html"><span class="doc">check library</span></a>.</p></li>
+</ul>
+<p>Running this testbench using PR will result in the following output (or similar):</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_minimal.all
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_minimal.all_42aa262c7c96c708ab3f3960f033f2328c642136\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=1) lib.tb_minimal.all (0.6 s)
+
+==== Summary ==============================
+<span style="color: #008000; ">pass</span> lib.tb_minimal.all (0.6 s)
+===========================================
+<span style="color: #008000; ">pass</span> 1 of 1
+===========================================
+Total time was 0.6 s
+Elapsed time was 0.6 s
+===========================================
+<span style="color: #008000; ">All passed!</span>
+</pre></div>
+</section>
+<section id="testbench-with-test-cases">
+<h2>Testbench with Test Cases<a class="headerlink" href="#testbench-with-test-cases" title="Link to this heading">¶</a></h2>
+<p>A VUnit testbench can be structured around a set of test cases called a test suite. Defining test cases is a way of
+emphasizing what functionality is being verified by the testbench.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">-- Put test suite setup code here. This code is common to the entire test suite</span>
+<span class="w">  </span><span class="c1">-- and is executed *once* prior to all test cases.</span>
+
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+
+<span class="w">    </span><span class="c1">-- Put test case setup code here. This code executed before *every* test case.</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for integer&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="c1">-- The test case code is placed in the corresponding (els)if branch.</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="mi">17</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;17&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for boolean&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="n">true</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-- Put test case cleanup code here. This code executed after *every* test case.</span>
+
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">-- Put test suite cleanup code here. This code is common to the entire test suite</span>
+<span class="w">  </span><span class="c1">-- and is executed *once* after all test cases have been run.</span>
+
+<span class="w">  </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+<p>This testbench has two test cases, named <code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">to_string</span> <span class="pre">for</span> <span class="pre">integer</span></code> and <code class="docutils literal notranslate"><span class="pre">Test</span> <span class="pre">to_string</span> <span class="pre">for</span> <span class="pre">boolean</span></code>.
+If a test case has been enabled by <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code>, the corresponding <code class="docutils literal notranslate"><span class="pre">run</span></code> function call will return <code class="docutils literal notranslate"><span class="pre">true</span></code>
+the <strong>first</strong> time it is called, and the test code in that (els)if branch is executed. All test code can be in
+that branch, as in the example, or the branch can be used to coordinate activities elsewhere in the testbench.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">test_suite</span></code> function returns <code class="docutils literal notranslate"><span class="pre">true</span></code>, and keeps the loop running, until there are no more enabled test cases
+remaining to execute.</p>
+<p>Note that registration of test cases is not necessary; PR will scan your testbenches for <code class="docutils literal notranslate"><span class="pre">run</span></code> function calls in order
+to find all test cases. Also note that the test case name <strong>must</strong> be a string literal or it won’t be found by PR.</p>
+<p>In case VR is used standalone, the test cases are registered on-the-fly the first time the <code class="docutils literal notranslate"><span class="pre">run</span></code> function is called.</p>
+<p>A VUnit testbench runs through several distinct <em>phases</em> during the course of a simulation. The first is the
+<code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> phase implemented by the procedure with the same name, and the last is the <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>
+phase. In between, there are a number of setup/cleanup phases for the test suite and the test cases. The code for these
+phases, if any, is defined by the user and is placed as indicated by the comments in the example. These phases are
+typically used for configuration, resetting the DUT, reading/writing test data from/to file etc. Phases can also be used
+to synchronize testbench processes and avoid issues such as premature simulation exits where <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>
+ends the simulation before all processes have completed their tasks. For a more comprehensive description of phases,
+please refer to the <a class="reference internal" href="../blog/2023_04_01_vunit_phases.html"><span class="doc">VUnit phase blog</span></a> for details.</p>
+<p>Running this testbench gives the following output:</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_with_test_cases.Test to_string for integer
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_test_cases.Test_to_string_for_integer_f5d39e15e865eddcda2b57f65dddc2428c994af4\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=2) lib.tb_with_test_cases.Test to_string for integer (0.6 s)
+
+(22:55:48) Starting lib.tb_with_test_cases.Test to_string for boolean
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_test_cases.Test_to_string_for_boolean_38c3f897030cff968430d763a9bbc23202de1a7b\output.txt
+<span style="color: #008000; ">pass</span> (P=2 S=0 F=0 T=2) lib.tb_with_test_cases.Test to_string for boolean (0.6 s)
+
+==== Summary =============================================================
+<span style="color: #008000; ">pass</span> lib.tb_with_test_cases.Test to_string for integer (0.6 s)
+<span style="color: #008000; ">pass</span> lib.tb_with_test_cases.Test to_string for boolean (0.6 s)
+==========================================================================
+<span style="color: #008000; ">pass</span> 2 of 2
+==========================================================================
+Total time was 1.2 s
+Elapsed time was 1.2 s
+==========================================================================
+<span style="color: #008000; ">All passed!</span>
+</pre></div>
+</section>
+<section id="distributed-testbenches">
+<h2>Distributed Testbenches<a class="headerlink" href="#distributed-testbenches" title="Link to this heading">¶</a></h2>
+<p>Some testbenches with a more distributed control may have several processes which operations depend on the currently
+running test case. However, there can be only one call to the <code class="docutils literal notranslate"><span class="pre">run(&quot;Name</span> <span class="pre">of</span> <span class="pre">test</span> <span class="pre">case&quot;)</span></code> function. Otherwise, VUnit
+will think that you’ve several test cases with the same name, which is not allowed in the same testbench. To avoid this,
+you can use the <code class="docutils literal notranslate"><span class="pre">running_test_case</span></code> function, which will return the name of the running test case. Below is an example
+of how it can be used. The example also contains a few other VUnit features:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">info</span></code> is a procedure for logging information. For more details, please refer to the <a class="reference internal" href="../logging/user_guide.html"><span class="doc">logging library user
+guide</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_stimuli</span></code> is a VUnit event used to synchronize the two processes. The <code class="docutils literal notranslate"><span class="pre">test_runner</span></code> process activates the
+event using <code class="docutils literal notranslate"><span class="pre">notify</span></code> and the <code class="docutils literal notranslate"><span class="pre">stimuli_generator</span></code> process waits until the event becomes active using <code class="docutils literal notranslate"><span class="pre">is_active</span></code>.
+For more details, please refer to the <a class="reference internal" href="../data_types/event_user_guide.html"><span class="doc">event user guide</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_entry_key</span></code>, <code class="docutils literal notranslate"><span class="pre">lock</span></code>, and <code class="docutils literal notranslate"><span class="pre">unlock</span></code> are subprograms used to prevent <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> from ending the
+simulation before the <code class="docutils literal notranslate"><span class="pre">stimuli_generator</span></code> process has completed. For more details, please refer to the
+<a class="reference internal" href="../blog/2023_04_01_vunit_phases.html"><span class="doc">VUnit phase blog</span></a>.</p></li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_running_test_case</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">start_stimuli</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">event_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">new_event</span><span class="p">;</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test scenario A&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test scenario B&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">notify</span><span class="p">(</span><span class="n">start_stimuli</span><span class="p">);</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test something else&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Testing something else&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nc">stimuli_generator</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">key_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">get_entry_key</span><span class="p">(</span><span class="n">test_runner_cleanup</span><span class="p">);</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">start_stimuli</span><span class="p">);</span>
+<span class="w">    </span><span class="n">lock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">running_test_case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Test scenario A&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Applying stimuli for scenario A&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">running_test_case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Test scenario B&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Applying stimuli for scenario B&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">unlock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>The <code class="docutils literal notranslate"><span class="pre">running_test_case</span></code> function returns the name of currently running test case from the call to the <code class="docutils literal notranslate"><span class="pre">run</span></code>
+function of that test case until the next <code class="docutils literal notranslate"><span class="pre">run</span></code> function is called. Before the first call to <code class="docutils literal notranslate"><span class="pre">run</span></code> or after a call
+to <code class="docutils literal notranslate"><span class="pre">run</span></code> returning <code class="docutils literal notranslate"><span class="pre">false</span></code>, this function will return an empty string (<code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>).</p>
+<p>There’s also a similar function, <code class="docutils literal notranslate"><span class="pre">active_test_case</span></code>, which returns a test case name within all parts of the
+<code class="docutils literal notranslate"><span class="pre">test_suite</span></code> loop. However, this function is not supported when running the testbench standalone without PR.</p>
+<p>In the examples described so far the main controlling process has been placed in the top-level entity. It’s also
+possible to move this to a lower-level entity. To do that the <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic has to be passed down to
+that entity. However, the generic in that lower-level entity <strong>must not</strong> be called <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> since PR
+considers every VHDL file with a <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic a top-level testbench to simulate. So the testbench
+top-level can look like this</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">tb_with_lower_level_control</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span><span class="n">runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_with_lower_level_control</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">test_control</span><span class="o">:</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">work</span><span class="p">.</span><span class="n">test_control</span>
+<span class="w">    </span><span class="k">generic</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">nested_runner_cfg</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>And the lower-level entity like this</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">test_control</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">nested_runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">test_control</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">test_control</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">nested_runner_cfg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test something&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Testing something&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test something else&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Testing something else&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="p">;</span>
+</pre></div>
+<p>The default PR behaviour is to scan all VHDL files with an entity containing a <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic for
+test cases to run. Now that that the lower-level entity uses another generic name you have to use the
+<a class="reference internal" href="../py/vunit.html"><span class="doc">scan_tests_from_file</span></a> method in your run script.</p>
+</section>
+<section id="controlling-what-test-cases-to-run">
+<h2>Controlling What Test Cases to Run<a class="headerlink" href="#controlling-what-test-cases-to-run" title="Link to this heading">¶</a></h2>
+<p>When working with VUnit you will eventually end up with many testbenches and test cases. For example</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py --list
+lib.tb_fail_on_warning.Test that fails on an assert
+lib.tb_fail_on_warning.Test that crashes on boundary problems
+lib.tb_fail_on_warning.Test that fails on VUnit check procedure
+lib.tb_fail_on_warning.Test that a warning passes
+lib.tb_magic_paths.all
+lib.tb_minimal.all
+lib.tb_running_test_case.Test scenario A
+lib.tb_running_test_case.Test scenario B
+lib.tb_running_test_case.Test something else
+lib.tb_run_all_in_same_sim.Test to_string for integer again
+lib.tb_run_all_in_same_sim.Test to_string for boolean again
+lib.tb_seed.all
+lib.tb_standalone.Test that fails on VUnit check procedure
+lib.tb_standalone.Test to_string for boolean
+lib.tb_stopping_failure.Test that fails on an assert
+lib.tb_stopping_failure.Test that crashes on boundary problems
+lib.tb_stopping_failure.Test that fails on VUnit check procedure
+lib.tb_stopping_failure.Test that a warning passes
+lib.tb_stop_level.Test that fails multiple times but doesn't stop
+lib.tb_with_lower_level_control.Test something
+lib.tb_with_lower_level_control.Test something else
+lib.tb_with_test_cases.Test to_string for integer
+lib.tb_with_test_cases.Test to_string for boolean
+lib.tb_with_watchdog.Test that stalls
+lib.tb_with_watchdog.Test to_string for boolean
+lib.tb_with_watchdog.Test that needs longer timeout
+Listed 26 tests
+</pre></div>
+<p>You can control what testbenches and test cases to run from the command line by listing their names and/or using
+patterns. For example</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py *minimal.all *integer
+Starting lib.tb_minimal.all
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_minimal.all_42aa262c7c96c708ab3f3960f033f2328c642136\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=2) lib.tb_minimal.all (0.5 seconds)
+
+Starting lib.tb_with_test_cases.Test to_string for integer
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_test_cases.Test_to_string_for_integer_f5d39e15e865eddcda2b57f65dddc2428c994af4\output.txt
+<span style="color: #008000; ">pass</span> (P=2 S=0 F=0 T=2) lib.tb_with_test_cases.Test to_string for integer (0.5 seconds)
+
+==== Summary =============================================================
+<span style="color: #008000; ">pass</span> lib.tb_minimal.all                                (0.5 seconds)
+<span style="color: #008000; ">pass</span> lib.tb_with_test_cases.Test to_string for integer (0.5 seconds)
+==========================================================================
+<span style="color: #008000; ">pass</span> 2 of 2
+==========================================================================
+Total time was 1.1 seconds
+Elapsed time was 1.1 seconds
+==========================================================================
+<span style="color: #008000; ">All passed!</span>
+</pre></div>
+<p>PR will simulate matching testbenches and use <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> to control what test cases to run. Be aware that your
+shell may try to match the pattern you specify first. For example, using <code class="docutils literal notranslate"><span class="pre">*tb*</span></code> as a pattern will match all previous
+test case names, but it will also match all testbench file names - resulting in the file names being passed to VUnit,
+and no matching tests being found. However, passing <code class="docutils literal notranslate"><span class="pre">.*tb*</span></code> will match all tests but no files.</p>
+</section>
+<section id="running-test-cases-independently">
+<h2>Running Test Cases Independently<a class="headerlink" href="#running-test-cases-independently" title="Link to this heading">¶</a></h2>
+<p>The test suite while loop presented earlier iterates over all enabled test cases but the default behaviour of
+VUnit is to run all test cases in separate simulations, only enabling one test case at a time. There are several
+good reasons for this</p>
+<ul class="simple">
+<li><p>The pass/fail status of a test case is based on its own merits and is not a side effect of other test cases.
+This makes it easier to trust the information in the test report.</p></li>
+<li><p>A failing test case, causing the simulation to stop, won’t prevent the other test cases in the testbench from
+running</p></li>
+<li><p>You can save time by just running one of many slow test cases if that’s sufficient for a specific test run.</p></li>
+<li><p>You can run test cases in parallel threads using the multicore capabilities of your computer. Below all three
+tests are run in parallel using the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option. Note the 3x difference between the total simulation time and
+the elapsed time.</p></li>
+</ul>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py -p3 *minimal.all *else
+Starting lib.tb_minimal.all
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_minimal.all_42aa262c7c96c708ab3f3960f033f2328c642136\output.txt
+Starting lib.tb_with_lower_level_control.Test something else
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_lower_level_control.Test_something_else_e47dc199cab8c612d9a0f46b8be7d141576fc970\output.txt
+Starting lib.tb_running_test_case.Test something else
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_running_test_case.Test_something_else_27dcc1aa8d44993b6b2d0b0a017fa6001b4c2aa7\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=3) lib.tb_running_test_case.Test something else (0.6 seconds)
+
+<span style="color: #008000; ">pass</span> (P=2 S=0 F=0 T=3) lib.tb_minimal.all (0.6 seconds)
+
+<span style="color: #008000; ">pass</span> (P=3 S=0 F=0 T=3) lib.tb_with_lower_level_control.Test something else (0.6 seconds)
+
+==== Summary ===============================================================
+<span style="color: #008000; ">pass</span> lib.tb_running_test_case.Test something else        (0.6 seconds)
+<span style="color: #008000; ">pass</span> lib.tb_minimal.all                                  (0.6 seconds)
+<span style="color: #008000; ">pass</span> lib.tb_with_lower_level_control.Test something else (0.6 seconds)
+============================================================================
+<span style="color: #008000; ">pass</span> 3 of 3
+============================================================================
+Total time was 1.7 seconds
+Elapsed time was 0.6 seconds
+============================================================================
+<span style="color: #008000; ">All passed!</span>
+</pre></div>
+<p>Possible drawbacks to this approach are that test cases have to be independent and the overhead
+of starting a new simulation for each test case (this is typically less than one second per test case). If that
+is the case you can force all test cases of a testbench to be run in the same simulation. This is done by adding
+the <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">vunit:</span> <span class="pre">run_all_in_same_sim</span></code>) before the test suite.</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">tb_run_all_in_same_sim</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="p">(</span><span class="n">runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_run_all_in_same_sim</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">-- vunit: run_all_in_same_sim</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for integer again&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="mi">17</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;17&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for boolean again&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="n">true</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> attribute can also be set from the run script, see <a class="reference internal" href="../py/vunit.html#vunit.ui.testbench.TestBench" title="vunit.ui.testbench.TestBench"><code class="xref py py-class docutils literal notranslate"><span class="pre">vunit.ui.testbench.TestBench</span></code></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When setting <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> from the run script, the setting must be identical for all configurations
+of the testbench.</p>
+</div>
+</section>
+<section id="the-vunit-watchdog">
+<h2>The VUnit Watchdog<a class="headerlink" href="#the-vunit-watchdog" title="Link to this heading">¶</a></h2>
+<p>Sometimes your design has a bug causing a test case to stall indefinitely, maybe preventing a nightly test run from
+proceeding. To avoid this VUnit provides a watchdog which will timeout and fail a test case after a specified time.</p>
+<div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_with_watchdog</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that stalls&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="k">wait</span><span class="p">;</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for boolean&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="n">true</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that needs longer timeout&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="c1">-- It is also possible to set/re-set the timeout</span>
+<span class="w">        </span><span class="c1">-- When test cases need separate timeout settings</span>
+<span class="w">        </span><span class="n">set_timeout</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">ms</span><span class="p">);</span>
+<span class="w">        </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">ms</span><span class="p">;</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">test_runner_watchdog</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ms</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>Note that the problem with the first test case doesn’t prevent the second from running.</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_with_watchdog.Test that stalls
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_watchdog.Test_that_stalls_7f50c5908f9e9f9df5075e065f984eef1c2f7b2b\output.txt
+Seed for lib.tb_with_watchdog.Test that stalls: abf6f593955b8927
+  10000000000000 fs - runner               -   ERROR - Test runner timeout after 10000000000000 fs.
+C:\github\vunit\vunit\vhdl\core\src\core_pkg.vhd:85:7:@10ms:(report failure): Stop simulation on log level error
+ghdl:error: report failed
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=0 S=0 F=1 T=3) lib.tb_with_watchdog.Test that stalls (0.6 s)
+
+(22:55:53) Starting lib.tb_with_watchdog.Test to_string for boolean
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_watchdog.Test_to_string_for_boolean_f167e524924d51144c5a6913c63e9fa5c6c7988c\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=1 T=3) lib.tb_with_watchdog.Test to_string for boolean (0.6 s)
+
+(22:55:53) Starting lib.tb_with_watchdog.Test that needs longer timeout
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_with_watchdog.Test_that_needs_longer_timeout_5494104827c61d0022a75acbab4c0c6de9e29643\output.txt
+<span style="color: #008000; ">pass</span> (P=2 S=0 F=1 T=3) lib.tb_with_watchdog.Test that needs longer timeout (0.6 s)
+
+==== Summary ===============================================================
+<span style="color: #008000; ">pass</span> lib.tb_with_watchdog.Test to_string for boolean     (0.6 s)
+<span style="color: #008000; ">pass</span> lib.tb_with_watchdog.Test that needs longer timeout (0.6 s)
+<span style="color: #cb4b16; ">fail</span> lib.tb_with_watchdog.Test that stalls               (0.6 s)
+============================================================================
+<span style="color: #008000; ">pass</span> 2 of 3
+<span style="color: #cb4b16; ">fail</span> 1 of 3
+============================================================================
+Total time was 1.8 s
+Elapsed time was 1.8 s
+============================================================================
+<span style="color: #cb4b16; ">Some failed!</span>
+</pre></div>
+</section>
+<section id="what-makes-a-test-fail">
+<h2>What Makes a Test Fail?<a class="headerlink" href="#what-makes-a-test-fail" title="Link to this heading">¶</a></h2>
+<section id="stopping-failures">
+<h3>Stopping Failures<a class="headerlink" href="#stopping-failures" title="Link to this heading">¶</a></h3>
+<p>Anything that stops the simulation before the <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> procedure is called will cause a failing
+test.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">variable</span><span class="w"> </span><span class="n">my_vector</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">integer_vector</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">17</span><span class="p">);</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails on an assert&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that crashes on boundary problems&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">my_vector</span><span class="p">(</span><span class="n">runner_cfg</span><span class="na">&#39;length</span><span class="p">));</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails on VUnit check procedure&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that a warning passes&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+<p>All but the last of these test cases will fail</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_stopping_failure.Test that fails on an assert
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_stopping_failure.Test_that_fails_on_an_assert_f53b930e2c7649bc33253af52f8ea89a9c05f07b\output.txt
+Seed for lib.tb_stopping_failure.Test that fails on an assert: a866d0986a663e6b
+C:\github\vunit\docs\run\src\tb_stopping_failure.vhd:24:9:@0ms:(assertion error): Assertion violation
+ghdl:error: assertion failed
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=0 S=0 F=1 T=4) lib.tb_stopping_failure.Test that fails on an assert (0.6 s)
+
+(22:55:55) Starting lib.tb_stopping_failure.Test that crashes on boundary problems
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_stopping_failure.Test_that_crashes_on_boundary_problems_b53105615efefaa16d0cf9ee1bad37b5d3369e95\output.txt
+Seed for lib.tb_stopping_failure.Test that crashes on boundary problems: cbcb543764149e78
+ghdl:error: index (340) out of bounds (1 to 17) at C:\github\vunit\docs\run\src\tb_stopping_failure.vhd:26
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=0 S=0 F=2 T=4) lib.tb_stopping_failure.Test that crashes on boundary problems (0.6 s)
+
+(22:55:55) Starting lib.tb_stopping_failure.Test that fails on VUnit check procedure
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_stopping_failure.Test_that_fails_on_VUnit_check_procedure_717a6f8ff044e3d5fa7d7d3ec5a32971d74864dd\output.txt
+Seed for lib.tb_stopping_failure.Test that fails on VUnit check procedure: 6581894e9ea614b1
+               0 fs - check                -   ERROR - Equality check failed - Got 17. Expected 18.
+C:\github\vunit\vunit\vhdl\core\src\core_pkg.vhd:85:7:@0ms:(report failure): Stop simulation on log level error
+ghdl:error: report failed
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=0 S=0 F=3 T=4) lib.tb_stopping_failure.Test that fails on VUnit check procedure (0.6 s)
+
+(22:55:56) Starting lib.tb_stopping_failure.Test that a warning passes
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_stopping_failure.Test_that_a_warning_passes_7db91f3b27aea5f89e74e39ea51ce6d61558674e\output.txt
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=3 T=4) lib.tb_stopping_failure.Test that a warning passes (0.6 s)
+
+==== Summary ============================================================================
+<span style="color: #008000; ">pass</span> lib.tb_stopping_failure.Test that a warning passes               (0.6 s)
+<span style="color: #cb4b16; ">fail</span> lib.tb_stopping_failure.Test that fails on an assert             (0.6 s)
+<span style="color: #cb4b16; ">fail</span> lib.tb_stopping_failure.Test that crashes on boundary problems   (0.6 s)
+<span style="color: #cb4b16; ">fail</span> lib.tb_stopping_failure.Test that fails on VUnit check procedure (0.6 s)
+=========================================================================================
+<span style="color: #008000; ">pass</span> 1 of 4
+<span style="color: #cb4b16; ">fail</span> 3 of 4
+=========================================================================================
+Total time was 2.4 s
+Elapsed time was 2.4 s
+=========================================================================================
+<span style="color: #cb4b16; ">Some failed!</span>
+</pre></div>
+<p>By setting the VUnit <code class="docutils literal notranslate"><span class="pre">fail_on_warning</span></code> attribute (<code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">vunit:</span> <span class="pre">fail_on_warning</span></code>) before the test suite,
+the last test case will also fail.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">variable</span><span class="w"> </span><span class="n">my_vector</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">integer_vector</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">17</span><span class="p">);</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">-- vunit: fail_on_warning</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails on an assert&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that crashes on boundary problems&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">my_vector</span><span class="p">(</span><span class="n">runner_cfg</span><span class="na">&#39;length</span><span class="p">));</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails on VUnit check procedure&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that a warning passes&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+<p>The <code class="docutils literal notranslate"><span class="pre">fail_on_warning</span></code> attribute can also be set from the run script, see <a class="reference internal" href="../py/vunit.html#vunit.ui.testbench.TestBench" title="vunit.ui.testbench.TestBench"><code class="xref py py-class docutils literal notranslate"><span class="pre">vunit.ui.testbench.TestBench</span></code></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When setting <code class="docutils literal notranslate"><span class="pre">fail_on_warning</span></code> from the run script, the setting must be identical for all configurations
+of the testbench.</p>
+</div>
+</section>
+<section id="counting-errors-with-vunit-logging-check-libraries">
+<h3>Counting Errors with VUnit Logging/Check Libraries<a class="headerlink" href="#counting-errors-with-vunit-logging-check-libraries" title="Link to this heading">¶</a></h3>
+<p>If you use the VUnit check/logging library you can set the <a class="reference internal" href="../logging/user_guide.html"><span class="doc">stop_level</span></a> such that the
+simulation continues on an error. Such errors will be remembered and the test will fail despite
+reaching the <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> call.</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> will fail if there were any error
+or failure log even if they where disabled. Disabled errors or
+failures can be allowed using the <code class="docutils literal notranslate"><span class="pre">allow_disabled_errors</span></code> or
+<code class="docutils literal notranslate"><span class="pre">allow_disabled_failures</span></code> flags. Warnings can also optionally cause
+failure by setting the <code class="docutils literal notranslate"><span class="pre">fail_on_warning</span></code> flag.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+<span class="w">  </span><span class="n">set_stop_level</span><span class="p">(</span><span class="n">failure</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails multiple times but doesn&#39;t stop&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="w">      </span><span class="n">check_equal</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">19</span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_stop_level.Test that fails multiple times but doesn't stop
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_stop_level.Test_that_fails_multiple_times_but_doesn't_stop_d08f48d859442d0bc71e2bcdd8b429119f7cc17c\output.txt
+Seed for lib.tb_stop_level.Test that fails multiple times but doesn't stop: 7a0e979de335b966
+               0 fs - check                -   ERROR - Equality check failed - Got 17. Expected 18.
+               0 fs - check                -   ERROR - Equality check failed - Got 17. Expected 19.
+FAILURE - Logger check has 2 errors
+C:\github\vunit\vunit\vhdl\core\src\core_pkg.vhd:85:7:@0ms:(report failure): Final log check failed
+ghdl:error: report failed
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=0 S=0 F=1 T=1) lib.tb_stop_level.Test that fails multiple times but doesn't stop (0.6 s)
+
+==== Summary =============================================================================
+<span style="color: #cb4b16; ">fail</span> lib.tb_stop_level.Test that fails multiple times but doesn't stop (0.6 s)
+==========================================================================================
+<span style="color: #008000; ">pass</span> 0 of 1
+<span style="color: #cb4b16; ">fail</span> 1 of 1
+==========================================================================================
+Total time was 0.6 s
+Elapsed time was 0.6 s
+==========================================================================================
+<span style="color: #cb4b16; ">Some failed!</span>
+</pre></div>
+</section>
+</section>
+<section id="seeds-for-random-number-generation">
+<h2>Seeds for Random Number Generation<a class="headerlink" href="#seeds-for-random-number-generation" title="Link to this heading">¶</a></h2>
+<p>The Python test runner automatically generates a 64-bit base seed, which serves as the foundation for deriving new seeds
+to initialize one or more random number generators (RNGs) within the simulation. This base seed is calculated using the
+system time and a thread identifier, ensuring that it varies between simulations. This variability enhances test
+coverage since randomized test will cover different areas in each simulation. By running the same randomized test in
+several parallel threads but with different base seeds we can also shorten the execution time while maintaining the same
+level of test coverage.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>VHDL-2019 introduces an interface for obtaining the system time. However, as of this writing, support for this
+feature is limited, and where available, it only offers second-level resolution. If used for base seed generation,
+simulations in parallel threads would receive the same base seed when started simultaneously.</p>
+<p>To address this, the Python test runner uses system time with microsecond resolution combined with an additional
+thread identifier as the source of entropy. This approach ensures the uniqueness of base seeds across parallel threads.</p>
+</div>
+<p>The base seed is provided via the <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic and new derived seeds can be obtained by calling the
+<code class="docutils literal notranslate"><span class="pre">get_seed</span></code> function with <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> and a salt string. The salt string is hashed together with the base seed to
+ensure the uniqueness of each derived seed (with very high probability). The <code class="docutils literal notranslate"><span class="pre">salt</span></code> parameter can be omitted if only a
+single seed is needed:</p>
+<div class="highlight"><pre><span></span><span class="k">constant</span><span class="w"> </span><span class="n">global_seed</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">get_seed</span><span class="p">(</span><span class="n">runner_cfg</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Optional salt&quot;</span><span class="p">);</span>
+</pre></div>
+<p>A seed can also be obtained without referencing <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code>, which is particularly useful when the seed is created
+within a process that is not part of the top-level testbench. However, this is only possible <strong>after</strong>
+<code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> has been executed. To prevent race conditions, the <code class="docutils literal notranslate"><span class="pre">get_seed</span></code> procedure will block execution
+until <code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> has completed.</p>
+<div class="highlight"><pre><span></span><span class="n">randomizing_process</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">variable</span><span class="w"> </span><span class="n">local_seed</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">string_seed_t</span><span class="p">;</span><span class="w"> </span><span class="c1">-- string_seed_t = string(1 to 16)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">get_seed</span><span class="p">(</span><span class="n">local_seed</span><span class="p">,</span><span class="w"> </span><span class="n">salt</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">randomizing_process</span><span class="na">&#39;path_name</span><span class="p">);</span>
+</pre></div>
+<p>In the previous examples, the <code class="docutils literal notranslate"><span class="pre">get_seed</span></code> subprograms returned seeds as strings. However, <code class="docutils literal notranslate"><span class="pre">get_seed</span></code> subprograms are
+also available for <code class="docutils literal notranslate"><span class="pre">integer</span></code> seeds and 64-bit seeds of <code class="docutils literal notranslate"><span class="pre">unsigned</span></code> and <code class="docutils literal notranslate"><span class="pre">signed</span></code> type. To avoid any ambiguity that
+may arise, the following function aliases are defined: <code class="docutils literal notranslate"><span class="pre">get_string_seed</span></code>, <code class="docutils literal notranslate"><span class="pre">get_integer_seed</span></code>, <code class="docutils literal notranslate"><span class="pre">get_unsigned_seed</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">get_signed_seed</span></code>. Additionally, the <code class="docutils literal notranslate"><span class="pre">get_uniform_seed</span></code> procedure is provided to support the standard
+<code class="docutils literal notranslate"><span class="pre">uniform</span></code> procedure in <code class="docutils literal notranslate"><span class="pre">ieee.math_real</span></code>. The <code class="docutils literal notranslate"><span class="pre">uniform</span></code> procedure requires two <code class="docutils literal notranslate"><span class="pre">positive</span></code> seeds, <code class="docutils literal notranslate"><span class="pre">seed1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">seed2</span></code>, each with its own specific legal range that is smaller than the full <code class="docutils literal notranslate"><span class="pre">positive</span></code> range.</p>
+<div class="highlight"><pre><span></span><span class="n">get_uniform_seed</span><span class="p">(</span><span class="n">seed1</span><span class="p">,</span><span class="w"> </span><span class="n">seed2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Optional salt&quot;</span><span class="p">);</span>
+
+<span class="n">uniform</span><span class="p">(</span><span class="n">seed1</span><span class="p">,</span><span class="w"> </span><span class="n">seed2</span><span class="p">,</span><span class="w"> </span><span class="n">a_random_value</span><span class="p">);</span>
+<span class="n">uniform</span><span class="p">(</span><span class="n">seed1</span><span class="p">,</span><span class="w"> </span><span class="n">seed2</span><span class="p">,</span><span class="w"> </span><span class="n">another_random_value</span><span class="p">);</span>
+</pre></div>
+<section id="reproducibility">
+<h3>Reproducibility<a class="headerlink" href="#reproducibility" title="Link to this heading">¶</a></h3>
+<p>The seed used for a test is logged in the test output file (<code class="docutils literal notranslate"><span class="pre">&lt;output</span> <span class="pre">path&gt;/output.txt</span></code>) and, in the event of a test failure, it is also displayed on the console:</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py
+Starting lib.tb_seed.Test that passes
+Output file: C:\repos\vunit\docs\run\src\vunit_out\test_output\lib.tb_seed.Test_that_passes_4125d67fe52dadd934f892b1209f41e7a94a39bd\output.txt
+Seed for lib.tb_seed.Test that passes: 8c5c0ea80b58a8ee
+simulation stopped @0ms with status 0
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=2) lib.tb_seed.Test that passes (0.5 s)
+
+(09:37:45) Starting lib.tb_seed.Test that fails
+Output file: C:\repos\vunit\docs\run\src\vunit_out\test_output\lib.tb_seed.Test_that_fails_0f173e63967af845f06d4a86c622bba76f3ffb3d\output.txt
+Seed for lib.tb_seed.Test that fails: fb19f3cca859d69c
+               0 fs - default              -   ERROR - Something bad happened
+C:\repos\vunit\vunit\vhdl\core\src\core_pkg.vhd:85:7:@0ms:(report failure): Stop simulation on log level error
+ghdl:error: report failed
+ghdl:error: simulation failed
+<span style="color: #cb4b16; ">fail</span> (P=1 S=0 F=1 T=2) lib.tb_seed.Test that fails (0.5 s)
+
+==== Summary ========================================
+<span style="color: #008000; ">pass</span> lib.tb_seed.Test that passes (0.5 s)
+<span style="color: #cb4b16; ">fail</span> lib.tb_seed.Test that fails  (0.5 s)
+=====================================================
+<span style="color: #008000; ">pass</span> 1 of 2
+<span style="color: #cb4b16; ">fail</span> 1 of 2
+=====================================================
+Total time was 1.0 s
+Elapsed time was 1.0 s
+=====================================================
+<span style="color: #cb4b16; ">Some failed!</span>
+</pre></div>
+<p>To reproduce the failing test setup and verify a bug fix, the failing seed can be specified using the <code class="docutils literal notranslate"><span class="pre">--seed</span></code> option:</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py "lib.tb_seed.Test that fails" --seed fb19f3cca859d69c</pre></div>
+<p><code class="docutils literal notranslate"><span class="pre">--seed</span></code> can also be set to <code class="docutils literal notranslate"><span class="pre">repeat</span></code>, in which case the values from the previous test run will be repeated.</p>
+</section>
+</section>
+<section id="running-a-vunit-testbench-standalone">
+<h2>Running A VUnit Testbench Standalone<a class="headerlink" href="#running-a-vunit-testbench-standalone" title="Link to this heading">¶</a></h2>
+<p>A VUnit testbench can be run just like any other VHDL testbench without involving PR. This is not the recommended
+way of working but can be useful in an organization which has started to use, but not fully adopted, VUnit. If
+you simulate the testbench below without PR the <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code> generic will have the
+value <code class="docutils literal notranslate"><span class="pre">runner_cfg_default</span></code> which will cause all test cases to be run.</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">tb_standalone</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span><span class="n">runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">runner_cfg_default</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_standalone</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="n">test_suite</span><span class="w"> </span><span class="k">loop</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test that fails on VUnit check procedure&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">check_equal</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">);</span>
+<span class="w">      </span><span class="k">elsif</span><span class="w"> </span><span class="n">run</span><span class="p">(</span><span class="s">&quot;Test to_string for boolean&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">check_equal</span><span class="p">(</span><span class="n">to_string</span><span class="p">(</span><span class="n">true</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;===Summary===&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">LF</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">get_checker_stat</span><span class="p">));</span>
+
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>However, since PR hasn’t scanned the code for test cases VUnit doesn’t know how many they are. Instead it will
+iterate the while loop as long as there is a call to the <code class="docutils literal notranslate"><span class="pre">run</span></code> function with a test case name VUnit hasn’t
+seen before. The first iteration in the example above will run the <em>Test that fails on VUnit check procedure</em> test
+case and the second iteration will run <em>Test to_string for boolean</em>. Then there is a third iteration where no
+new test case is found. This will trigger VUnit to end the while loop.</p>
+<p>The default level for a VUnit check like <code class="docutils literal notranslate"><span class="pre">check_equal</span></code> is <code class="docutils literal notranslate"><span class="pre">error</span></code> and the default behaviour is to stop the
+simulation on <code class="docutils literal notranslate"><span class="pre">error</span></code> when running with PR. When running standalone the default behaviour is to stop the
+simulation on the <code class="docutils literal notranslate"><span class="pre">failure</span></code> level such that the simulation has the ability to run through all test cases
+despite a failing check like in the example above.</p>
+<p>Without PR there is a need to print the test result. VUnit provides the <code class="docutils literal notranslate"><span class="pre">get_checker_stat</span></code> function to get the
+internal error counters and a <code class="docutils literal notranslate"><span class="pre">to_string</span></code> function to convert the returned record to a string. The example
+uses that and VUnit logging capabilities to create a simple summary in the test suite cleanup phase.</p>
+<p>It’s also useful to print the currently running test case. VR has an internal logger, <code class="docutils literal notranslate"><span class="pre">runner</span></code>, providing
+such information. This information is suppressed when running with PR but is enabled in the standalone mode</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#             0 ps - runner  -    INFO  - Test case: Test that fails on VUnit check procedure
+#             0 ps - check   -    ERROR - Equality check failed - Got 17. Expected 18.
+#             0 ps - runner  -    INFO  - Test case: Test to_string for boolean
+#             0 ps - default -    INFO  - ===Summary===
+#                                         checker_stat&#39;(n_checks =&gt; 2, n_failed =&gt; 1, n_passed =&gt; 1)
+</pre></div>
+</div>
+<p>Note that VUnit cannot handle VHDL asserts in this mode of operation. If the simulator has full support for VHDL-2019,
+it is possible to read out assert error counters and use <code class="docutils literal notranslate"><span class="pre">check_equal</span></code> to verify that these are zero before calling
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>. Failures like division by zero or out of range operations are other examples that won’t be
+handle gracefully in this mode, and not something that VHDL provides any solutions for.</p>
+</section>
+<section id="special-paths">
+<h2>Special Paths<a class="headerlink" href="#special-paths" title="Link to this heading">¶</a></h2>
+<p>When running with PR you can get the path to the directory containing the testbench and the path to the output
+directory of the current test by using the <code class="docutils literal notranslate"><span class="pre">tb_path</span></code> and <code class="docutils literal notranslate"><span class="pre">output_path</span></code> generics. This is described in more
+detail <a class="reference internal" href="../user_guide.html"><span class="doc">here</span></a>. It’s also possible to access these path strings from the <code class="docutils literal notranslate"><span class="pre">runner_cfg</span></code>
+generic by using the <code class="docutils literal notranslate"><span class="pre">tb_path</span></code> and <code class="docutils literal notranslate"><span class="pre">output_path</span></code> functions.</p>
+<p>Running the following testbench</p>
+<div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">vunit_lib</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">vunit_lib</span><span class="p">.</span><span class="n">vunit_context</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">tb_magic_paths</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span><span class="n">runner_cfg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">tb_magic_paths</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="n">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span>
+<span class="w">    </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Directory containing testbench: &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">tb_path</span><span class="p">(</span><span class="n">runner_cfg</span><span class="p">));</span>
+<span class="w">    </span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Test output directory: &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">output_path</span><span class="p">(</span><span class="n">runner_cfg</span><span class="p">));</span>
+<span class="w">    </span><span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+<p>will reveal that</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">> python run.py -v
+Starting lib.tb_magic_paths.all
+Output file: C:\github\vunit\docs\run\src\vunit_out\test_output\lib.tb_magic_paths.all_243b3c717ce1d4e82490245d1b7e8fe8797f5e94\output.txt
+Seed for lib.tb_magic_paths.all: 3680f2e2321cdac3
+               0 fs - default              -    INFO - Directory containing testbench: C:/github/vunit/docs/run/src/
+               0 fs - default              -    INFO - Test output directory: C:/github/vunit/docs/run/src/vunit_out/test_output/lib.tb_magic_paths.all_243b3c717ce1d4e82490245d1b7e8fe8797f5e94/
+simulation stopped @0ms with status 0
+<span style="color: #008000; ">pass</span> (P=1 S=0 F=0 T=1) lib.tb_magic_paths.all (0.6 s)
+
+==== Summary ==================================
+<span style="color: #008000; ">pass</span> lib.tb_magic_paths.all (0.6 s)
+===============================================
+<span style="color: #008000; ">pass</span> 1 of 1
+===============================================
+Total time was 0.6 s
+Elapsed time was 0.6 s
+===============================================
+<span style="color: #008000; ">All passed!</span>
+</pre></div>
+</section>
+<section id="note-on-undocumented-features">
+<h2>Note On Undocumented Features<a class="headerlink" href="#note-on-undocumented-features" title="Link to this heading">¶</a></h2>
+<p>VR contains a number of features not documented in this guide. These features are under evaluation and will be
+documented or removed when that evaluation has completed.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../com/user_guide.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Communication Library User Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../check/checker_pkg.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><em>checker</em> package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2014-2024, Lars Asplund
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fa-solid fa-brands fa-twitter" href="https://twitter.com/VUnitFramework" aria-label="Twitter @VUnitFramework"></a>
+              <a class="muted-link fa-solid fa-brands fa-gitter" href="https://gitter.im/VUnit/vunit" aria-label="Gitter VUnit/vunit"></a>
+              <a class="muted-link fa-solid fa-brands fa-github" href="https://github.com/VUnit/vunit" aria-label="GitHub VUnit/vunit"></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Run Library User Guide</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#minimal-vunit-testbench">Minimal VUnit Testbench</a></li>
+<li><a class="reference internal" href="#testbench-with-test-cases">Testbench with Test Cases</a></li>
+<li><a class="reference internal" href="#distributed-testbenches">Distributed Testbenches</a></li>
+<li><a class="reference internal" href="#controlling-what-test-cases-to-run">Controlling What Test Cases to Run</a></li>
+<li><a class="reference internal" href="#running-test-cases-independently">Running Test Cases Independently</a></li>
+<li><a class="reference internal" href="#the-vunit-watchdog">The VUnit Watchdog</a></li>
+<li><a class="reference internal" href="#what-makes-a-test-fail">What Makes a Test Fail?</a><ul>
+<li><a class="reference internal" href="#stopping-failures">Stopping Failures</a></li>
+<li><a class="reference internal" href="#counting-errors-with-vunit-logging-check-libraries">Counting Errors with VUnit Logging/Check Libraries</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#seeds-for-random-number-generation">Seeds for Random Number Generation</a><ul>
+<li><a class="reference internal" href="#reproducibility">Reproducibility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-a-vunit-testbench-standalone">Running A VUnit Testbench Standalone</a></li>
+<li><a class="reference internal" href="#special-paths">Special Paths</a></li>
+<li><a class="reference internal" href="#note-on-undocumented-features">Note On Undocumented Features</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

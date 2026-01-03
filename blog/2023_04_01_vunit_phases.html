@@ -1,0 +1,826 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="author" title="About these documents" href="../about.html"><link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="VUnit Events" href="2023_03_31_vunit_events.html"><link rel="prev" title="Improved Support for VHDL Configurations and OSVVM" href="2023_08_26_vhdl_configurations.html">
+        <link rel="prefetch" href="../_static/VUnit_logo.png" as="image">
+
+    <link rel="shortcut icon" href="../_static/vunit.ico"><!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>VUnit Phases - VUnit documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">VUnit  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/VUnit_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Blog</a><input aria-label="Toggle navigation of Blog" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2023_08_26_vhdl_configurations.html">Improved Support for VHDL Configurations and OSVVM</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">VUnit Phases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2023_03_31_vunit_events.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2022_09_19_vunit_user_conference.html">VUnit User Conference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2022_09_06_vunit_and_other_frameworks.html">FAQ What is VUnit’s Relation to Other Verification Frameworks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../id/user_guide.html">Identity Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../logging/user_guide.html">Logging Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../check/user_guide.html">Check Library User Guide</a><input aria-label="Toggle navigation of Check Library User Guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../check/check_api.html"><em>check</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../check/checker_pkg.html"><em>checker</em> package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../run/user_guide.html">Run Library User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../com/user_guide.html">Communication Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../verification_components/user_guide.html">Verification Components User Guide</a><input aria-label="Toggle navigation of Verification Components User Guide" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/memory_model.html">Memory Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html">Bus Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#stream-master-vci">Stream Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification_components/vci.html#synchronization-vci">Synchronization VCI</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_types/user_guide.html">Data Types User Guide</a><input aria-label="Toggle navigation of Data Types User Guide" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/event_user_guide.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/queue.html"><em>queue</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/integer_array.html"><em>integer_array</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/ext_string.html"><em>external string</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_types/ext_integer_vector.html"><em>external integer vector</em> package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command Line Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../py/ui.html">Python Interface</a><input aria-label="Toggle navigation of Python Interface" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../py/vunit.html">vunit.ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/opts.html">Compilation Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../py/opts.html#simulation-options">Simulation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hdl_libraries.html">HDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/blob/master/docs/blog/2023_04_01_vunit_phases.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/edit/master/docs/blog/2023_04_01_vunit_phases.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="vunit-phases">
+<h1>VUnit Phases<a class="headerlink" href="#vunit-phases" title="Link to this heading">¶</a></h1>
+<section id="what-you-will-learn">
+<h2>What You Will Learn<a class="headerlink" href="#what-you-will-learn" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>The different phases a VUnit testbench traverses during its execution.</p></li>
+<li><p>How phases can be used by a process, such as a third part verification component (VC), to prevent a premature
+simulation exit without requiring non-intuitive coding constructs on the user side.</p></li>
+<li><p>How testbench processes can be made aware of an imminent simulation exit, allowing them to carry out exit tasks such
+as verifying the correctness of the final DUT state or logging interesting summary information.</p></li>
+</ol>
+</section>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>During the course of a simulation, VUnit guides the testbench through a number of distinct <em>phases</em>. These phases are
+determined by the structure of the test runner process - the main process controlling the execution of the testbench.
+Some phases are completely encapsulated within a VUnit procedure, such as <code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> and
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>, while others are defined as a code region within the test runner process. The code example
+below outlines a test runner process consisting of two test cases. The phases involved are named and described by the
+<code class="docutils literal notranslate"><span class="pre">phase</span></code> procedure calls. This procedure, created specifically for this example, provides a visual representation of
+the different phases and their transitions as a VUnit log.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST RUNNER SETUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;The testbench is initialized from the runner_cfg generic. This allows for &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;configuration of features such as coloration of log entries. This phase &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;call comes before initialization, so it will not be affected by any of the &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;settings and the resulting log entry will be without special colors.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="gr">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST SUITE SETUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;Code common to the entire test suite (set of test cases) that is executed *once* &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;prior to all test cases. For example, if we want to specify what log levels should &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;be visible.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">show</span><span class="p">(</span><span class="n">display_handler</span><span class="p">,</span><span class="w"> </span><span class="n">debug</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="gr">test_suite</span><span class="w"> </span><span class="k">loop</span><span class="w"></span>
+<span class="w">    </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST CASE SETUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;Code executed before *every* test case. For example, if we use the VUnit &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;run_all_in_same_sim attribute to run all test cases in the same simulation, we &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;may need to reset the DUT before each test case.&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">-- vunit: run_all_in_same_sim</span><span class="w"></span>
+<span class="w">    </span><span class="n">reset</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">reset</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="gr">run</span><span class="p">(</span><span class="s">&quot;Test case 1&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">      </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST CASE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;This is where we run our test case 1 code.&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="c1">-- The test code is just a wait statement in this dummy example</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">elsif</span><span class="w"> </span><span class="gr">run</span><span class="p">(</span><span class="s">&quot;Test case 2&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">      </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST CASE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s">&quot;This is where we run our test case 2 code.&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="c1">-- The test code is just a wait statement in this dummy example</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST CASE CLEANUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;Code executed after *every* test case. For example, there may be some DUT status &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">      </span><span class="s">&quot;flags we want to check before ending the test.&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">error_flag</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST SUITE CLEANUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;Code common to the entire test suite which is executed *once* after all test &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;cases have been run. For example, it can be used to check if the desired coverage &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;metric has been fully achieved.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">check_true</span><span class="p">(</span><span class="n">full_coverage</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST RUNNER CLEANUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;Housekeeping performed by VUnit before ending the simulation. For example, &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;if VUnit was configure not to end the simulation upon detecting the first error, &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;it will fail the simulation during this phase if any errors have been detected.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="gr">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">       0 fs - tb_phases            -   PHASE -          TEST RUNNER SETUP
+                                                        The testbench is initialized from the runner_cfg generic. This allows for 
+                                                        configuration of features such as coloration of log entries. This phase 
+                                                        call comes before initialization, so it will not be affected by any of the 
+                                                        settings and the resulting log entry will be without special colors. 
+                                               
+       <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -  <span style="background: #eee8d5; "> </span>       <span style="font_weight: bold; color: #4fb636; ">TEST SUITE SETUP</span>
+                                                <span style="background: #eee8d5; "> </span>       Code common to the entire test suite (set of test cases) that is executed 
+                                                <span style="background: #eee8d5; "> </span>       *once* prior to all test cases. For example, if we want to specify what log 
+                                                <span style="background: #eee8d5; "> </span>       levels should be visible. 
+                                               
+       <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -   <span style="background: #268bd2; "> </span>      <span style="font_weight: bold; color: #4fb636; ">TEST CASE SETUP</span>
+                                                 <span style="background: #268bd2; "> </span>      Code executed before *every* test case. For example, if we use the VUnit 
+                                                 <span style="background: #268bd2; "> </span>      run_all_in_same_sim attribute to run all test cases in the same simulation, 
+                                                 <span style="background: #268bd2; "> </span>      we may need to reset the DUT before each test case. 
+                                               
+<span style="color: #2aa198; ">10000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -    <span style="background: #9c36b6; "> </span>     <span style="font_weight: bold; color: #4fb636; ">TEST CASE</span>
+                                                  <span style="background: #9c36b6; "> </span>     This is where we run our test case 1 code. 
+                                               
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -     <span style="background: #008080; "> </span>    <span style="font_weight: bold; color: #4fb636; ">TEST CASE CLEANUP</span>
+                                                   <span style="background: #008080; "> </span>    Code executed after *every* test case. For example, there may be some DUT 
+                                                   <span style="background: #008080; "> </span>    status flags we want to check before ending the test. 
+                                               
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -   <span style="background: #268bd2; "> </span>      <span style="font_weight: bold; color: #4fb636; ">TEST CASE SETUP</span>
+                                                 <span style="background: #268bd2; "> </span>      Code executed before *every* test case. For example, if we use the VUnit 
+                                                 <span style="background: #268bd2; "> </span>      run_all_in_same_sim attribute to run all test cases in the same simulation, 
+                                                 <span style="background: #268bd2; "> </span>      we may need to reset the DUT before each test case. 
+                                               
+<span style="color: #2aa198; ">30000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -    <span style="background: #9c36b6; "> </span>     <span style="font_weight: bold; color: #4fb636; ">TEST CASE</span>
+                                                  <span style="background: #9c36b6; "> </span>     This is where we run our test case 2 code. 
+                                               
+<span style="color: #2aa198; ">40000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -     <span style="background: #008080; "> </span>    <span style="font_weight: bold; color: #4fb636; ">TEST CASE CLEANUP</span>
+                                                   <span style="background: #008080; "> </span>    Code executed after *every* test case. For example, there may be some DUT 
+                                                   <span style="background: #008080; "> </span>    status flags we want to check before ending the test. 
+                                               
+<span style="color: #2aa198; ">40000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -      <span style="background: #859900; "> </span>   <span style="font_weight: bold; color: #4fb636; ">TEST SUITE CLEANUP</span>
+                                                    <span style="background: #859900; "> </span>   Code common to the entire test suite which is executed *once* after all 
+                                                    <span style="background: #859900; "> </span>   test cases have been run. For example, it can be used to check if the 
+                                                    <span style="background: #859900; "> </span>   desired coverage metric has been fully achieved. 
+                                               
+<span style="color: #2aa198; ">40000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -       <span style="background: #cb4b16; "> </span>  <span style="font_weight: bold; color: #4fb636; ">TEST RUNNER CLEANUP</span>
+                                                     <span style="background: #cb4b16; "> </span>  Housekeeping performed by VUnit before ending the simulation. For example, 
+                                                     <span style="background: #cb4b16; "> </span>  if VUnit was configure not to end the simulation upon detecting the first 
+                                                     <span style="background: #cb4b16; "> </span>  error, it will fail the simulation during this phase if any errors have 
+                                                     <span style="background: #cb4b16; "> </span>  been detected. 
+                                               
+</pre></div>
+<p>To infer as little overhead as possible (but not less than that), VUnit permits testbenches without named test cases,
+resulting in the elimination of certain phases. However, <code class="docutils literal notranslate"><span class="pre">test_runner_setup</span></code> and <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> remain
+present at all times.</p>
+<div class="highlight"><pre><span></span><span class="n">test_runner</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST RUNNER SETUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;The testbench is initialized from the runner_cfg generic. This allows for &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;configuration of features such as coloration of log entries. This phase &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;call comes before initialization, so it will not be affected by any of the &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;settings and the resulting log entry will be without special colors.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="gr">test_runner_setup</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">runner_cfg</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST CASE&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;This is where we run all the test code.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">reset</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">reset</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span><span class="w"> </span><span class="c1">-- The test code is just a wait statement in this dummy example</span><span class="w"></span>
+<span class="w">  </span><span class="n">check_equal</span><span class="p">(</span><span class="n">error_flag</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">check_true</span><span class="p">(</span><span class="n">full_coverage</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="n">phase</span><span class="p">(</span><span class="s">&quot;TEST RUNNER CLEANUP&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;Housekeeping performed by VUnit before ending the simulation. For example, &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;if VUnit was configure not to end the simulation upon detecting the first error, &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;it will fail the simulation during this phase if any errors have been detected.&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="gr">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>Of these phases, the test runner cleanup phase is the most useful and the focal point of this blog. To understand how we
+can use this phase, we can start by showing the usually hidden trace messages from the <code class="docutils literal notranslate"><span class="pre">runner</span></code> logger when the
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> function is invoked:</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">       0 fs - tb_phases            -   PHASE -          TEST RUNNER SETUP
+                                                        The testbench is initialized from the runner_cfg generic. This allows for 
+                                                        configuration of features such as coloration of log entries. This phase 
+                                                        call comes before initialization, so it will not be affected by any of the 
+                                                        settings and the resulting log entry will be without special colors. 
+                                               
+       <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -    <span style="background: #9c36b6; "> </span>     <span style="font_weight: bold; color: #4fb636; ">TEST CASE</span>
+                                                  <span style="background: #9c36b6; "> </span>     This is where we run all the test code. 
+                                               
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">tb_phases</span>            -   <span style="color: #eee8d5; ">PHASE</span> -       <span style="background: #cb4b16; "> </span>  <span style="font_weight: bold; color: #4fb636; ">TEST RUNNER CLEANUP</span>
+                                                     <span style="background: #cb4b16; "> </span>  Housekeeping performed by VUnit before ending the simulation. For example, 
+                                                     <span style="background: #cb4b16; "> </span>  if VUnit was configure not to end the simulation upon detecting the first 
+                                                     <span style="background: #cb4b16; "> </span>  error, it will fail the simulation during this phase if any errors have 
+                                                     <span style="background: #cb4b16; "> </span>  been detected. 
+                                               
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>               -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner cleanup phase.
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>               -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>               -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase exit gate.
+<span style="color: #2aa198; ">20000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>               -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner exit phase.
+</pre></div>
+<p>As we can see VUnit keeps track of the phases internally and there is a concept of a <em>gate</em> when entering and exiting a
+phase. In this example, VUnit passes through the gates but it’s possible for a user to prevent that by locking a gate.
+This capability can be used to prevent VUnit from cleaning up and exiting the simulation until all processes are done,
+resolving the issues that arose with using an event as a barrier in our previous blog:</p>
+<ol class="arabic simple">
+<li><p>The phase lock solution scales well. <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> is already present in every VUnit testbench and it
+eliminates the need for creating a new event for every process to wait on.</p></li>
+<li><p>There is no race condition as it doesn’t matter in which order processes complete. <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> will
+wait until every process has removed its lock.</p></li>
+<li><p>With the absence of any additional constructs in the test runner, there is no risk of forgetting to wait for another
+process, and any process can introduce locks without requiring external changes. This is especially important for
+verification components, as they can start using locks without the necessity of their users having to update
+their code.</p></li>
+</ol>
+</section>
+<section id="phase-gate-locks">
+<h2>Phase Gate Locks<a class="headerlink" href="#phase-gate-locks" title="Link to this heading">¶</a></h2>
+<p>To see the phase gate locks in action we’re going to revisit the example provided in the <a class="reference internal" href="2023_03_31_vunit_events.html"><span class="doc">event blog</span></a>. In that example our <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> process notified its completion with the
+<code class="docutils literal notranslate"><span class="pre">dut_checker_done</span></code> event.</p>
+<div class="highlight"><pre><span></span><span class="n">dut_checker</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">new_data_set</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">loop</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">output_tvalid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">log_active</span><span class="p">(</span><span class="n">vunit_error</span><span class="p">,</span><span class="w"> </span><span class="n">decorate</span><span class="p">(</span><span class="s">&quot;while waiting on output data&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">output_tdata</span><span class="p">,</span><span class="w"> </span><span class="n">calculate_expected_output</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)));</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="n">notify</span><span class="p">(</span><span class="n">dut_checker_done</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>The test runner process waited for that event before calling <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>.</p>
+<div class="highlight"><pre><span></span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active_msg</span><span class="p">(</span><span class="n">dut_checker_done</span><span class="p">);</span><span class="w"></span>
+<span class="n">test_runner_cleanup</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+<p>Before adding the locks, we need to remove the <code class="docutils literal notranslate"><span class="pre">dut_checker_done</span></code> event, the notification of that event in the
+<code class="docutils literal notranslate"><span class="pre">dut_checker</span></code>, and the wait statement waiting for that event in <code class="docutils literal notranslate"><span class="pre">test_runner</span></code>. Afterwards, we can update the
+<code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> according to the code listing provided below.</p>
+<div class="highlight"><pre><span></span><span class="n">dut_checker</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">key_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="gr">get_entry_key</span><span class="p">(</span><span class="n">test_runner_cleanup</span><span class="p">);</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">new_data_set</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="gr">lock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">loop</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">output_tvalid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">log_active</span><span class="p">(</span><span class="n">vunit_error</span><span class="p">,</span><span class="w"> </span><span class="n">decorate</span><span class="p">(</span><span class="s">&quot;while waiting on output data&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">output_tdata</span><span class="p">,</span><span class="w"> </span><span class="n">calculate_expected_output</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)));</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="gr">unlock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>The first step is to acquire a unique key for the gate we want to control, in this case the entry gate for the
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> phase. This is done by calling the <code class="docutils literal notranslate"><span class="pre">get_entry_key</span></code> function with <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> as
+the parameter. Each gate has many locks and the returned key fits one of those locks. An alternative design for locking
+a gate would be to use a keyless system, wherein locks can be added and removed to/from gates. However, such a design is
+prone to a class of bugs where a process unlocks a gate more than it locks it. This will lead to locks previously added
+by other processes being removed and the protection against premature termination of the simulation is lost.</p>
+<p>The second step is to determine when to lock the gate. Generally, this is done when the process has a task that requires
+completion before the end of the simulation. In this case, this is when the queue is not empty. Locking is done by
+passing the <code class="docutils literal notranslate"><span class="pre">runner</span></code> signal, the key, and optionally a logger, to the <code class="docutils literal notranslate"><span class="pre">lock</span></code> procedure. The <code class="docutils literal notranslate"><span class="pre">runner</span></code> signal in
+VUnit contains several events, of which <code class="docutils literal notranslate"><span class="pre">runner_phase</span></code> is used to indicate that something occurred related to the
+VUnit phases.</p>
+<p>The third step is to decide when to unlock. Unlocking should be done when the process has completed a task, provided
+there are no more tasks left to complete. In this case we unlock if the queue is empty. If we were to unlock before
+checking the queue, and the test runner process has already pushed all remaining data sets to the queue, we allow
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> to end the simulation and data is lost. When unlocking eventually does take place,
+<code class="docutils literal notranslate"><span class="pre">runner_phase</span></code> is activated and triggers <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> to verify that all locks are unlocked such that it
+can proceed.</p>
+<p>Let’s take a look at what the log looks like after implementing these updates.</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">        <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">114000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">222000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner cleanup phase.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Halting on test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase exit gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner exit phase.
+</pre></div>
+<p>First, we can observe that <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> is locking the gate three times in succession without unlocking it in
+between. This is perfectly fine as it keeps a locked gate locked and allows for simpler code. The same goes for an
+unlocked gate; if it is unlocked multiple times, it will remain unlocked. This is another advantage of having unique
+keys, as a keyless design would not accommodate this behaviour.</p>
+<p>We can also see how <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> halts on the entry gate and proceeds immediately after the locked gate lock
+is unlocked.</p>
+<p>An alternative design solution for the <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> is to move the last if statement to the top:</p>
+<div class="highlight"><pre><span></span><span class="n">dut_checker</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">key_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="gr">get_entry_key</span><span class="p">(</span><span class="n">test_runner_cleanup</span><span class="p">);</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="gr">unlock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">new_data_set</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="gr">lock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">loop</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">output_tvalid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">log_active</span><span class="p">(</span><span class="n">vunit_error</span><span class="p">,</span><span class="w"> </span><span class="n">decorate</span><span class="p">(</span><span class="s">&quot;while waiting on output data&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">output_tdata</span><span class="p">,</span><span class="w"> </span><span class="n">calculate_expected_output</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)));</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>The only difference is that there will be an initial unlock because of the initially empty queue but that is, as
+mentioned before, allowed.</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">        <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+        <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">114000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">222000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner cleanup phase.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Halting on test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase exit gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                       -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner exit phase.
+</pre></div>
+<p>It may be tempting to combine the two initial if statements into one where we first call <code class="docutils literal notranslate"><span class="pre">unlock</span></code> and then wait for
+the <code class="docutils literal notranslate"><span class="pre">new_data_set</span></code> event. However, this is a bad idea since it exposes us to a potential <a class="reference external" href="https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use">Time-Of-Check To Time-Of-Use
+bug</a>. When we call <code class="docutils literal notranslate"><span class="pre">unlock</span></code>, it triggers
+<code class="docutils literal notranslate"><span class="pre">runner_phase</span></code>, which is an operation consuming delta cycles. During this time, a new data set may have been pushed to
+the queue and the <code class="docutils literal notranslate"><span class="pre">new_data_set</span></code> event is activated before we return from the <code class="docutils literal notranslate"><span class="pre">unlock</span></code> procedure. Consequently,
+<code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> will miss the first event and block on the wait statement until the second event arrives some time after
+the DUT responded to the first data set. However, the first data set is still at the front of the queue and it will
+cause a failure when it is used to verify the DUT response to the second data set. This is a bug that only occurs under
+unfortunate timing circumstances and in this example we’ve added a dummy procedure with a finely tuned delay to showcase
+the scenario. Even if the risk of encountering this bug is low, or not even possible with the timing at hand, it would
+be unwise to make any assumptions about the test runner timing as that can change in the future.</p>
+<div class="highlight"><pre><span></span><span class="n">dut_checker</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">key_t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="gr">get_entry_key</span><span class="p">(</span><span class="n">test_runner_cleanup</span><span class="p">);</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="n">a_procedure_adding_some_delay</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">is_empty</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">then</span><span class="w"></span>
+<span class="w">    </span><span class="gr">unlock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">new_data_set</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="gr">lock</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span><span class="w"> </span><span class="k">loop</span><span class="w"></span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="p">(</span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">output_tvalid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">log_active</span><span class="p">(</span><span class="n">vunit_error</span><span class="p">,</span><span class="w"> </span><span class="n">decorate</span><span class="p">(</span><span class="s">&quot;while waiting on output data&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">dut_checker_logger</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">check_equal</span><span class="p">(</span><span class="n">output_tdata</span><span class="p">,</span><span class="w"> </span><span class="n">calculate_expected_output</span><span class="p">(</span><span class="n">pop</span><span class="p">(</span><span class="n">queue</span><span class="p">)));</span><span class="w"></span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">loop</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">       <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">78000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                  -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">82000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">check</span>                        -   <span style="font_weight: bold; color: #cb4b16; ">ERROR</span> - Equality check failed - Got 0000_0000_1011_1001 (185). Expected 0000_0000_1000_0011 (131).
+</pre></div>
+<p>With the two separate if statements, there is still a potential issue to consider. What if the test runner process
+pushes the last data set to the queue, notifies the <code class="docutils literal notranslate"><span class="pre">new_data_set</span></code> event, and then immediately calls
+<code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>? If the <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> just missed that last data set and unlocks the gate, will it then have
+enough time to detect the new data set after the unlocking and lock the gate again, before <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>
+terminates the simulation? Fortunately, there is time for that, as long as the presented design is used.</p>
+<p>Keeping both of the if statements at the beginning serves no purpose other than explaining the dangers of misplaced code
+optimizations. We recommend keeping the if statement that unlocks the gate at the bottom, thereby keeping the
+optimization temptation “out of sight”.</p>
+<p>At this point, we have designed a testbench where the <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> is solely responsible for carrying out its
+intended task and ensuring it is fully completed before the simulation ends (high cohesion). There are no
+responsibilities for the <code class="docutils literal notranslate"><span class="pre">test_runner</span></code> process. We have also ensured that the <code class="docutils literal notranslate"><span class="pre">dut_checker</span></code> does not make any
+assumptions about the timing of the <code class="docutils literal notranslate"><span class="pre">test_runner</span></code> (low coupling).</p>
+</section>
+<section id="phase-transition-events">
+<h2>Phase Transition Events<a class="headerlink" href="#phase-transition-events" title="Link to this heading">¶</a></h2>
+<p>In the previous chapters, we described how a process can prevent phase transitions by locking gates. However, there are
+also use cases that require processes to simply be aware of such transitions without needing to prevent them. To
+illustrate, let us take a look at the AXI Stream standard. This standard provides a set of <a class="reference external" href="https://developer.arm.com/documentation/dui0534/b">protocol assertions</a> that can be employed to verify if a stream conforms to the
+protocol. One such assertion, <code class="docutils literal notranslate"><span class="pre">AXI4STREAM_ERRM_STREAM_ALL_DONE_EOS</span></code>, states that</p>
+<p><em>“At the end of simulation, all streams have had their corresponding TLAST transfer”</em></p>
+<p>An AXI Stream protocol checker will not prevent a simulation from exiting but it must be given the opportunity to check
+that all streams have ended when that is about to happen. Let’s see how this is solved in the ARM-provided protocol
+checker IP:</p>
+<p><em>“The testbench that you are using has a signal called EOS_signal. You must drive EOS_signal HIGH at the end of the
+simulation for at least one clock cycle.”</em></p>
+<p>This is an example of a scenario in which a user must take a non-obvious step to ensure that a verification component
+works correctly. This is due to the fact that the ARM IP lacks a testbench structure to rely upon. A VUnit verification
+component, on the other hand, has a known structure in the mandatory presence of the <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> procedure.
+This procedure will trigger the <code class="docutils literal notranslate"><span class="pre">runner_phase</span></code> event when the phase changes to <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code>, giving the AXI
+Stream protocol checker the option to act. However, remember that <code class="docutils literal notranslate"><span class="pre">runner_phase</span></code> is activated on all phase changes and
+also when there is activity related to phase gate locks. Therefore, before checking stream status, the protocol checker
+must verify that the event was caused by an imminent simulation exit and not some other change. This is done by
+confirming that the active phase is <code class="docutils literal notranslate"><span class="pre">test_runner_cleanup</span></code> and that the testbench is <em>within</em> the gates of that phase,
+i.e. it has passed the entry gate but not yet the exit gate. The principle for the
+<code class="docutils literal notranslate"><span class="pre">AXI4STREAM_ERRM_STREAM_ALL_DONE_EOS</span></code> assertion is outlined below. After ensuring that the simulation is about to
+terminate, the process is able to make its final check, provided it is done within a single delta cycle.</p>
+<div class="highlight"><pre><span></span><span class="n">end_of_simulation_process</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"></span>
+<span class="k">begin</span><span class="w"></span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">is_active</span><span class="p">(</span><span class="n">runner_phase</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">is_within_gates_of</span><span class="p">(</span><span class="n">test_runner_cleanup</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">check_stream_activity</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">wait</span><span class="p">;</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+<p>Incorporating this protocol checker into our example testbench generates the following log:</p>
+<div class="highlight" style="background: #002b36; color: #eee8d5;"><pre style="line-height: 125%; background: #002b36; color: #eee8d5;">        <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                      -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+        <span style="color: #2aa198; ">0 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                      -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">114000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                      -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">222000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                      -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Locked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                           -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner cleanup phase.
+<span style="color: #2aa198; ">290000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                           -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Halting on test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">dut_checker</span>                      -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Unlocked test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                           -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase entry gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">axis_checker</span><span style="font_weight: bold; color: #2aa198; ">:</span><span style="font_weight: bold; color: #eee8d5; ">STREAM_ALL_DONE_EOS</span> -    <span style="font_weight: bold; color: #008000; ">PASS</span> - Equality check passed for number of active streams - Got 0.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                           -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Passed test runner cleanup phase exit gate.
+<span style="color: #2aa198; ">326000000 fs</span> - <span style="font_weight: bold; color: #eee8d5; ">runner</span>                           -   <span style="font_weight: bold; color: #9c36b6; ">TRACE</span> - Entering test runner exit phase.
+</pre></div>
+<p>As you can see from the pass message, the check is perform just before the simulation comes to an end.</p>
+</section>
+<section id="final-words">
+<h2>Final Words<a class="headerlink" href="#final-words" title="Link to this heading">¶</a></h2>
+<p>In this blog we’ve shown how phases can be used to handle the final ticks of your simulation in a robust and reliable
+way while adhering to two key concepts of good code design: high cohesion and low coupling.</p>
+<p>Do you have your own personal use cases for phases, or perhaps use cases that you think are not supported? Feel free to
+reach out and share them with us!</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="2023_03_31_vunit_events.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">VUnit Events</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="2023_08_26_vhdl_configurations.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Improved Support for VHDL Configurations and OSVVM</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2014-2024, Lars Asplund
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fa-solid fa-brands fa-twitter" href="https://twitter.com/VUnitFramework" aria-label="Twitter @VUnitFramework"></a>
+              <a class="muted-link fa-solid fa-brands fa-gitter" href="https://gitter.im/VUnit/vunit" aria-label="Gitter VUnit/vunit"></a>
+              <a class="muted-link fa-solid fa-brands fa-github" href="https://github.com/VUnit/vunit" aria-label="GitHub VUnit/vunit"></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">VUnit Phases</a><ul>
+<li><a class="reference internal" href="#what-you-will-learn">What You Will Learn</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#phase-gate-locks">Phase Gate Locks</a></li>
+<li><a class="reference internal" href="#phase-transition-events">Phase Transition Events</a></li>
+<li><a class="reference internal" href="#final-words">Final Words</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
