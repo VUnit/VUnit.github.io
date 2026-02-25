@@ -1,0 +1,910 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="author" title="About these documents" href="about.html"><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Python Interface" href="py/ui.html"><link rel="prev" title="external integer vector package" href="data_types/ext_integer_vector.html">
+        <link rel="prefetch" href="_static/VUnit_logo.png" as="image">
+
+    <link rel="shortcut icon" href="_static/vunit.ico"><!-- Generated with Sphinx 7.3.7 and Furo 2025.12.19 -->
+        <title>Command Line Interface - VUnit documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">VUnit  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/VUnit_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="blog/index.html">Blog</a><input aria-label="Toggle navigation of Blog" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="blog/2023_08_26_vhdl_configurations.html">Improved Support for VHDL Configurations and OSVVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2023_04_01_vunit_phases.html">VUnit Phases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2023_03_31_vunit_events.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2022_09_19_vunit_user_conference.html">VUnit User Conference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2022_09_06_vunit_and_other_frameworks.html">FAQ What is VUnit’s Relation to Other Verification Frameworks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2020_08_12_continuous_integration_with_vunit_action_in_10_lines_of_code.html">Continuous Integration With VUnit Action in 10 Lines of Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2018_09_22_sigasi_adds_full_vunit_support.html">Sigasi Adds Full VUnit Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2018_07_22_sigasi_deepens_its_commitment_to_the_vunit_testing_framework.html">Sigasi Deepens Its Commitment to the VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2018_03_22_vunit_community_developed_bfms.html">VUnit Community Developed BFMs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2018_02_12_vunit3.html">VUnit 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_12_14_vunit_bfms_as_simple_as_emailing.html">VUnit BFMs - as Simple as Emailing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_11_23_vunit_matlab_integration.html">VUnit Matlab Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_11_07_vunit_3_0_while_waiting_for_vhdl_2017.html">VUnit 3.0 - While Waiting for VHDL-2017</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_10_31_vunit_3_0_color_logging.html">VUnit 3.0 Color Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_09_28_sigasi_adds_support_for_vunit_testing_framework.html">Sigasi Adds Support for VUnit Testing Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_06_03_enable_your_simulator_to_handle_complex_top_level_generics.html">Enable Your Simulator to Handle Complex Top-Level Generics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2017_01_12_vunit_getting_started_1_2_3.html">VUnit - Getting Started 1-2-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_11_22_vunit_the_best_value_for_initial_effort_part3.html">VUnit - The Best Value for Initial Effort - Part 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_11_16_vunit_the_best_value_for_initial_effort_part2.html">VUnit - The Best Value for Initial Effort - Part 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_11_15_vunit_the_best_value_for_initial_effort_part1.html">VUnit - The Best Value for Initial Effort - Part 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_08_08_making_osvvm_a_submodule.html">Making OSVVM a Git Submodule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_02_21_improving_vhdl_testbench_design_with_message_passing.html">Improving VHDL Testbench Design with Message Passing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_02_01_website_updates.html">Website Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_01_29_chat_with_vunit_users_and_developers.html">Chat with VUnit Users and Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2016_01_26_welcome_to_our_new_website.html">Welcome to Our New Website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2015_12_15_free_and_open_source_verification_with_vunit_and_ghdl.html">Free and Open Source Verification with VUnit and GHDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2015_10_08_who_is_using_UVM.html">Who’s Using UVM (or Not) for FPGA Development, and Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blog/2015_09_24_short_introduction_to_vunit.html">Short Introduction to VUnit</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">About</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about.html">What is VUnit?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testimonials/testimonials.html">Testimonials</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="id/user_guide.html">Identity Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging/user_guide.html">Logging Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="check/user_guide.html">Check Library User Guide</a><input aria-label="Toggle navigation of Check Library User Guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="check/check_api.html"><em>check</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="check/checker_pkg.html"><em>checker</em> package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="run/user_guide.html">Run Library User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="com/user_guide.html">Communication Library User Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="verification_components/user_guide.html">Verification Components User Guide</a><input aria-label="Toggle navigation of Verification Components User Guide" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="verification_components/memory_model.html">Memory Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification_components/vci.html">Bus Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification_components/vci.html#stream-master-vci">Stream Master VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification_components/vci.html#stream-slave-vci">Stream Slave VCI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification_components/vci.html#synchronization-vci">Synchronization VCI</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_types/user_guide.html">Data Types User Guide</a><input aria-label="Toggle navigation of Data Types User Guide" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_types/event_user_guide.html">VUnit Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_types/queue.html"><em>queue</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_types/integer_array.html"><em>integer_array</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_types/ext_string.html"><em>external string</em> package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_types/ext_integer_vector.html"><em>external integer vector</em> package</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Command Line Interface</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="py/ui.html">Python Interface</a><input aria-label="Toggle navigation of Python Interface" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="py/vunit.html">vunit.ui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="py/opts.html">Compilation Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="py/opts.html#simulation-options">Simulation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hdl_libraries.html">HDL Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Continuous Integration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ci/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/script.html">Setup/configuration scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/container.html">Containers and/or Virtual Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/manual.html">Manual setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ci/usecases.html">Practical use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/blob/master/docs/cli.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/VUnit/vunit/edit/master/docs/cli.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="command-line-interface">
+<span id="cli"></span><h1>Command Line Interface<a class="headerlink" href="#command-line-interface" title="Link to this heading">¶</a></h1>
+<p>A <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit" title="vunit.ui.VUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">VUnit</span></code></a> object can be created from command
+line arguments by using the <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit.from_argv" title="vunit.ui.VUnit.from_argv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_argv</span></code></a> method effectively creating a custom
+command line tool for running tests in the user project.  Source files
+and libraries are added to the project by using methods on the VUnit
+object. The configuration is followed by a call to the <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit.main" title="vunit.ui.VUnit.main"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main</span></code></a> method which will execute the function
+specified by the command line arguments and exit the script. The added
+source files are automatically scanned for test cases.</p>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p><p>VUnit command line tool version 5.0.0.dev9</p>
+</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">attributes</span> <span class="n">WITH_ATTRIBUTES</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">attributes</span> <span class="n">WITHOUT_ATTRIBUTES</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">f</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="nb">compile</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">-</span><span class="n">m</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">fail</span><span class="o">-</span><span class="n">fast</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">elaborate</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">clean</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">OUTPUT_PATH</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">changed</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">test</span><span class="o">-</span><span class="n">prio</span> <span class="p">{</span><span class="n">opt</span><span class="p">,</span><span class="n">ordered</span><span class="p">}]</span> <span class="p">[</span><span class="o">-</span><span class="n">x</span> <span class="n">XUNIT_XML</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">xunit</span><span class="o">-</span><span class="n">xml</span><span class="o">-</span><span class="nb">format</span> <span class="p">{</span><span class="n">jenkins</span><span class="p">,</span><span class="n">bamboo</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">exit</span><span class="o">-</span><span class="mi">0</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">dont</span><span class="o">-</span><span class="n">catch</span><span class="o">-</span><span class="n">exceptions</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">color</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">log</span><span class="o">-</span><span class="n">level</span> <span class="p">{</span><span class="n">info</span><span class="p">,</span><span class="n">error</span><span class="p">,</span><span class="n">warning</span><span class="p">,</span><span class="n">debug</span><span class="p">}]</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="n">NUM_THREADS</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">u</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">export</span><span class="o">-</span><span class="n">json</span> <span class="n">EXPORT_JSON</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">version</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">seed</span> <span class="o">&lt;</span><span class="n">seed</span><span class="o">&gt;|</span><span class="n">repeat</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">debugger</span> <span class="p">{</span><span class="n">original</span><span class="p">,</span><span class="n">visualizer</span><span class="p">}]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">viewer</span><span class="o">-</span><span class="n">fmt</span> <span class="p">{</span><span class="n">vcd</span><span class="p">,</span><span class="n">fst</span><span class="p">,</span><span class="n">ghw</span><span class="p">}]</span> <span class="p">[</span><span class="o">--</span><span class="n">viewer</span><span class="o">-</span><span class="n">args</span> <span class="n">VIEWER_ARGS</span><span class="p">]</span>
+              <span class="p">[</span><span class="o">--</span><span class="n">viewer</span> <span class="n">VIEWER</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">cdslib</span> <span class="n">CDSLIB</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">hdlvar</span> <span class="n">HDLVAR</span><span class="p">]</span>
+              <span class="p">[</span><span class="n">tests</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="positional-arguments">
+<h3>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Link to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>tests</kbd></dt>
+<dd><p>Tests to run</p>
+<p>Default: “*”</p>
+</dd>
+</dl>
+</section>
+<section id="named-arguments">
+<h3>Named Arguments<a class="headerlink" href="#named-arguments" title="Link to this heading">¶</a></h3>
+<dl class="option-list">
+<dt><kbd>--with-attributes</kbd></dt>
+<dd><p>Only select tests with these attributes set</p>
+</dd>
+<dt><kbd>--without-attributes</kbd></dt>
+<dd><p>Only select tests without these attributes set</p>
+</dd>
+<dt><kbd>-l, --list</kbd></dt>
+<dd><p>Only list all test cases</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-f, --files</kbd></dt>
+<dd><p>Only list all files in compile order</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--compile</kbd></dt>
+<dd><p>Only compile project without running tests</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-m, --minimal</kbd></dt>
+<dd><p>Only compile files required for the (filtered) test benches</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-k, --keep-compiling</kbd></dt>
+<dd><p>Continue compiling even after errors only skipping files that depend on failed files</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--fail-fast</kbd></dt>
+<dd><p>Stop immediately on first failing test</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--elaborate</kbd></dt>
+<dd><p>Only elaborate test benches without running</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--clean</kbd></dt>
+<dd><p>Remove output path first. This is useful, for example, to force a complete recompile when compilation artifacts are obsolete due to a simulator version update.</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-o, --output-path</kbd></dt>
+<dd><p>Output path for compilation and simulation artifacts</p>
+<p>Default: “./vunit_out”</p>
+</dd>
+<dt><kbd>--changed</kbd></dt>
+<dd><p>Include only test_patterns that depend on file changes since the last recorded test run</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--test-prio</kbd></dt>
+<dd><p>Possible choices: opt, ordered</p>
+<p>Controls test priority strategy. “opt” (default) = Optimized to increase the probability of running failing tests early and to minimize test time through thread load-balancing. “ordered” = Tests are executed in the order they were added.</p>
+<p>Default: “opt”</p>
+</dd>
+<dt><kbd>-x, --xunit-xml</kbd></dt>
+<dd><p>Xunit test report .xml file</p>
+</dd>
+<dt><kbd>--xunit-xml-format</kbd></dt>
+<dd><p>Possible choices: jenkins, bamboo</p>
+<p>Only valid with –xunit-xml argument. Defines where in the XML file the simulator output is stored on a failure. “jenkins” = Output stored in &lt;system-out&gt;, “bamboo” = Output stored in &lt;failure&gt;.</p>
+<p>Default: “jenkins”</p>
+</dd>
+<dt><kbd>--exit-0</kbd></dt>
+<dd><p>Exit with code 0 even if a test failed. Still exits with code 1 on fatal errors such as compilation failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--dont-catch-exceptions</kbd></dt>
+<dd><p>Let exceptions bubble up all the way. Useful when running with “python -m pdb”.</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-v, --verbose</kbd></dt>
+<dd><p>Print test output immediately and not only when failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>-q, --quiet</kbd></dt>
+<dd><p>Do not print test output even in the case of failure</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--no-color</kbd></dt>
+<dd><p>Do not color output</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--log-level</kbd></dt>
+<dd><p>Possible choices: info, error, warning, debug</p>
+<p>Log level of VUnit internal python logging. Used for debugging</p>
+<p>Default: “warning”</p>
+</dd>
+<dt><kbd>-p, --num-threads</kbd></dt>
+<dd><p>Number of tests to run in parallel. Test output is not continuously written in verbose mode with p != 1. p = 0 uses all logical CPUs.</p>
+<p>Default: 1</p>
+</dd>
+<dt><kbd>-u, --unique-sim</kbd></dt>
+<dd><p>Do not re-use the same simulator process for running different test cases (slower)</p>
+<p>Default: False</p>
+</dd>
+<dt><kbd>--export-json</kbd></dt>
+<dd><p>Export project information to a JSON file.</p>
+</dd>
+<dt><kbd>--version</kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+<dt><kbd>--seed</kbd></dt>
+<dd><p>16 hex digits base seed provided to the simulation or repeat the previous base seed(s). If no previous base seed has been recorded, “repeat” will use the default base seed which is generated from system time.</p>
+</dd>
+<dt><kbd>-g, --gui</kbd></dt>
+<dd><p>Open test case(s) in simulator gui with top level pre loaded</p>
+<p>Default: False</p>
+</dd>
+</dl>
+</section>
+<section id="modelsim/questa">
+<h3>modelsim/questa<a class="headerlink" href="#modelsim/questa" title="Link to this heading">¶</a></h3>
+<p>ModelSim/Questa specific flags</p>
+<dl class="option-list">
+<dt><kbd>--debugger</kbd></dt>
+<dd><p>Possible choices: original, visualizer</p>
+<p>Debugger to use.</p>
+<p>Default: “original”</p>
+</dd>
+</dl>
+</section>
+<section id="ghdl/nvc">
+<h3>ghdl/nvc<a class="headerlink" href="#ghdl/nvc" title="Link to this heading">¶</a></h3>
+<p>GHDL/NVC specific flags</p>
+<dl class="option-list">
+<dt><kbd>--viewer-fmt, --gtkwave-fmt</kbd></dt>
+<dd><p>Possible choices: vcd, fst, ghw</p>
+<p>Save .vcd, .fst, or .ghw to open in waveform viewer. NVC does not support ghw.</p>
+</dd>
+<dt><kbd>--viewer-args, --gtkwave-args</kbd></dt>
+<dd><p>Arguments to pass to waveform viewer</p>
+<p>Default: “”</p>
+</dd>
+<dt><kbd>--viewer</kbd></dt>
+<dd><p>Waveform viewer to use</p>
+</dd>
+</dl>
+</section>
+<section id="incisive-irun">
+<h3>Incisive irun<a class="headerlink" href="#incisive-irun" title="Link to this heading">¶</a></h3>
+<p>Incisive irun-specific flags</p>
+<dl class="option-list">
+<dt><kbd>--cdslib</kbd></dt>
+<dd><p>The cds.lib file to use. If not given, VUnit maintains its own cds.lib file.</p>
+</dd>
+<dt><kbd>--hdlvar</kbd></dt>
+<dd><p>The hdl.var file to use. If not given, VUnit does not use a hdl.var file.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="example-session">
+<h2>Example Session<a class="headerlink" href="#example-session" title="Link to this heading">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/VUnit/vunit/tree/master/examples/vhdl/user_guide//">VHDL User Guide Example</a> can be run to produce the following output:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">List all tests</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -l</span>
+<span class="go">lib.tb_example.all</span>
+<span class="go">lib.tb_example_many.test_pass</span>
+<span class="go">lib.tb_example_many.test_fail</span>
+<span class="go">Listed 3 tests</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Run all tests</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py</span>
+<span class="go">Re-compile not needed</span>
+
+<span class="gp gp-VirtualEnv">(09:40:59)</span> <span class="go">Starting lib.tb_example.all</span>
+<span class="go">Output file: C:\vunit\examples\vhdl\user_guide\vunit_out\test_output\lib.tb_example.all_7b5933c73ddb812488c059080644e9fd58c418d9\output.txt</span>
+<span class="go">pass (P=1 S=0 F=0 T=3) lib.tb_example.all (0.5 s)</span>
+
+<span class="gp gp-VirtualEnv">(09:40:59)</span> <span class="go">Starting lib.tb_example_many.test_pass</span>
+<span class="go">Output file: C:\vunit\examples\vhdl\user_guide\vunit_out\test_output\lib.tb_example_many.test_pass_aff64431373db20d8bbba18c28096f449861ccbe\output.txt</span>
+<span class="go">pass (P=2 S=0 F=0 T=3) lib.tb_example_many.test_pass (0.5 s)</span>
+
+<span class="gp gp-VirtualEnv">(09:41:00)</span> <span class="go">Starting lib.tb_example_many.test_fail</span>
+<span class="go">Output file: C:\vunit\examples\vhdl\user_guide\vunit_out\test_output\lib.tb_example_many.test_fail_d8956871e3b3d178e412e37587673fe9df648faf\output.txt</span>
+<span class="go">Seed for lib.tb_example_many.test_fail: 7efb6d37186ac077</span>
+<span class="go">C:\vunit\examples\vhdl\user_guide\tb_example_many.vhd:26:9:@0ms:(assertion error): It fails</span>
+<span class="go">ghdl:error: assertion failed</span>
+<span class="go">ghdl:error: simulation failed</span>
+<span class="go">fail (P=2 S=0 F=1 T=3) lib.tb_example_many.test_fail (0.5 s)</span>
+
+<span class="go">==== Summary =========================================</span>
+<span class="go">pass lib.tb_example.all            (0.5 s)</span>
+<span class="go">pass lib.tb_example_many.test_pass (0.5 s)</span>
+<span class="go">fail lib.tb_example_many.test_fail (0.5 s)</span>
+<span class="go">======================================================</span>
+<span class="go">pass 2 of 3</span>
+<span class="go">fail 1 of 3</span>
+<span class="go">======================================================</span>
+<span class="go">Total time was 1.5 s</span>
+<span class="go">Elapsed time was 1.5 s</span>
+<span class="go">======================================================</span>
+<span class="go">Some failed!</span>
+</pre></div>
+</div>
+</div>
+<p>By default, test output is shown only for failing tests. To display output for all tests, use the <code class="docutils literal notranslate"><span class="pre">-v</span></code> option. The example below demonstrates this,
+while also selecting a subset of tests using a test pattern.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">Run specific test(s) matching a pattern</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py -v lib.tb_example_many*</span>
+<span class="go">Re-compile not needed</span>
+
+<span class="go">Running test: lib.tb_example_many.test_pass</span>
+<span class="go">Running test: lib.tb_example_many.test_fail</span>
+<span class="go">Running 2 tests</span>
+
+<span class="gp gp-VirtualEnv">(09:57:18)</span> <span class="go">Starting lib.tb_example_many.test_fail</span>
+<span class="go">Output file: C:\vunit\examples\vhdl\user_guide\vunit_out\test_output\lib.tb_example_many.test_fail_d8956871e3b3d178e412e37587673fe9df648faf\output.txt</span>
+<span class="go">Seed for lib.tb_example_many.test_fail: 2c14af95ae82a231</span>
+<span class="go">C:\vunit\examples\vhdl\user_guide\tb_example_many.vhd:26:9:@0ms:(assertion error): It fails</span>
+<span class="go">ghdl:error: assertion failed</span>
+<span class="go">ghdl:error: simulation failed</span>
+<span class="go">fail (P=0 S=0 F=1 T=2) lib.tb_example_many.test_fail (3.2 s)</span>
+
+<span class="gp gp-VirtualEnv">(09:57:22)</span> <span class="go">Starting lib.tb_example_many.test_pass</span>
+<span class="go">Output file: C:\vunit\examples\vhdl\user_guide\vunit_out\test_output\lib.tb_example_many.test_pass_aff64431373db20d8bbba18c28096f449861ccbe\output.txt</span>
+<span class="go">Seed for lib.tb_example_many.test_pass: 30e3764e6f87ca85</span>
+<span class="go">C:\vunit\examples\vhdl\user_guide\tb_example_many.vhd:23:9:@0ms:(report note): This will pass</span>
+<span class="go">simulation stopped @0ms with status 0</span>
+<span class="go">pass (P=1 S=0 F=1 T=2) lib.tb_example_many.test_pass (0.5 s)</span>
+
+<span class="go">==== Summary =========================================</span>
+<span class="go">pass lib.tb_example_many.test_pass (0.5 s)</span>
+<span class="go">fail lib.tb_example_many.test_fail (3.2 s)</span>
+<span class="go">======================================================</span>
+<span class="go">pass 1 of 2</span>
+<span class="go">fail 1 of 2</span>
+<span class="go">======================================================</span>
+<span class="go">Total time was 3.6 s</span>
+<span class="go">Elapsed time was 3.7 s</span>
+<span class="go">======================================================</span>
+<span class="go">Some failed!</span>
+</pre></div>
+</div>
+</div>
+<p>Note that the order of test execution has changed - the failing test is now run first. VUnit reorders tests based on
+previous results and recent code changes to achieve two main goals:</p>
+<ol class="arabic simple">
+<li><p>Prioritize likely failures - Tests more likely to fail are executed earlier to provide faster feedback. In this case, <code class="docutils literal notranslate"><span class="pre">lib.tb_example_many.test_fail</span></code>
+has a history of failing, and no relevant code changes have been made, so it is assumed to fail again and is run first.</p></li>
+<li><p>Load balancing - When tests are executed in parallel using the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option, VUnit distributes them across threads to minimize to total execution time.</p></li>
+</ol>
+</section>
+<section id="opening-a-test-case-in-simulator-gui">
+<h2>Opening a Test Case in Simulator GUI<a class="headerlink" href="#opening-a-test-case-in-simulator-gui" title="Link to this heading">¶</a></h2>
+<p>Sometimes the textual error messages and logs are not enough to
+pinpoint the error and a test case needs to be opened in the GUI for
+visual debugging using single stepping, breakpoints and wave form
+viewing. VUnit makes it easy to open a test case in the GUI by having
+a <code class="docutils literal notranslate"><span class="pre">-g/--gui</span></code> command line flag:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">&gt; python run.py --gui my_test_case &amp;</span>
+</pre></div>
+</div>
+<p>This launches a simulator GUI window with the top level for the
+selected test case loaded and ready to run. Depending on the simulator
+a help text is printed were a few TCL functions are pre-defined:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># vunit_help</span>
+<span class="c">#   - Prints this help</span>
+<span class="c"># vunit_load [vsim_extra_args]</span>
+<span class="c">#   - Load design with correct generics for the test</span>
+<span class="c">#   - Optional first argument are passed as extra flags to vsim</span>
+<span class="c"># vunit_user_init</span>
+<span class="c">#   - Re-runs the user defined init file</span>
+<span class="c"># vunit_run</span>
+<span class="c">#   - Run test, must do vunit_load first</span>
+<span class="c"># vunit_compile</span>
+<span class="c">#   - Recompiles the source files</span>
+<span class="c"># vunit_restart</span>
+<span class="c">#   - Recompiles the source files</span>
+<span class="c">#   - and re-runs the simulation if the compile was successful</span>
+</pre></div>
+</div>
+<p>The test bench has already been loaded with the <code class="docutils literal notranslate"><span class="pre">vunit_load</span></code>
+command. Breakpoints can now be set and signals added to the log or to
+the waveform viewer manually by the user. The test case is then run
+using the <code class="docutils literal notranslate"><span class="pre">vunit_run</span></code> command. Recompilation can be performed
+without closing the GUI by running <code class="docutils literal notranslate"><span class="pre">vunit_compile</span></code>. It is also
+possible to perform <code class="docutils literal notranslate"><span class="pre">run.py</span></code> with the <code class="docutils literal notranslate"><span class="pre">--compile</span></code> flag in a
+separate terminal.</p>
+</section>
+<section id="test-output-paths">
+<h2>Test Output Paths<a class="headerlink" href="#test-output-paths" title="Link to this heading">¶</a></h2>
+<p>VUnit creates a separate output directory for each test to provide
+isolation. The test output paths are located under
+<code class="docutils literal notranslate"><span class="pre">OUTPUT_PATH/test_output/</span></code>. The test names have been washed of any
+unsuitable characters and a hash has been added as a suffix to ensure
+uniqueness.</p>
+<p>On Windows the paths can be shortened to avoid path length
+limitations. This behavior can be controlled by setting the relevant
+<a class="reference internal" href="#test-output-envs"><span class="std std-ref">environment variables</span></a>.</p>
+<p>To get the exact test name to test output path mapping the file
+<code class="docutils literal notranslate"><span class="pre">OUTPUT_PATH/test_output/test_name_to_path_mapping.txt</span></code> can be used.
+Each line contains a test output path followed by a space seperator
+and then a test name.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">run_all_in_same_sim</span></code> pragma all tests within the
+test bench share the same output folder named after the test bench.</p>
+</div>
+</section>
+<section id="environment-variables">
+<span id="id1"></span><h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Link to this heading">¶</a></h2>
+<section id="simulator-selection">
+<span id="id2"></span><h3>Simulator Selection<a class="headerlink" href="#simulator-selection" title="Link to this heading">¶</a></h3>
+<p>VUnit automatically detects which simulators are available on the
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable and by default selects the first one
+found. For people who have multiple simulators installed the
+<code class="docutils literal notranslate"><span class="pre">VUNIT_SIMULATOR</span></code> environment variable can be set to one of
+<code class="docutils literal notranslate"><span class="pre">activehdl</span></code>, <code class="docutils literal notranslate"><span class="pre">rivierapro</span></code>, <code class="docutils literal notranslate"><span class="pre">ghdl</span></code>, <code class="docutils literal notranslate"><span class="pre">nvc`</span></code>, or <code class="docutils literal notranslate"><span class="pre">modelsim</span></code> to
+specify which simulator to use. <code class="docutils literal notranslate"><span class="pre">modelsim</span></code> is used for both ModelSim
+and Questa as VUnit handles these simulators identically.</p>
+<p>In addition to VUnit scanning the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> the simulator executable
+path can be explicitly configured by setting a
+<code class="docutils literal notranslate"><span class="pre">VUNIT_&lt;SIMULATOR_NAME&gt;_PATH</span></code> environment variable.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">Explicitly set path to GHDL executables</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">VUNIT_GHDL_PATH=/opt/ghdl/bin</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="simulator-specific">
+<h3>Simulator Specific<a class="headerlink" href="#simulator-specific" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_MODELSIM_INI</span></code> By default VUnit copies the <em>modelsim.ini</em>
+file from the tool install folder as a starting point. Setting this
+environment variable selects another <em>modelsim.ini</em> file as the
+starting point allowing the user to customize it.</p></li>
+</ul>
+</section>
+<section id="test-output-path-length">
+<span id="test-output-envs"></span><h3>Test Output Path Length<a class="headerlink" href="#test-output-path-length" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_SHORT_TEST_OUTPUT_PATHS</span></code> Unfortunately file system paths
+are still practically limited to 260 characters on Windows. VUnit
+tries to limit the length of the test output paths on Windows to
+avoid this limitation but still includes as much of the test name
+name as possible leaving a margin of 100 characters. VUnit however
+cannot forsee user specific test output file lengths and this
+environment variable can be set to minimize output path lengths on
+Windows. On other operating systems this limitation is not relevant.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VUNIT_TEST_OUTPUT_PATH_MARGIN</span></code> Can be used to change the test
+output path margin on Windows. By default the test output path is
+shortened to allow a 100 character margin.</p></li>
+</ul>
+</section>
+<section id="language-revision-selection">
+<h3>Language revision selection<a class="headerlink" href="#language-revision-selection" title="Link to this heading">¶</a></h3>
+<p>The VHDL revision can be specified through the <a class="reference internal" href="py/ui.html#python-interface"><span class="std std-ref">Python Interface</span></a>
+(see <a class="reference internal" href="py/vunit.html#vunit.ui.VUnit" title="vunit.ui.VUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">vunit.ui.VUnit</span></code></a>).
+Alternatively, environment variable <code class="docutils literal notranslate"><span class="pre">VUNIT_VHDL_STANDARD</span></code> can be set to
+<code class="docutils literal notranslate"><span class="pre">93``|``1993</span></code>, <code class="docutils literal notranslate"><span class="pre">02``|``2002</span></code>, <code class="docutils literal notranslate"><span class="pre">08``|``2008</span></code> (default) or <code class="docutils literal notranslate"><span class="pre">19``|``2019</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Note that VHDL revision 2019 is unsupported by most vendors, and support of VHDL 2008 features is uneven.
+Check the documentation of the simulator before using features requiring revisions equal or newer than 2008.</p>
+</div>
+</section>
+</section>
+<section id="json-export">
+<span id="id3"></span><h2>JSON Export<a class="headerlink" href="#json-export" title="Link to this heading">¶</a></h2>
+<p>VUnit supports exporting project information through the <code class="docutils literal notranslate"><span class="pre">--export-json</span></code> command
+line argument. A JSON file is written containing the list of all files
+added to the project as well as a list of all tests. Each test has a
+mapping to its source code location.</p>
+<p>The feature can be used for IDE-integration where the IDE can know the
+path to all files, the library mapping of files and the source code
+location of all tests.</p>
+<p>The JSON export file has three top level values:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">export_format_version</span></code>: The <a class="reference external" href="https://semver.org/">semantic</a> version of the format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">files</span></code>: List of project files. Each file item has <code class="docutils literal notranslate"><span class="pre">file_name</span></code> and <code class="docutils literal notranslate"><span class="pre">library_name</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code>: List of tests. Each test has <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, <code class="docutils literal notranslate"><span class="pre">location</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code>
+information. Attributes is the list of test attributes. The <code class="docutils literal notranslate"><span class="pre">location</span></code> contains the file name as well as
+the offset and length in characters of the symbol that defines the test. <code class="docutils literal notranslate"><span class="pre">name</span></code> is the name of the test.</p></li>
+</ul>
+</div></blockquote>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">Example JSON export file (file names are always absolute but the example has been simplified)</span><a class="headerlink" href="#id8" title="Link to this code">¶</a></div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;export_format_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;major&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;minor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;patch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;files&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;library_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lib&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;file_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tb_example_many.vhd&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;library_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lib&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;file_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tb_example.vhd&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;tests&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">            </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;file_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tb_example_many.vhd&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">556</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lib.tb_example_many.test_pass&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">            </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;file_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tb_example_many.vhd&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">624</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lib.tb_example_many.test_fail&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;.attr&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;location&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;file_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tb_example.vhd&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">465</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lib.tb_example.all&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Several tests may map to the same source code location if
+the user created multiple <a class="reference internal" href="py/ui.html#configurations"><span class="std std-ref">configurations</span></a> of the same basic tests.</p>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="py/ui.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Python Interface</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="data_types/ext_integer_vector.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><em>external integer vector</em> package</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2014-2024, Lars Asplund
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link fa-solid fa-brands fa-twitter" href="https://twitter.com/VUnitFramework" aria-label="Twitter @VUnitFramework"></a>
+              <a class="muted-link fa-solid fa-brands fa-gitter" href="https://gitter.im/VUnit/vunit" aria-label="Gitter VUnit/vunit"></a>
+              <a class="muted-link fa-solid fa-brands fa-github" href="https://github.com/VUnit/vunit" aria-label="GitHub VUnit/vunit"></a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Command Line Interface</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#positional-arguments">Positional Arguments</a></li>
+<li><a class="reference internal" href="#named-arguments">Named Arguments</a></li>
+<li><a class="reference internal" href="#modelsim/questa">modelsim/questa</a></li>
+<li><a class="reference internal" href="#ghdl/nvc">ghdl/nvc</a></li>
+<li><a class="reference internal" href="#incisive-irun">Incisive irun</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-session">Example Session</a></li>
+<li><a class="reference internal" href="#opening-a-test-case-in-simulator-gui">Opening a Test Case in Simulator GUI</a></li>
+<li><a class="reference internal" href="#test-output-paths">Test Output Paths</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li><a class="reference internal" href="#simulator-selection">Simulator Selection</a></li>
+<li><a class="reference internal" href="#simulator-specific">Simulator Specific</a></li>
+<li><a class="reference internal" href="#test-output-path-length">Test Output Path Length</a></li>
+<li><a class="reference internal" href="#language-revision-selection">Language revision selection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#json-export">JSON Export</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
