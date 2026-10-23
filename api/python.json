@@ -1,0 +1,701 @@
+{
+ "schema_version": 1,
+ "vunit_version": "5.0.0.dev16",
+ "objects": [
+  {
+   "name": "vunit.package_context.PackageContext",
+   "kind": "class",
+   "doc": "The context in which a VUnit package is added.\n\nAn instance of this class is passed to the setup function of a package, that is the\nfunction pointed out by the ``setup`` key of the package ``vunit_pkg.toml`` file. The\nsetup function is called after the sources listed in ``vunit_pkg.toml`` have been added\nand the context provides what a package needs to complete its own addition, for example\nbuilding a native library or adding generated sources.",
+   "members": [
+    {
+     "name": "add_library",
+     "kind": "method",
+     "signature": "(self, library_name: str)",
+     "doc": "Add a library managed by VUnit, see :meth:`.VUnit.add_library`.\n\n:param library_name: The name of the library\n:returns: The created :class:`.Library` object"
+    },
+    {
+     "name": "add_source_files",
+     "kind": "method",
+     "signature": "(self, library_name: str, pattern, vhdl_standard: Optional[str] = None)",
+     "doc": "Add source files matching wildcard pattern to library, see :meth:`.VUnit.add_source_files`.\n\n:param library_name: The name of the library to add files into\n:param pattern: A wildcard pattern matching the files to add or a list of files\n:param vhdl_standard: The VHDL standard used to compile files,\n                      if None the standard of the package is used\n:returns: A list of files (:class:`.SourceFileList`) that were added"
+    },
+    {
+     "name": "register_simulator_hooks",
+     "kind": "method",
+     "signature": "(self, simulator_name: str, *, elab_flags: Optional[Callable[..., List[str]]] = None, run_flags: Optional[Callable[..., List[str]]] = None, process_flags: Optional[Callable[..., List[str]]] = None, run_env: Optional[Callable[..., Dict[str, str]]] = None) -> None",
+     "doc": "Register hooks extending what a simulator does for a test, see :ref:`vunit_packages`. The\nhooks apply to the tests of the VUnit object the package is added to.\n\n:param simulator_name: The name of the simulator the hooks apply to, for example \"ghdl\".\n:param elab_flags: A ``elab_flags(simulator_interface)`` function returning extra flags for\n                   the elaboration of a test.\n:param run_flags: A ``run_flags(simulator_interface)`` function returning extra flags for the\n                  simulation of a test.\n:param process_flags: A ``process_flags(simulator_interface)`` function returning extra flags\n                      for the simulator process VUnit starts.\n:param run_env: A ``run_env(simulator_interface, env)`` function returning the environment\n                of the simulation of a test, given the environment it would otherwise have."
+    },
+    {
+     "name": "simulator_backend",
+     "kind": "property",
+     "signature": null,
+     "doc": "How the selected simulator installation was built, None for a simulator with no such\nnotion. What it says is simulator specific.\n\nGHDL is the simulator having one: its code generator, ``\"mcode\"``, ``\"llvm\"``,\n``\"llvm-jit\"`` or ``\"gcc\"``, which decides how a native library is bound to the design.\nIt follows from the prefix, so it cannot be had from the simulator class alone."
+    },
+    {
+     "name": "simulator_name",
+     "kind": "property",
+     "signature": null,
+     "doc": "The name of the selected simulator or None if no simulator was found."
+    },
+    {
+     "name": "simulator_prefix",
+     "kind": "property",
+     "signature": null,
+     "doc": "The path the executables of the selected simulator were found in, None if no simulator\nwas found. The setup function of a package gets what it builds against from here, before\nany simulator interface exists to ask."
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.VUnit",
+   "kind": "class",
+   "doc": "The public interface of VUnit\n\n:example:\n\n.. code-block:: python\n\n   from vunit import VUnit",
+   "members": [
+    {
+     "name": "add_array_util",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Add array util"
+    },
+    {
+     "name": "add_com",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Add communication package"
+    },
+    {
+     "name": "add_compile_option",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False)",
+     "doc": "Add compile option to all files\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "add_external_library",
+     "kind": "method",
+     "signature": "(self, library_name, path: Union[str, pathlib._local.Path], vhdl_standard: Optional[str] = None)",
+     "doc": "Add an externally compiled library as a black-box\n\n:param library_name: The name of the external library\n:param path: The path to the external library file or directory\n:param vhdl_standard: The VHDL standard used to compile files,\n                      if None the VUNIT_VHDL_STANDARD environment variable is used\n:returns: The created :class:`.Library` object\n\n:example:\n\n.. code-block:: python\n\n   prj.add_external_library(\"unisim\", \"path/to/unisim/\")"
+    },
+    {
+     "name": "add_json4vhdl",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Removed json4vhdl add-on."
+    },
+    {
+     "name": "add_library",
+     "kind": "method",
+     "signature": "(self, library_name: str, vhdl_standard: Optional[str] = None, allow_duplicate: Optional[bool] = False)",
+     "doc": "Add a library managed by VUnit.\n\n:param library_name: The name of the library\n:param vhdl_standard: The VHDL standard used to compile files,\n                      if None the VUNIT_VHDL_STANDARD environment variable is used\n:param allow_duplicate: Set to True to allow the same library\n                        to be added multiple times. Subsequent additions will just\n                        return the previously created library.\n:returns: The created :class:`.Library` object\n\n:example:\n\n.. code-block:: python\n\n   library = prj.add_library(\"lib\")"
+    },
+    {
+     "name": "add_osvvm",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Removed osvvm library"
+    },
+    {
+     "name": "add_package",
+     "kind": "method",
+     "signature": "(self, package_name: str, allow_setup: bool = False) -> None",
+     "doc": "Add a VUnit package, that is an installed Python package providing HDL code.\n\nSee :ref:`vunit_packages` for how a package is created.\n\n:param package_name: The name of the Python package. Dashes and dots are, just like for\n                     PyPI package names, equivalent to underscores.\n:param allow_setup: Allow the setup function of the package to run. Defaults to ``False``,\n                    which makes a package declaring a setup function an error such that no\n                    Python code of a package runs unless the run script asks for it.\n\n:example:\n\n.. code-block:: python\n\n    VU.add_package(\"vunit-json-for-vhdl\")"
+    },
+    {
+     "name": "add_preprocessor",
+     "kind": "method",
+     "signature": "(self, preprocessor)",
+     "doc": "Adds a custom preprocessor to be used on all files. Must be called before adding any files.\n\n:param preprocessor: Instance of of :class:`.Preprocessor`"
+    },
+    {
+     "name": "add_random",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Add random"
+    },
+    {
+     "name": "add_source_file",
+     "kind": "method",
+     "signature": "(self, file_name: Union[str, pathlib._local.Path], library_name: str, preprocessors=None, include_dirs=None, defines=None, vhdl_standard: Optional[str] = None, no_parse: Optional[bool] = False, file_type=None)",
+     "doc": "Add source file to library\n\n:param file_name: The name of the file\n:param library_name: The name of the library to add the file into\n:param include_dirs: A list of include directories\n:param defines: A dictionary containing Verilog defines to be set\n:param vhdl_standard: The VHDL standard used to compile this file,\n                      if None VUNIT_VHDL_STANDARD environment variable is used\n:param no_parse: Do not parse file for dependency or test scanning purposes\n:param file_type: The type of the file; ``\"vhdl\"``, ``\"verilog\"``  or ``\"systemverilog\"``.\n                  Auto-detected by default when set to ``None``.\n:returns: The :class:`.SourceFile` which was added\n\n:example:\n\n.. code-block:: python\n\n   prj.add_source_file(\"file.vhd\", \"lib\")"
+    },
+    {
+     "name": "add_source_files",
+     "kind": "method",
+     "signature": "(self, pattern, library_name: str, preprocessors=None, include_dirs=None, defines=None, allow_empty: Optional[bool] = False, vhdl_standard: Optional[str] = None, no_parse: Optional[bool] = False, file_type=None)",
+     "doc": "Add source files matching wildcard pattern to library\n\n:param pattern: A wildcard pattern matching the files to add or a list of files\n:param library_name: The name of the library to add files into\n:param include_dirs: A list of include directories\n:param defines: A dictionary containing Verilog defines to be set\n:param allow_empty: To disable an error if no files matched the pattern\n:param vhdl_standard: The VHDL standard used to compile files,\n                      if None VUNIT_VHDL_STANDARD environment variable is used\n:param no_parse: Do not parse file(s) for dependency or test scanning purposes\n:param file_type: The type of the file; ``\"vhdl\"``, ``\"verilog\"``  or ``\"systemverilog\"``.\n                  Auto-detected by default when set to ``None``.\n:returns: A list of files (:class:`.SourceFileList`) which were added\n\n:example:\n\n.. code-block:: python\n\n   prj.add_source_files(\"*.vhd\", \"lib\")"
+    },
+    {
+     "name": "add_source_files_from_csv",
+     "kind": "method",
+     "signature": "(self, project_csv_path: Union[str, pathlib._local.Path], vhdl_standard: Optional[str] = None)",
+     "doc": "Add a project configuration, mapping all the libraries and files\n\n:param project_csv_path: path to csv project specification, each line contains the name\n                         of the library and the path to one file 'lib_name,filename'\n                         note that all filenames are relative to the parent folder of the\n                         csv file\n:param vhdl_standard: The VHDL standard used to compile files,\n                      if None, the VUNIT_VHDL_STANDARD environment variable is used\n:returns: A list of files (:class:`.SourceFileList`) that were added"
+    },
+    {
+     "name": "add_verification_components",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Add verification component library"
+    },
+    {
+     "name": "add_verilog_builtins",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Add VUnit Verilog builtin libraries.\n\n.. IMPORTANT::\n  As of VUnit v5, class ``vunit.verilog`` is removed.\n  Verilog users need to call this method explicitly in order to preserve the functionality.\n  See :vunit_issue:`777`."
+    },
+    {
+     "name": "add_vhdl_builtins",
+     "kind": "method",
+     "signature": "(self, external=None, use_external_log=None)",
+     "doc": "Add VUnit VHDL builtin libraries.\n\n:param external: struct to provide bridges for the external VHDL API.\n:param use_external_log: path to external implementation of common_log_pkg-body to allow\n    VUnit log messages to be redirected to another logging framework.\n\n:example:\n\n.. code-block:: python\n\n    VU.add_vhdl_builtins(external={\n        'string': ['path/to/custom/file'],\n        'integer': ['path/to/custom/file']}\n    )\n\n.. IMPORTANT::\n  As of VUnit v5, option ``compile_builtins`` of methods :meth:`from_argv` and :meth:`from_args` is removed.\n  VHDL users need to call this method explicitly in order to preserve the functionality.\n  See :vunit_issue:`777`."
+    },
+    {
+     "name": "codecs_path",
+     "kind": "property",
+     "signature": null,
+     "doc": null
+    },
+    {
+     "name": "enable_check_preprocessing",
+     "kind": "method",
+     "signature": "(self, order=200)",
+     "doc": "Inserts error context information into VUnit check_relation calls.\n\n:param order: Integer controlling in which order the check preprocessor is applied in relation to other preprocessors. Lowest value first. The order between preprocessors with the same value is undefined."
+    },
+    {
+     "name": "enable_location_preprocessing",
+     "kind": "method",
+     "signature": "(self, additional_subprograms=None, exclude_subprograms=None, order=100)",
+     "doc": "Inserts file name and line number information into VUnit check and log subprograms calls. Custom\nsubprograms can also be added. Must be called before adding any files.\n\n:param additional_subprograms: List of custom subprograms to add the line_num and file_name parameters to.\n:param exclude_subprograms: List of VUnit subprograms to exclude from location preprocessing. Used to avoid location preprocessing of other functions sharing name with a VUnit log or check subprogram.\n:param order: Integer controlling in which order the location preprocessor is applied in relation to other preprocessors. Lowest value first. The order between preprocessors with the same value is undefined.\n\n:example:\n\n.. code-block:: python\n\n   prj.enable_location_preprocessing(additional_subprograms=['my_check'],\n                                     exclude_subprograms=['log'])"
+    },
+    {
+     "name": "export_items",
+     "kind": "method",
+     "signature": "(self, keys: Iterable[str], directory_path: Union[str, pathlib._local.Path])",
+     "doc": "Export items.\n\n:param keys : List or other iterable of strings denoting the items to be exported. Valid keys are:\n            * test_history - Exports the test history on which optimized test prioritization is based. The\n                             exported test history can be imported to a clean project, such as a CI pipeline,\n                             with :meth:`.import_items`.\n\n:param directory_path: Path to the directory dedicated to the items. The directory is created if it doesn't\n                       already exists **and is cleared of all contents** if it already exists."
+    },
+    {
+     "name": "get_compile_order",
+     "kind": "method",
+     "signature": "(self, source_files=None)",
+     "doc": "Get the compile order of all or specific source files and\ntheir dependencies.\n\nA dependency of file **A** in terms of compile order is any\nfile **B** which **must** be successfully compiled before **A**\ncan be successfully compiled.\n\nThis is **not** the same as all files required to successfully elaborate **A**.\nFor example using component instantiation in VHDL there is no\ncompile order dependency but the component instance will not\nelaborate if there is no binding component.\n\n:param source_files: A list of :class:`.SourceFile` objects or `None` meaning all\n:returns: A list of :class:`.SourceFile` objects in compile order."
+    },
+    {
+     "name": "get_implementation_subset",
+     "kind": "method",
+     "signature": "(self, source_files)",
+     "doc": "Get the subset of files which are required to successfully\nelaborate the list of input files without any missing\ndependencies.\n\n:param source_files: A list of :class:`.SourceFile` objects\n:returns: A list of :class:`.SourceFile` objects which is the implementation subset."
+    },
+    {
+     "name": "get_libraries",
+     "kind": "method",
+     "signature": "(self, pattern='*', allow_empty: Optional[bool] = False)",
+     "doc": "Get a list of libraries\n\n:param pattern: A wildcard pattern matching the library name\n:param allow_empty: To disable an error if no labraries matched the pattern\n:returns: A :class:`.LibraryList` object"
+    },
+    {
+     "name": "get_simulator_name",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Get the name of the simulator used.\n\nWill return None if no simulator was found."
+    },
+    {
+     "name": "get_source_file",
+     "kind": "method",
+     "signature": "(self, file_name: Union[str, pathlib._local.Path], library_name: Optional[str] = None)",
+     "doc": "Get a source file\n\n:param file_name: The name of the file as a relative or absolute path\n:param library_name: The name of a specific library to search if not all libraries\n:returns: A :class:`.SourceFile` object"
+    },
+    {
+     "name": "get_source_files",
+     "kind": "method",
+     "signature": "(self, pattern='*', library_name: Optional[str] = None, allow_empty: Optional[bool] = False)",
+     "doc": "Get a list of source files\n\n:param pattern: A wildcard pattern matching either an absolute or relative path\n:param library_name: The name of a specific library to search if not all libraries\n:param allow_empty: To disable an error if no files matched the pattern\n:returns: A :class:`.SourceFileList` object"
+    },
+    {
+     "name": "import_items",
+     "kind": "method",
+     "signature": "(self, directory_path: Union[str, pathlib._local.Path])",
+     "doc": "Import previously exported items, see :meth:`.export_items`.\n\n:param directory_path: Path to the directory containing the items."
+    },
+    {
+     "name": "library",
+     "kind": "method",
+     "signature": "(self, library_name: str)",
+     "doc": "Get a library\n\n:param library_name: The name of the library\n:returns: A :class:`.Library` object"
+    },
+    {
+     "name": "main",
+     "kind": "method",
+     "signature": "(self, post_run=None)",
+     "doc": "Run vunit main function and exit\n\n:param post_run: A callback function which is called after\n  running tests. The function must accept a single `results`\n  argument which is an instance of :class:`.Results`"
+    },
+    {
+     "name": "set_attribute",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False)",
+     "doc": "Set a value of attribute in all |configurations|\n\n:param name: The name of the attribute\n:param value: The value of the attribute\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   prj.set_attribute(\".foo\", \"bar\")\n\n.. note::\n   Only affects test benches added *before* the attribute is set."
+    },
+    {
+     "name": "set_compile_option",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False)",
+     "doc": "Set compile option of all files\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n:example:\n\n.. code-block:: python\n\n   prj.set_compile_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "set_generic",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False)",
+     "doc": "Set a value of generic in all |configurations|\n\n:param name: The name of the generic\n:param value: The value of the generic\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   prj.set_generic(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the generic is set."
+    },
+    {
+     "name": "set_parameter",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False)",
+     "doc": "Set value of parameter in all |configurations|\n\n:param name: The name of the parameter\n:param value: The value of the parameter\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   prj.set_parameter(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the parameter is set."
+    },
+    {
+     "name": "set_sim_option",
+     "kind": "method",
+     "signature": "(self, name: str, value: str, allow_empty: Optional[bool] = False, overwrite: Optional[bool] = True)",
+     "doc": "Set simulation option in all |configurations|\n\n:param name: |simulation_options|\n:param value: The value of the simulation option\n:param allow_empty: To disable an error when no test benches were found\n:param overwrite: To overwrite the option or append to the existing value\n\n:example:\n\n.. code-block:: python\n\n   prj.set_sim_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n.. note::\n   Only affects test benches added *before* the option is set."
+    },
+    {
+     "name": "simulator_supports_coverage",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Returns True when the simulator supports coverage\n\nWill return None if no simulator was found."
+    },
+    {
+     "name": "update_test_pattern",
+     "kind": "method",
+     "signature": "(self, include_dependent_on: Optional[Iterable[Union[str, pathlib._local.Path]]] = None, exclude_dependent_on: Optional[Iterable[Union[str, pathlib._local.Path]]] = None) -> None",
+     "doc": "Update test pattern to include testbenches depending on source files with a file path matching any of the\npatterns given in `include_dependent_on_file_patterns` but exclude testbenches depending on source file\npatterns in `exclude_dependent_on_file_patterns`.\n\nExcluded testbenches take precedence over included testbenches. Test patterns given on the command line take\nprecedence over excluded testbenches.\n\n:param include_dependent_on: List or other iterable of :class:`str` or :class:`pathlib.Path` items,\n                             each representing a relative, an absolute file path\n                             pattern. Applied recursively. Default is including\n                             all project source files.\n:param exclude_dependent_on: List or other iterable of :class:`str` or :class:`pathlib.Path` items,\n                             each representing a relative or an absolute file path\n                             pattern. Applied recursively. Default is excluding no\n                             project source file.\n:returns: None"
+    },
+    {
+     "name": "vhdl_standard",
+     "kind": "property",
+     "signature": null,
+     "doc": null
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.library.Library",
+   "kind": "class",
+   "doc": "User interface of a library",
+   "members": [
+    {
+     "name": "add_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Add compile option to all files within the library\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "add_source_file",
+     "kind": "method",
+     "signature": "(self, file_name, preprocessors=None, include_dirs=None, defines=None, vhdl_standard: Optional[str] = None, no_parse=False, file_type=None)",
+     "doc": "Add source file to library\n\n:param file_name: The name of the file\n:param include_dirs: A list of include directories\n:param defines: A dictionary containing Verilog defines to be set\n:param vhdl_standard: The VHDL standard used to compile this file, if None library default is used\n:param no_parse: Do not parse file for dependency or test scanning purposes\n:param file_type: The type of the file; ``\"vhdl\"``, ``\"verilog\"``  or ``\"systemverilog\"``.\n                  Auto-detected by default when set to ``None``.\n:returns: The :class:`.SourceFile` which was added\n\n:example:\n\n.. code-block:: python\n\n   library.add_source_file(\"file.vhd\")"
+    },
+    {
+     "name": "add_source_files",
+     "kind": "method",
+     "signature": "(self, pattern, preprocessors=None, include_dirs=None, defines=None, allow_empty=False, vhdl_standard: Optional[str] = None, no_parse=False, file_type=None)",
+     "doc": "Add source files matching wildcard pattern to library\n\n:param pattern: A wildcard pattern match the files to add\n:param include_dirs: A list of include directories\n:param defines: A dictionary containing Verilog defines to be set\n:param allow_empty: To disable an error if no files matched the pattern\n:param vhdl_standard: The VHDL standard used to compile files, if None library default is used\n:param no_parse: Do not parse file(s) for dependency or test scanning purposes\n:param file_type: The type of the file; ``\"vhdl\"``, ``\"verilog\"``  or ``\"systemverilog\"``.\n                  Auto-detected by default when set to ``None``.\n:returns: A list of files (:class:`.SourceFileList`) which were added\n\n:example:\n\n.. code-block:: python\n\n   library.add_source_files(\"*.vhd\")"
+    },
+    {
+     "name": "entity",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Get an entity within the library\n\n:param name: The name of the entity\n:returns: A :class:`.TestBench` object\n:raises: KeyError"
+    },
+    {
+     "name": "get_source_file",
+     "kind": "method",
+     "signature": "(self, file_name)",
+     "doc": "Get a source file within this library\n\n:param file_name: The name of the file as a relative or absolute path\n\n:returns: A :class:`.SourceFile` object"
+    },
+    {
+     "name": "get_source_files",
+     "kind": "method",
+     "signature": "(self, pattern='*', allow_empty=False)",
+     "doc": "Get a list of source files within this libary\n\n:param pattern: A wildcard pattern matching either an absolute or relative path\n:param allow_empty: To disable an error if no files matched the pattern\n:returns: A :class:`.SourceFileList` object"
+    },
+    {
+     "name": "get_test_benches",
+     "kind": "method",
+     "signature": "(self, pattern='*', allow_empty=False)",
+     "doc": "Get a list of test benches\n\n:param pattern: A wildcard pattern matching the test_bench name\n:param allow_empty: To disable an error when no test benches were found\n:returns: A list of :class:`.TestBench` objects"
+    },
+    {
+     "name": "module",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Get a module within the library\n\n:param name: The name of the module\n:returns: A :class:`.TestBench` object\n:raises: KeyError"
+    },
+    {
+     "name": "name",
+     "kind": "property",
+     "signature": null,
+     "doc": "The name of the library"
+    },
+    {
+     "name": "package",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Get a package within the library"
+    },
+    {
+     "name": "set_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set compile option for all files within the library\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n:example:\n\n.. code-block:: python\n\n   lib.set_compile_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "set_generic",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set a value of generic within all |configurations| of test benches and tests this library\n\n:param name: The name of the generic\n:param value: The value of the generic\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   lib.set_generic(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the generic is set."
+    },
+    {
+     "name": "set_parameter",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set a value of parameter within all |configurations| of test benches and tests this library\n\n:param name: The name of the parameter\n:param value: The value of the parameter\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   lib.set_parameter(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the parameter is set."
+    },
+    {
+     "name": "set_sim_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False, overwrite=True)",
+     "doc": "Set simulation option within all |configurations| of test benches and tests this library\n\n:param name: |simulation_options|\n:param value: The value of the simulation option\n:param allow_empty: To disable an error when no test benches were found\n:param overwrite: To overwrite the option or append to the existing value\n\n:example:\n\n.. code-block:: python\n\n   lib.set_sim_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n.. note::\n   Only affects test benches added *before* the option is set."
+    },
+    {
+     "name": "test_bench",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Get a test bench within this library\n\n:param name: The name of the test bench\n:returns: A :class:`.TestBench` object\n:raises: KeyError"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.library.LibraryList",
+   "kind": "class",
+   "doc": "A list of :class:`.Library`",
+   "members": [
+    {
+     "name": "add_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Add compile option to all files within these libraries\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "get_source_files",
+     "kind": "method",
+     "signature": "(self, pattern='*', allow_empty=False)",
+     "doc": "Get a list of source files within these libraries\n\n:param pattern: A wildcard pattern matching either an absolute or relative path\n:param allow_empty: To disable an error if no files matched the pattern\n:returns: A :class:`.SourceFileList` object"
+    },
+    {
+     "name": "get_test_benches",
+     "kind": "method",
+     "signature": "(self, pattern='*', allow_empty=False)",
+     "doc": "Get a list of test benches\n\n:param pattern: A wildcard pattern matching the test_bench name\n:param allow_empty: To disable an error when no test benches were found\n:returns: A list of :class:`.TestBench` objects"
+    },
+    {
+     "name": "set_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set compile option for all files within these libraries\n\n:param name: |compile_option|\n:param value: The value of the compile option\n:param allow_empty: To disable an error when no source files were found\n\n:example:\n\n.. code-block:: python\n\n   libs.set_compile_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n\n.. note::\n   Only affects files added *before* the option is set."
+    },
+    {
+     "name": "set_generic",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set a value of generic within all |configurations| of test benches and tests in these libraries\n\n:param name: The name of the generic\n:param value: The value of the generic\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   libs.set_generic(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the generic is set."
+    },
+    {
+     "name": "set_parameter",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False)",
+     "doc": "Set a value of parameter within all |configurations| of test benches and tests in these libraries\n\n:param name: The name of the parameter\n:param value: The value of the parameter\n:param allow_empty: To disable an error when no test benches were found\n\n:example:\n\n.. code-block:: python\n\n   libs.set_parameter(\"data_width\", 16)\n\n.. note::\n   Only affects test benches added *before* the parameter is set."
+    },
+    {
+     "name": "set_sim_option",
+     "kind": "method",
+     "signature": "(self, name, value, allow_empty=False, overwrite=True)",
+     "doc": "Set simulation option within all |configurations| of test benches and tests in these libraries.\n\n:param name: |simulation_options|\n:param value: The value of the simulation option\n:param allow_empty: To disable an error when no test benches were found\n:param overwrite: To overwrite the option or append to the existing value\n\n:example:\n\n.. code-block:: python\n\n   libs.set_sim_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])\n\n.. note::\n   Only affects test benches added *before* the option is set."
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.preprocessor.Preprocessor",
+   "kind": "class",
+   "doc": "Preprocessor base class.",
+   "members": [
+    {
+     "name": "run",
+     "kind": "method",
+     "signature": "(self, code: str, file_name: str) -> str",
+     "doc": "Preprocess code.\n\n:param code: Code to process.\n:param file_name: File name of original code file.\n\n:return: Preprocessed code"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.results.Report",
+   "kind": "class",
+   "doc": "Gives access to test results and paths after running tests\n\n:data output_path: Absolute path to the output path (see :ref:`cli`)\n:data tests: Dictionary of :class:`TestResult` objects",
+   "members": []
+  },
+  {
+   "name": "vunit.ui.results.Results",
+   "kind": "class",
+   "doc": "Gives access to results after running tests",
+   "members": [
+    {
+     "name": "get_report",
+     "kind": "method",
+     "signature": "(self)",
+     "doc": "Get a report (dictionary) of tests: status, time and output path\n\n:returns: A :class:`Report` object"
+    },
+    {
+     "name": "merge_coverage",
+     "kind": "method",
+     "signature": "(self, file_name, args=None)",
+     "doc": "Create a merged coverage report from the individual coverage files\n\n:param file_name: The resulting coverage file name.\n:param args: The tool arguments for the merge command. Should be a list of strings."
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.results.TestResult",
+   "kind": "class",
+   "doc": "Gives access to a subset of the results of a test\n\n:data status: Result status (passed, failed or skipped)\n:data time: Simulation time\n:data path: Absolute path of the test output\n\n:example:\n\n.. code-block:: python\n\n   def post_func(results):\n       report = results.get_report()\n       print(report.output_path)\n       for key, test in report.tests.items():\n           print(key)\n           print(test.status)\n           print(test.time)\n           print(test.path)\n           print(test.relpath)\n\n   vu.main(post_run=post_func)",
+   "members": [
+    {
+     "name": "relpath",
+     "kind": "property",
+     "signature": null,
+     "doc": "If the path is a subdir to the default TEST_OUTPUT_PATH, return the subdir only"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.source.SourceFile",
+   "kind": "class",
+   "doc": "A single file",
+   "members": [
+    {
+     "name": "add_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Add compile option to this file\n\n:param name: |compile_option|\n:param value: The value of the compile option"
+    },
+    {
+     "name": "add_dependency_on",
+     "kind": "method",
+     "signature": "(self, source_file)",
+     "doc": "Add manual dependency of this file other file(s)\n\n:param source_file: The file(s) which this file depends on\n\n:example:\n\n.. code-block:: python\n\n   other_files = lib.get_source_files(\"*.vhd\")\n   my_file.add_dependency_on(other_files)"
+    },
+    {
+     "name": "get_compile_option",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Return compile option of this file\n\n:param name: |compile_option|"
+    },
+    {
+     "name": "library",
+     "kind": "property",
+     "signature": null,
+     "doc": "The library of the source file"
+    },
+    {
+     "name": "name",
+     "kind": "property",
+     "signature": null,
+     "doc": "The name of the SourceFile"
+    },
+    {
+     "name": "set_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set compile option for this file\n\n:param name: |compile_option|\n:param value: The value of the compile option\n\n:example:\n\n.. code-block:: python\n\n   my_file.set_compile_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])"
+    },
+    {
+     "name": "vhdl_standard",
+     "kind": "property",
+     "signature": null,
+     "doc": "The VHDL standard applicable to the file,\nNone if not a VHDL file"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.source.SourceFileList",
+   "kind": "class",
+   "doc": "A list of :class:`.SourceFile`",
+   "members": [
+    {
+     "name": "add_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Add compile option to all files in the list\n\n:param name: |compile_option|\n:param value: The value of the compile option"
+    },
+    {
+     "name": "add_dependency_on",
+     "kind": "method",
+     "signature": "(self, source_file)",
+     "doc": "Add manual dependency of these files on other file(s)\n\n:param source_file: The file(s) which this file depends on\n\n:example:\n\n.. code-block:: python\n\n   other_file = lib.get_source_file(\"other_file.vhd\")\n   files.add_dependency_on(other_file)"
+    },
+    {
+     "name": "set_compile_option",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set compile option for all files in the list\n\n:param name: |compile_option|\n:param value: The value of the compile option\n\n:example:\n\n.. code-block:: python\n\n   files.set_compile_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.test.Test",
+   "kind": "class",
+   "doc": "User interface of a single test case",
+   "members": [
+    {
+     "name": "add_config",
+     "kind": "method",
+     "signature": "(self, name, generics=None, parameters=None, pre_config=None, post_check=None, sim_options=None, attributes=None, vhdl_configuration_name=None)",
+     "doc": "Add a configuration to this test copying the default configuration.\n\nMultiple configuration may be added one after another.\nIf no |configurations| are added the default configuration is used.\n\n:param name: The name of the configuration. Will be added as a suffix on the test name\n:param generics: A `dict` containing the generics to be set in addition to the default configuration.\n:param parameters: A `dict` containing the parameters to be set in addition to the default configuration.\n:param pre_config: A :ref:`callback function <pre_and_post_hooks>` to be called before test execution.\n:param post_check: A :ref:`callback function <pre_and_post_hooks>` to be called after test execution.\n:param sim_options: A `dict` containing the sim_options to be set in addition to the default configuration.\n:param attributes: A `dict` containing the attributes to be set in addition to the default configuration.\n:param vhdl_configuration_name: Name of VHDL configuration to use for the testbench entity, if any.\n\n:example:\n\nGiven the ``lib.test_bench.test`` test and the following ``add_config`` calls:\n\n.. code-block:: python\n\n   for data_width in range(14, 15+1):\n       for sign in [False, True]:\n           test.add_config(\n               name=\"data_width=%s,sign=%s\" % (data_width, sign),\n               generics=dict(data_width=data_width, sign=sign))\n\nThe following tests will be created:\n\n* ``lib.test_bench.data_width=14,sign=False.test``\n\n* ``lib.test_bench.data_width=14,sign=True.test``\n\n* ``lib.test_bench.data_width=15,sign=False.test``\n\n* ``lib.test_bench.data_width=15,sign=True.test``"
+    },
+    {
+     "name": "name",
+     "kind": "property",
+     "signature": null,
+     "doc": ":returns: the entity or module name of the test bench"
+    },
+    {
+     "name": "set_attribute",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of attribute within all |configurations| of this test\n\n:param name: The name of the attribute\n:param value: The value of the attribute\n\n:example:\n\n.. code-block:: python\n\n   test.set_attribute(\".foo\", \"bar\")"
+    },
+    {
+     "name": "set_generic",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of generic within all |configurations| of this test\n\n:param name: The name of the generic\n:param value: The value of the generic\n\n:example:\n\n.. code-block:: python\n\n   test.set_generic(\"data_width\", 16)"
+    },
+    {
+     "name": "set_parameter",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of parameter within all |configurations| of this test\n\n:param name: The name of the parameter\n:param value: The value of the parameter\n\n:example:\n\n.. code-block:: python\n\n   test.set_parameter(\"data_width\", 16)"
+    },
+    {
+     "name": "set_post_check",
+     "kind": "method",
+     "signature": "(self, value)",
+     "doc": "Set :ref:`post_check <pre_and_post_hooks>` function of all |configurations| of this test\n\n:param value: The post_check function"
+    },
+    {
+     "name": "set_pre_config",
+     "kind": "method",
+     "signature": "(self, value)",
+     "doc": "Set :ref:`pre_config <pre_and_post_hooks>` function of all |configurations| of this test\n\n:param value: The pre_config function"
+    },
+    {
+     "name": "set_sim_option",
+     "kind": "method",
+     "signature": "(self, name, value, overwrite=True)",
+     "doc": "Set simulation option within all |configurations| of this test\n\n:param name: |simulation_options|\n:param value: The value of the simulation option\n:param overwrite: To overwrite the option or append to the existing value\n\n:example:\n\n.. code-block:: python\n\n   test.set_sim_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])"
+    },
+    {
+     "name": "set_vhdl_configuration_name",
+     "kind": "method",
+     "signature": "(self, value: str)",
+     "doc": "Set VHDL configuration name of all\n|configurations| of this test\n\n:param value: The VHDL configuration name"
+    }
+   ]
+  },
+  {
+   "name": "vunit.ui.testbench.TestBench",
+   "kind": "class",
+   "doc": "User interface of a test bench.\nA test bench consists of one or more :class:`.Test` cases. Setting options for a test\nbench will apply that option to all test cases belonging to that test bench.",
+   "members": [
+    {
+     "name": "add_config",
+     "kind": "method",
+     "signature": "(self, name, generics=None, parameters=None, pre_config=None, post_check=None, sim_options=None, attributes=None, vhdl_configuration_name=None)",
+     "doc": "Add a configuration of this test bench or to all test cases within it by copying the default configuration.\n\nMultiple configuration may be added one after another.\nIf no |configurations| are added the default configuration is used.\n\n:param name: The name of the configuration. Will be added as a suffix on the test name\n:param generics: A `dict` containing the generics to be set in addition to the default configuration\n:param parameters: A `dict` containing the parameters to be set in addition to the default configuration\n:param pre_config: A :ref:`callback function <pre_and_post_hooks>` to be called before test execution.\n:param post_check: A :ref:`callback function <pre_and_post_hooks>` to be called after test execution.\n:param sim_options: A `dict` containing the sim_options to be set in addition to the default configuration\n:param attributes: A `dict` containing the attributes to be set in addition to the default configuration\n:param vhdl_configuration_name: Name of VHDL configuration to use for the testbench entity, if any.\n\n:example:\n\nGiven a test bench that by default gives rise to the test\n``lib.test_bench`` and the following ``add_config`` calls:\n\n.. code-block:: python\n\n   for data_width in range(14, 15+1):\n       for sign in [False, True]:\n           test_bench.add_config(\n               name=\"data_width=%s,sign=%s\" % (data_width, sign),\n               generics=dict(data_width=data_width, sign=sign))\n\nThe following tests will be created:\n\n* ``lib.test_bench.data_width=14,sign=False``\n\n* ``lib.test_bench.data_width=14,sign=True``\n\n* ``lib.test_bench.data_width=15,sign=False``\n\n* ``lib.test_bench.data_width=15,sign=True``"
+    },
+    {
+     "name": "get_tests",
+     "kind": "method",
+     "signature": "(self, pattern='*')",
+     "doc": "Get a list of tests\n\n:param pattern: A wildcard pattern matching the test name\n:returns: A list of :class:`.Test` objects"
+    },
+    {
+     "name": "library",
+     "kind": "property",
+     "signature": null,
+     "doc": ":returns: The library that contains this test bench"
+    },
+    {
+     "name": "name",
+     "kind": "property",
+     "signature": null,
+     "doc": ":returns: The entity or module name of the test bench"
+    },
+    {
+     "name": "scan_tests_from_file",
+     "kind": "method",
+     "signature": "(self, file_name)",
+     "doc": "Scan tests from another file than the one containing the test\nbench.  Useful for when the top level test bench does not\ncontain any tests.\n\nSuch a structure is not the preferred way of doing things in\nVUnit but this method exists to accommodate legacy needs.\n\n:param file_name: The name of another file to scan for tests\n\n.. warning::\n   The nested module containing the tests needs to be given\n   the ``runner_cfg`` parameter or generic by the\n   instantiating top level test bench. The nested module\n   should not call its parameter or generic `runner_cfg` but\n   rather `nested_runner_cfg` to avoid the VUnit test scanner\n   detecting and running it as a test bench. In SystemVerilog\n   the ``NESTED_TEST_SUITE`` macro should be used instead of\n   the ``TEST_SUITE`` macro."
+    },
+    {
+     "name": "set_attribute",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of attribute within all |configurations| of this test bench or test cases within it\n\n:param name: The name of the attribute\n:param value: The value of the atrribute\n\n:example:\n\n.. code-block:: python\n\n   test_bench.set_attribute(\".foo\", \"bar\")"
+    },
+    {
+     "name": "set_generic",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of generic within all |configurations| of this test bench or test cases within it\n\n:param name: The name of the generic\n:param value: The value of the generic\n\n:example:\n\n.. code-block:: python\n\n   test_bench.set_generic(\"data_width\", 16)"
+    },
+    {
+     "name": "set_parameter",
+     "kind": "method",
+     "signature": "(self, name, value)",
+     "doc": "Set a value of parameter within all |configurations| of this test bench or test cases within it\n\n:param name: The name of the parameter\n:param value: The value of the parameter\n\n:example:\n\n.. code-block:: python\n\n   test_bench.set_parameter(\"data_width\", 16)"
+    },
+    {
+     "name": "set_post_check",
+     "kind": "method",
+     "signature": "(self, value)",
+     "doc": "Set :ref:`post_check <pre_and_post_hooks>` function of all\n|configurations| of this test bench or test cases within it\n\n:param value: The post_check function"
+    },
+    {
+     "name": "set_pre_config",
+     "kind": "method",
+     "signature": "(self, value)",
+     "doc": "Set :ref:`pre_config <pre_and_post_hooks>` function of all\n|configurations| of this test bench or test cases within it\n\n:param value: The pre_config function"
+    },
+    {
+     "name": "set_sim_option",
+     "kind": "method",
+     "signature": "(self, name, value, overwrite=True)",
+     "doc": "Set simulation option within all |configurations| of this test bench or test cases within it\n\n:param name: |simulation_options|\n:param value: The value of the simulation option\n:param overwrite: To overwrite the option or append to the existing value\n\n:example:\n\n.. code-block:: python\n\n   test_bench.set_sim_option(\"ghdl.a_flags\", [\"--no-vital-checks\"])"
+    },
+    {
+     "name": "set_vhdl_configuration_name",
+     "kind": "method",
+     "signature": "(self, value: str)",
+     "doc": "Set VHDL configuration name of all\n|configurations| of this test bench or test cases within it\n\n:param value: The VHDL configuration name"
+    },
+    {
+     "name": "test",
+     "kind": "method",
+     "signature": "(self, name)",
+     "doc": "Get a test within this test bench\n\n:param name: The name of the test\n:returns: A :class:`.Test` object"
+    }
+   ]
+  },
+  {
+   "name": "vunit.vunit_cli",
+   "kind": "module",
+   "doc": ".. _custom_cli:\n\nAdding Custom Command Line Arguments\n------------------------------------\nIt is possible to add custom command line arguments to your ``run.py``\nscripts using the ``VUnitCLI`` class. A ``VUnitCLI`` object\nhas a ``parser`` field which is an `ArgumentParser` object of the\n`argparse`_ library.\n\n.. _argparse: https://docs.python.org/3/library/argparse.html\n\n.. code-block:: python\n\n   from vunit import VUnitCLI, VUnit\n\n   # Add custom command line argument to standard CLI\n   # Beware of conflicts with existing arguments\n   cli = VUnitCLI()\n   cli.parser.add_argument('--custom-arg', ...)\n   args = cli.parse_args()\n\n   # Create VUNit instance from custom arguments\n   vu = VUnit.from_args(args=args)\n\n   # Use args.custom_arg here ...\n   print(args.custom_arg)",
+   "members": []
+  }
+ ]
+}
